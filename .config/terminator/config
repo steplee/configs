@@ -2,20 +2,23 @@
   enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, Logger, LaunchpadBugURLHandler
   title_transmit_bg_color = "#69a1e7"
   title_inactive_fg_color = "#d0d0d0"
-  suppress_multiple_term_dialog = True
   title_inactive_bg_color = "#5d989b"
 [keybindings]
+  broadcast_all = <Alt>a
+  broadcast_off = <Alt>s
 [profiles]
   [[default]]
     scrollbar_position = hidden
-    palette = "#1d839d:#4497d4:#c4dd20:#adf84c:#268bd2:#4ffb52:#2aa198:#141e25:#243c41:#f16f1e:#fad313:#16b4ee:#40f50e:#fe7913:#1fc4d7:#96494d"
-    background_type = transparent
-    cursor_shape = ibeam
     background_image = None
-    foreground_color = "#a0b3be"
+    background_darkness = 0.8
+    scrollback_lines = 686
+    background_type = transparent
+    palette = "#1d839d:#4497d4:#76ee14:#cdf92d:#268bd2:#fe9f13:#2aa198:#141e25:#243c41:#fe5d13:#d4fa13:#16b4ee:#76ee14:#16b4ee:#1fc4d7:#96494d"
+    foreground_color = "#9cafb8"
     icon_bell = False
-    background_darkness = 0.59
+    cursor_shape = ibeam
     background_color = "#0e191e"
+  [[New Profile]]
   [[opaquer]]
     scrollbar_position = hidden
     palette = "#1d839d:#c7e411:#3fbcdd:#adf84c:#84a828:#5ed527:#883539:#141e25:#2b3537:#e47a33:#fad313:#55a0bb:#40f50e:#fe7913:#1fc4d7:#a5515e"
