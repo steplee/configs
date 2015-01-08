@@ -1,0 +1,9 @@
+#!/bin/sh
+
+	synclient TapButton1=1 		&
+	synclient MaxSpeed=2.5 		&
+	synclient VertScrollDelta=15 	&
+	synclient TapButton1=1 		
+	synclient MaxSpeed=2.5 		
+	synclient VertScrollDelta=15 	
+	synclient VertTwoFingerScroll=1
