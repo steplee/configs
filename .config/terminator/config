@@ -18,7 +18,6 @@
     icon_bell = False
     cursor_shape = ibeam
     background_color = "#0e191e"
-  [[New Profile]]
   [[opaquer]]
     scrollbar_position = hidden
     palette = "#1d839d:#c7e411:#3fbcdd:#adf84c:#84a828:#5ed527:#883539:#141e25:#2b3537:#e47a33:#fad313:#55a0bb:#40f50e:#fe7913:#1fc4d7:#a5515e"
@@ -29,6 +28,8 @@
     icon_bell = False
     background_darkness = 0.92
     background_color = "#080f12"
+  [[New Profile]]
+    background_image = None
 [layouts]
   [[default]]
     [[[child1]]]
