@@ -10,14 +10,16 @@
   [[default]]
     scrollbar_position = hidden
     background_image = None
-    background_darkness = 0.8
-    scrollback_lines = 686
+    background_darkness = 0.88
+    scrollback_lines = 1238
     background_type = transparent
     palette = "#1d839d:#4497d4:#76ee14:#cdf92d:#268bd2:#fe9f13:#2aa198:#141e25:#243c41:#fe5d13:#d4fa13:#16b4ee:#76ee14:#16b4ee:#1fc4d7:#96494d"
-    foreground_color = "#9cafb8"
+    foreground_color = "#beced5"
     icon_bell = False
     cursor_shape = ibeam
     background_color = "#0e191e"
+  [[New Profile]]
+    background_image = None
   [[opaquer]]
     scrollbar_position = hidden
     palette = "#1d839d:#c7e411:#3fbcdd:#adf84c:#84a828:#5ed527:#883539:#141e25:#2b3537:#e47a33:#fad313:#55a0bb:#40f50e:#fe7913:#1fc4d7:#a5515e"
@@ -28,8 +30,6 @@
     icon_bell = False
     background_darkness = 0.92
     background_color = "#080f12"
-  [[New Profile]]
-    background_image = None
 [layouts]
   [[default]]
     [[[child1]]]
