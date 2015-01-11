@@ -1,17 +1,11 @@
 [global_config]
-  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, Logger, LaunchpadBugURLHandler
-  title_transmit_bg_color = "#69a1e7"
-  title_inactive_fg_color = "#d0d0d0"
-  title_inactive_bg_color = "#5d989b"
+  title_receive_bg_color = "#014474"
+  title_transmit_bg_color = "#195a6e"
 [keybindings]
-  broadcast_all = <Alt>a
-  broadcast_off = <Alt>s
 [profiles]
   [[default]]
-    scrollbar_position = hidden
+    background_darkness = 0.9
     background_image = None
-    background_darkness = 0.8
-    scrollback_lines = 686
     background_type = transparent
     palette = "#1d839d:#4497d4:#76ee14:#cdf92d:#268bd2:#fe9f13:#2aa198:#141e25:#243c41:#fe5d13:#d4fa13:#16b4ee:#76ee14:#16b4ee:#1fc4d7:#96494d"
     foreground_color = "#9cafb8"
@@ -38,36 +32,4 @@
     [[[window0]]]
       type = Window
       parent = ""
-  [[vimCmake]]
-    [[[child0]]]
-      position = -8:-1
-      type = Window
-      order = 0
-      parent = ""
-      size = 1920, 1019
-    [[[child1]]]
-      position = 960
-      type = HPaned
-      order = 0
-      parent = child0
-    [[[child3]]]
-      position = 689
-      type = VPaned
-      order = 1
-      parent = child1
-    [[[terminal2]]]
-      profile = opaquer
-      type = Terminal
-      order = 0
-      parent = child1
-    [[[terminal5]]]
-      profile = opaquer
-      type = Terminal
-      order = 1
-      parent = child3
-    [[[terminal4]]]
-      profile = opaquer
-      type = Terminal
-      order = 0
-      parent = child3
 [plugins]

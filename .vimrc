@@ -43,6 +43,8 @@ filetype plugin indent on    " required
 
 syntax on
 
+execute pathogen#infect()
+
 filetype indent on
 set autoindent
 set number
