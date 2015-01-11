@@ -1,5 +1,10 @@
 PS1="\[\]\$(exit=\$?; if [[ \$exit == 0 ]]; then echo \"\[\033[01;32m\]✓\"; else echo \"\[\033[01;31m\]✗ \$exit\"; fi) \[\033[01;32m\]\u\[\033[01;34m\] \W \$\[\033[00m\] "
 
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/lib/"
+export PATH="$PATH:/home/cslee/dev/chrome/depot_tools"
+
+alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
+
 # not tracked by git
 source ~/.bash_xtra
 
