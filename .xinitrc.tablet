@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# rename this file .xinitrc if using a tablet
+#   it makes the touchpad more usable
+
+
+#
+# ~/.xinitrc
+#
+# Executed by startx (run your window manager from here)
+#
+
+exec gnome-session-cinnamon
+
+if egrep -iq 'touchpad' /proc/bus/input/devices; then
+	synclient TapButton1=1 		&
+	synclient MaxSpeed=2.5 		&
+	synclient VertScrollDelta=15 	&
+fi
