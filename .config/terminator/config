@@ -9,26 +9,26 @@
 [profiles]
   [[default]]
     scrollbar_position = hidden
-    background_image = None
-    background_darkness = 0.88
+    palette = "#1d839d:#4497d4:#81fb0c:#2df9ef:#ddff00:#fe3a13:#2aa198:#c85367:#243c41:#365173:#61fa13:#16b4ee:#bbee14:#ff6f00:#1fc4d7:#96494d"
+    background_darkness = 0.86
     scrollback_lines = 1238
     background_type = transparent
-    palette = "#1d839d:#4497d4:#76ee14:#cdf92d:#268bd2:#fe9f13:#2aa198:#141e25:#243c41:#fe5d13:#d4fa13:#16b4ee:#76ee14:#16b4ee:#1fc4d7:#96494d"
-    foreground_color = "#beced5"
-    icon_bell = False
-    background_color = "#0e191e"
-  [[New Profile]]
     background_image = None
-  [[opaquer]]
+    foreground_color = "#b6c5d4"
+    show_titlebar = False
+    font = Droid Sans Mono 9
+    background_color = "#020507"
+  [[default2]]
     scrollbar_position = hidden
-    palette = "#1d839d:#c7e411:#3fbcdd:#adf84c:#84a828:#5ed527:#883539:#141e25:#2b3537:#e47a33:#fad313:#55a0bb:#40f50e:#fe7913:#1fc4d7:#a5515e"
+    palette = "#9b260f:#4497d4:#ebfb0c:#ff8f09:#ddff00:#fe3a13:#2aa198:#c85367:#71291a:#365173:#d2fa13:#eeaa16:#bbee14:#ff6f00:#1fc4d7:#96494d"
+    background_darkness = 0.86
+    scrollback_lines = 1238
     background_type = transparent
-    cursor_shape = ibeam
     background_image = None
-    foreground_color = "#a0b3be"
-    icon_bell = False
-    background_darkness = 0.92
-    background_color = "#080f12"
+    foreground_color = "#d400f6"
+    show_titlebar = False
+    font = Droid Sans Mono 9
+    background_color = "#040607"
 [layouts]
   [[default]]
     [[[child1]]]

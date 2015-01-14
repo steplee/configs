@@ -6,6 +6,9 @@ set foldnestmax=5
 set foldlevelstart=99
 set foldcolumn=0
 
+" Stephen Custom
+set formatoptions-=cro
+
 let useHs = 0
 if isdirectory(".haskell-vim-now")
   let useHs = 1

@@ -6,8 +6,9 @@ antigen use oh-my-zsh
 antigen bundle git
 
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen theme XsErG/zsh-themes themes/lazyuser
-antigen theme pure
+#antigen theme XsErG/zsh-themes themes/lazyuser
+#antigen theme pure
+antigen theme gnzh
 
 antigen apply
 
