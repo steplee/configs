@@ -16,7 +16,6 @@
     palette = "#1d839d:#4497d4:#76ee14:#cdf92d:#268bd2:#fe9f13:#2aa198:#141e25:#243c41:#fe5d13:#d4fa13:#16b4ee:#76ee14:#16b4ee:#1fc4d7:#96494d"
     foreground_color = "#beced5"
     icon_bell = False
-    cursor_shape = ibeam
     background_color = "#0e191e"
   [[New Profile]]
     background_image = None
