@@ -24,3 +24,5 @@ alias chrome-dev="google-chrome-stable --disable-web-security --allow-file-acces
 export PATH="$PATH:/home/cslee/dev/chrome/depot_tools"
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
+
+alias tmux="tmux -2"
