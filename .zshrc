@@ -13,6 +13,10 @@ antigen apply
 
 #####
 
+# allows HEAD^ without escaping the caret
+setopt NO_NOMATCH
+# allows git log a..b
+#setopt NO_EXTENDED_GLOB
 
 alias chrome-dev="google-chrome-stable --disable-web-security --allow-file-access-from-files --allow-file-access --allow-cross-origin-auth-prompt"
 
