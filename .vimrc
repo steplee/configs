@@ -8,6 +8,9 @@ set foldcolumn=0
 
 " Stephen Custom
 set formatoptions-=cro
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
+"
 
 let useHs = 0
 if isdirectory(".haskell-vim-now")
@@ -65,6 +68,9 @@ Bundle 'gmarik/vundle'
 " Stephen custom
 
 Bundle 'flazz/vim-colorschemes'
+Bundle 'travitch/hasksyn'
+Bundle 'xolox/vim-session'
+Bundle 'xolox/vim-misc'
 
 "
 """"""""""""""""""""""""""""""""""""""
@@ -104,6 +110,7 @@ Bundle 'enomsg/vim-haskellConcealPlus'
 Bundle 'eagletmt/ghcmod-vim'
 Bundle 'eagletmt/neco-ghc'
 Bundle 'Twinside/vim-hoogle'
+
 
 " Custom bundles
 if filereadable(expand("~/.vim.local/bundles.vim"))
@@ -638,5 +645,6 @@ vnoremap <silent> <leader>h> :call Pointful()<CR>
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
 
 " }}}
