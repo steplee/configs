@@ -1,7 +1,8 @@
 configs
 =======
 
-Add this to bashrc
+Before using:
+  install adobe source code pro font, tmux, vim, terminator
 
-PS1="\[\]\$(exit=\$?; if [[ \$exit == 0 ]]; then echo \"\[\033[01;              32m\]~\~S\"; else echo \"\[\033[01;31m\]~\~W \$exit\"; fi) \[\033[01;32m\]\u\[\033[01;34m\] \W \$\[\033[00m\] "
-export LANG="en_US.UTF-8"
+After that:
+  run :PluginInstall in vim
