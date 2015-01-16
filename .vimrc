@@ -71,6 +71,7 @@ Bundle 'flazz/vim-colorschemes'
 Bundle 'travitch/hasksyn'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
+Bundle 'tpope/vim-surround'
 
 "
 """"""""""""""""""""""""""""""""""""""
