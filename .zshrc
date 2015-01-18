@@ -26,6 +26,7 @@ export PATH="$PATH:/home/cslee/dev/chrome/depot_tools"
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
 alias tmux="tmux -2"
+alias gcm="git commit -m"
 
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export EDITOR="vim"
