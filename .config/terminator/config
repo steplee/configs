@@ -5,6 +5,7 @@
   title_inactive_bg_color = "#5d989b"
 [keybindings]
   broadcast_all = <Alt>a
+  move_tab_right = <Primary><Shift>r
   broadcast_off = <Alt>s
 [profiles]
   [[default]]

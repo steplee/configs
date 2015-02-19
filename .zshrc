@@ -7,8 +7,8 @@ antigen bundle git
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 #antigen theme XsErG/zsh-themes themes/lazyuser
-#antigen theme pure
-antigen theme gnzh
+antigen theme pure
+#antigen theme gnzh
 
 antigen apply
 
@@ -30,3 +30,6 @@ alias gcm="git commit -m"
 
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export EDITOR="vim"
+
+# for CMS216
+alias gcc="gcc -ansi -Wall -g -O0 -Wwrite-strings -Wshadow -pedantic-errors -fstack-protector-all"
