@@ -1,6 +1,12 @@
 source ~/.zshrc_local
 source ~/.antigen.zsh
 
+#  tmux
+#  If not running interactively, do not do anything
+alias tmux="tmux -2"
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux -2
+
 antigen use oh-my-zsh
 
 antigen bundle git
@@ -25,7 +31,6 @@ export PATH="$PATH:/home/cslee/dev/chrome/depot_tools"
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
-alias tmux="tmux -2"
 alias gcm="git commit -m"
 
 export PATH="$HOME/.tmuxifier/bin:$PATH"

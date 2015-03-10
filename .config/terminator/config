@@ -21,6 +21,9 @@
     font = Source Code Pro 9
     background_color = "#020507"
     foreground_color = "#b6c5d4"
+  [[New Profile]]
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    background_image = None
   [[default2]]
     scrollbar_position = hidden
     palette = "#9b260f:#4497d4:#ebfb0c:#ff8f09:#ddff00:#fe3a13:#2aa198:#c85367:#71291a:#365173:#d2fa13:#eeaa16:#bbee14:#ff6f00:#1fc4d7:#96494d"
