@@ -11,11 +11,12 @@
     scrollbar_position = hidden
     palette = "#1d839d:#4497d4:#81fb0c:#2df9ef:#ddff00:#fe3a13:#2aa198:#c85367:#243c41:#365173:#61fa13:#16b4ee:#bbee14:#ff6f00:#1fc4d7:#96494d"
     background_image = None
-    background_darkness = 0.86
+    background_darkness = 0.93
     scrollback_lines = 1238
     background_type = transparent
     use_system_font = False
     foreground_color = "#b6c5d4"
+    icon_bell = False
     show_titlebar = False
     font = Source Code Pro 9
     background_color = "#020507"

@@ -7,9 +7,11 @@ set foldlevelstart=99
 set foldcolumn=0
 
 " Stephen Custom
-set formatoptions-=cro
+"set formatoptions-=cro
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
+set formatoptions-=r  " disable annoying auto-commenting
+set formatoptions-=o
 "
 
 let useHs = 0
@@ -54,6 +56,7 @@ inoremap jk <esc>
 " }}}
 
 " Vundle {{{
+"
 
 set nocompatible
 filetype off
@@ -649,3 +652,11 @@ endif
 
 
 " }}}
+"
+
+
+" Stephen Custom
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
+set formatoptions-=cro
+"
