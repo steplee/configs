@@ -5,22 +5,21 @@
   title_inactive_bg_color = "#5d989b"
 [keybindings]
   broadcast_all = <Alt>a
+  move_tab_right = <Primary><Shift>r
   broadcast_off = <Alt>s
 [profiles]
   [[default]]
     scrollbar_position = hidden
     palette = "#1d839d:#4497d4:#81fb0c:#2df9ef:#ddff00:#fe3a13:#2aa198:#c85367:#243c41:#365173:#61fa13:#16b4ee:#bbee14:#ff6f00:#1fc4d7:#96494d"
-    background_image = None
+    background_image = /home/slee/Downloads/amd.png
     background_darkness = 0.93
     scrollback_lines = 1238
     background_type = transparent
     use_system_font = False
-    foreground_color = "#b6c5d4"
-    icon_bell = False
+    scroll_background = False
     show_titlebar = False
     font = Source Code Pro 9
     background_color = "#020507"
-<<<<<<< HEAD
     foreground_color = "#b6c5d4"
   [[New Profile 2]]
     palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
@@ -30,19 +29,16 @@
   [[New Profile]]
     palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
     background_image = None
-=======
->>>>>>> 5704ce2999f4a93eb3159db8bd111af53bc280a3
   [[default2]]
     scrollbar_position = hidden
     palette = "#9b260f:#4497d4:#ebfb0c:#ff8f09:#ddff00:#fe3a13:#2aa198:#c85367:#71291a:#365173:#d2fa13:#eeaa16:#bbee14:#ff6f00:#1fc4d7:#96494d"
     background_darkness = 0.98
     scrollback_lines = 1238
-    background_type = transparent
     background_image = None
-    foreground_color = "#8f00a6"
+    foreground_color = "#e47d2e"
     show_titlebar = False
     font = Droid Sans Mono 9
-    background_color = "#040607"
+    background_color = "#060d0f"
 [layouts]
   [[default]]
     [[[child1]]]

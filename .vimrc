@@ -1,8 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-<<<<<<< HEAD
-=======
 " use indentation for folds
 set foldmethod=indent
 set foldnestmax=5
@@ -64,7 +62,6 @@ inoremap jk <esc>
 set nocompatible
 filetype off
 "set rtp+=~/.vim/bundle/vundle/
->>>>>>> 5704ce2999f4a93eb3159db8bd111af53bc280a3
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -78,7 +75,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 Bundle 'scrooloose/syntastic'
 Bundle 'flazz/vim-colorschemes'
-Bundle 'travitch/hasksyn'
+Plugin 'tpope/vim-eunuch'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
 Bundle 'tpope/vim-surround'
@@ -86,7 +83,7 @@ Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'morhetz/gruvbox'
 
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 
 ""
 """"""""""""""""""""""""""""""""""""""""
@@ -196,19 +193,13 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-<<<<<<< HEAD
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-=======
-" }}}
-"
 
-
-" Stephen Custom
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 set formatoptions-=cro
-"
->>>>>>> 5704ce2999f4a93eb3159db8bd111af53bc280a3
+
+set tabstop=4
