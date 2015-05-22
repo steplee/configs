@@ -1,6 +1,70 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+<<<<<<< HEAD
+=======
+" use indentation for folds
+set foldmethod=indent
+set foldnestmax=5
+set foldlevelstart=99
+set foldcolumn=0
+
+" Stephen Custom
+"set formatoptions-=cro
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
+set formatoptions-=r  " disable annoying auto-commenting
+set formatoptions-=o
+"
+
+let useHs = 0
+if isdirectory(".haskell-vim-now")
+  let useHs = 1
+endif
+
+" Sets how many lines of history VIM has to remember
+set history=700
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+
+" Leader key timeout
+set tm=2000
+
+" Allow the normal use of "," by pressing it twice
+noremap ,, ,
+
+" Use par for prettier line formatting
+set formatprg="PARINIT='rTbgqR B=.,?_A_a Q=_s>|' par\ -w72"
+
+" Use stylish haskell instead of par for haskell buffers
+autocmd FileType haskell let &formatprg="stylish-haskell"
+
+if  useHs 
+  " Find custom built ghc-mod, codex etc
+  let $PATH = $PATH . ':' . expand("~/.haskell-vim-now/bin")
+endif
+
+" Kill the damned Ex mode.
+nnoremap Q <nop>
+
+" Exit Insert mode without getting Carpal Tunnel Syndrome.
+inoremap jk <esc>
+
+" }}}
+
+" Vundle {{{
+"
+
+set nocompatible
+filetype off
+"set rtp+=~/.vim/bundle/vundle/
+>>>>>>> 5704ce2999f4a93eb3159db8bd111af53bc280a3
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -132,7 +196,19 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+<<<<<<< HEAD
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+=======
+" }}}
+"
+
+
+" Stephen Custom
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
+set formatoptions-=cro
+"
+>>>>>>> 5704ce2999f4a93eb3159db8bd111af53bc280a3
