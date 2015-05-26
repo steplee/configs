@@ -69,3 +69,9 @@ ex ()
 
 # prompt
 #PS1='[\u@\h \W]\$ '
+export OSSIEHOME=/var/lib/redhawk/core
+export SDRROOT=/var/lib/redhawk/sdr
+export PYTHONPATH=${OSSIEHOME}/lib/python
+export JAVA_HOME=/usr/lib/jvm/java-<version number>
+export PATH=${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH
+export LD_LIBRARY_PATH=$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH
