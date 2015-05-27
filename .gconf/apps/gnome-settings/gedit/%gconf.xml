@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="history-gedit2_search_for_entry" mtime="1432661200" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>bashr</stringvalue>
+		</li>
+	</entry>
+	<entry name="history-gedit2_replace_with_entry" mtime="1432661200" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>zshr</stringvalue>
+		</li>
+	</entry>
+</gconf>
