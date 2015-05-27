@@ -37,3 +37,7 @@ export PYTHONPATH=${OSSIEHOME}/lib/python
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 export PATH=${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH
 export LD_LIBRARY_PATH=$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH
+
+# bash-like ctrl-u
+bindkey \^U backward-kill-line
+alias gst="git status -uno"
