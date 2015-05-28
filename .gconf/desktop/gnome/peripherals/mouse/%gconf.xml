@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="cursor_size" mtime="1432831269" type="int" value="24"/>
+	<entry name="cursor_theme" mtime="1432831269" type="string">
+		<stringvalue>dmz-aa</stringvalue>
+	</entry>
+</gconf>

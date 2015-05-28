@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="icon_theme" mtime="1432831297" type="string">
+		<stringvalue>System</stringvalue>
+	</entry>
+	<entry name="gtk_theme" mtime="1432831471" type="string">
+		<stringvalue>FlatStudioDark</stringvalue>
+	</entry>
+	<entry name="gtk_color_scheme" mtime="1432831287" type="string">
+		<stringvalue>fg_color:#bdbdbdbdbdbd
+bg_color:#38383a3a3b3b
+text_color:#e949e949e949
+base_color:#2c2c2e2e2f2f
+selected_fg_color:#e9e9e9e9e9e9
+selected_bg_color:#4d4d67679a9a
+tooltip_fg_color:#ffffffffffff
+tooltip_bg_color:#161616161616</stringvalue>
+	</entry>
+	<entry name="gtk-im-module" mtime="1432831134" type="string">
+		<stringvalue>gtk-im-context-simple</stringvalue>
+	</entry>
+</gconf>

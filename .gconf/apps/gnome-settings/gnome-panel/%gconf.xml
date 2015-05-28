@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="history-gnome-run" mtime="1432831144" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>terminator</stringvalue>
+		</li>
+	</entry>
+</gconf>
