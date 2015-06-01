@@ -84,6 +84,8 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'morhetz/gruvbox'
 
 "Bundle 'Valloric/YouCompleteMe'
+Bundle 'petRUShka/vim-opencl'
+"Bundle 'jalcine/cmake.vim'
 
 ""
 """"""""""""""""""""""""""""""""""""""""
@@ -197,9 +199,19 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+"let g:syntastic_cpp_compiler = 'g++'
+"let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+let g:syntastic_enable_balloons = 1
+
+"let g:syntastic_quiet_messages = { "regex" : ["\'utility\'"]  }  
 
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 set formatoptions-=cro
 
 set tabstop=4
+
+" tagbar
+noremap <leader>c :TagbarToggle<CR>
+
+set clipboard=unnamedplus

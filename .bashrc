@@ -1,6 +1,5 @@
 PS1="\[\]\$(exit=\$?; if [[ \$exit == 0 ]]; then echo \"\[\033[01;32m\]✓\"; else echo \"\[\033[01;31m\]✗ \$exit\"; fi) \[\033[01;32m\]\u\[\033[01;34m\] \W \$\[\033[00m\] "
 
-export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/lib/"
 export PATH="$PATH:/home/cslee/dev/chrome/depot_tools"
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
@@ -72,6 +71,7 @@ ex ()
 export OSSIEHOME=/var/lib/redhawk/core
 export SDRROOT=/var/lib/redhawk/sdr
 export PYTHONPATH=${OSSIEHOME}/lib/python
-export JAVA_HOME=/usr/lib/jvm/java-<version number>
-export PATH=${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH
-export LD_LIBRARY_PATH=$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH
+export JAVA_HOME=/usr/lib/jvm/java
+export PATH="${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH"
+export AMDAPPSDKROOT="/home/slee/AMDAPPSDK-3.0-0-Beta"
+export LD_LIBRARY_PATH="/var/lib/redhawk/core/lib64:/var/lib/redhawk/core/lib:/usr/local/redhawk/core/lib64:home/slee/amd-ocl/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/amd-ocl/AMDAPPSDK-3.0-0-Beta/lib/x86/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86/"

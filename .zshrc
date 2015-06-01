@@ -36,8 +36,15 @@ export SDRROOT=/var/lib/redhawk/sdr
 export PYTHONPATH=${OSSIEHOME}/lib/python
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 export PATH=${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH
-export LD_LIBRARY_PATH=$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86/"
+export AMDAPPSDKROOT="/home/slee/AMDAPPSDK-3.0-0-Beta"
 
 # bash-like ctrl-u
 bindkey \^U backward-kill-line
 alias gst="git status -uno"
+
+# ctags tag all of /usr/include
+alias ctagsinc="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include"
+
+export AMDOCLLIB="/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/sdk/libOpenCL.so"
+export AMDOCLINCL="/home/slee/AMDAPPSDK-3.0-0-Beta/include"
