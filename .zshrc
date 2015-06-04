@@ -31,8 +31,8 @@ export PATH="$PATH:~/.cabal/bin"
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
 alias tmux="tmux -2"
-export OSSIEHOME=/var/lib/redhawk/core
-export SDRROOT=/var/lib/redhawk/sdr
+export OSSIEHOME=/usr/local/redhawk/core
+export SDRROOT=/var/redhawk/sdr
 export PYTHONPATH=${OSSIEHOME}/lib/python
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 export PATH=${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH
@@ -48,3 +48,5 @@ alias ctagsinc="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include"
 
 export AMDOCLLIB="/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/sdk/libOpenCL.so"
 export AMDOCLINCL="/home/slee/AMDAPPSDK-3.0-0-Beta/include"
+
+#export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"

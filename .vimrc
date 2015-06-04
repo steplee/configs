@@ -202,6 +202,7 @@ let g:syntastic_check_on_wq = 0
 "let g:syntastic_cpp_compiler = 'g++'
 "let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 let g:syntastic_enable_balloons = 1
+let g:syntastic_cpp_check_header = 0
 
 "let g:syntastic_quiet_messages = { "regex" : ["\'utility\'"]  }  
 
@@ -215,3 +216,6 @@ set tabstop=4
 noremap <leader>c :TagbarToggle<CR>
 
 set clipboard=unnamedplus
+
+" disable auto comment next line
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
