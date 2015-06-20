@@ -1,0 +1,7 @@
+[user]
+	email = stephenl7797@gmail.com
+	name = Stephen Lee
+[http]
+	cookiefile = /home/slee/.gitcookies
+[core]
+	editor = /usr/bin/vim
