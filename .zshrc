@@ -25,7 +25,8 @@ setopt NO_NOMATCH
 
 alias chrome-dev="google-chrome-stable --disable-web-security --allow-file-access-from-files --allow-file-access --allow-cross-origin-auth-prompt"
 
-export PATH="$PATH:~/dev/chrome/depot_tools"
+export SCALA_HOME="/usr/share/scala"
+export PATH="$PATH:~/dev/chrome/depot_tools:$SCALA_HOME/"
 export PATH="$PATH:~/.cabal/bin"
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'

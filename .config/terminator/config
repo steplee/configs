@@ -12,9 +12,8 @@
     scrollbar_position = hidden
     palette = "#1d839d:#4497d4:#81fb0c:#2df9ef:#ddff00:#fe3a13:#2aa198:#c85367:#243c41:#365173:#61fa13:#16b4ee:#bbee14:#ff6f00:#1fc4d7:#96494d"
     background_image = /home/slee/Downloads/amd.png
-    background_darkness = 0.93
+    background_darkness = 0.2
     scrollback_lines = 1238
-    background_type = transparent
     use_system_font = False
     scroll_background = False
     show_titlebar = False
@@ -26,6 +25,7 @@
     font = Lohit Telugu 10
     use_system_font = False
     show_titlebar = False
+    background_image = None
   [[New Profile]]
     palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
     background_image = None
