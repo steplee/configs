@@ -73,6 +73,7 @@ Bundle 'travitch/hasksyn'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
 Bundle 'tpope/vim-surround'
+Plugin 'derekwyatt/vim-scala'
 
 "
 """"""""""""""""""""""""""""""""""""""
@@ -650,3 +651,5 @@ endif
 
 
 " }}}
+
+colorscheme jellybeans
