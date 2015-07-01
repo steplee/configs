@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <gconf>
-	<entry name="history-gedit2_search_for_entry" mtime="1433271166" type="list" ltype="string">
+	<entry name="history-gedit2_search_for_entry" mtime="1433943320" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>nvidi</stringvalue>
+		</li>
 		<li type="string">
 			<stringvalue>checkP</stringvalue>
 		</li>

@@ -36,7 +36,7 @@ export SDRROOT=/var/redhawk/sdr
 export PYTHONPATH=${OSSIEHOME}/lib/python
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 export PATH=${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH
-export LD_LIBRARY_PATH="$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86/"
+export LD_LIBRARY_PATH="$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86/:/opt/clAmdFft-1.10.321/lib64"
 export AMDAPPSDKROOT="/home/slee/AMDAPPSDK-3.0-0-Beta"
 
 # bash-like ctrl-u
@@ -46,7 +46,21 @@ alias gst="git status -uno"
 # ctags tag all of /usr/include
 alias ctagsinc="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include"
 
+export SCALA_HOME="$HOME/Downloads/scala-2.11.6"
+export SCALAHOME="$HOME/Downloads/scala-2.11.6"
+export PATH="$PATH:$SCALA_HOME/bin"
 export AMDOCLLIB="/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/sdk/libOpenCL.so"
 export AMDOCLINCL="/home/slee/AMDAPPSDK-3.0-0-Beta/include"
 
 #export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+#export PATH="$PATH:/opt/altera/aocl-sdk/bin"
+#export ALTERAOCLSDKLIB="/opt/altera/aocl-sdk/host/linux64/lib"
+#export ALTERAOCLSDKINC="/opt/altera/aocl-sdk/host/linux64/include"
+
+export ALTERAOCLSDKROOT="/opt/altera/13.1/hld"
+export AOCL_BOARD_PACKAGE_ROOT=$ALTERAOCLSDKROOT/board/pcie385n
+export LM_LICENSE_FILE='/data/aocl_license.dat'
+export PATH="$PATH:/opt/altera/13.1/hld/bin:/opt/altera/13.1/quartus/bin"
+export LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib:$LD_LIBRARY_PATH:/opt/altera/13.1/hld/host/linux64/lib
+
