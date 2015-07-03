@@ -1,0 +1,10 @@
+package kbd.dsp
+
+class SinglePole(a:Float, b:Float) {
+
+  val a0 = a
+  val b1 = b
+  var z1 = 0
+
+  def apply(in:Float) = { z1 = a0*in + b1*z1 }
+}

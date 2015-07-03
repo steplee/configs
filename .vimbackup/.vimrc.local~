@@ -1,0 +1,15 @@
+
+
+" annoying ESC problem fix
+set timeoutlen=0
+
+set list listchars=tab:»·,trail:·
+
+
+au InsertLeave * if &mod && expand('%')!=''|write|endif
+
+iunmap <Esc>
+
+set t_Co=256
+set t_AB=^[[48;5;%dm
+set t_AF=^[[38;5;%dm]]]]

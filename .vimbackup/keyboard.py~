@@ -1,0 +1,95 @@
+import math
+from kivy.app import App
+from kivy.core.window import Window
+from kivy.uix.widget import Widget
+from kivy.graphics import Color, Line
+
+from kivy.uix.label import Label
+
+import path
+from path import *
+
+LetterMap = [
+        ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+        ["a", "s", "d", "f", "g", "h",  "j", "k", "l"],
+        ["z", "x", "c", "v", "b", "n",  "m"]
+        ]
+
+class Letter(Label):
+    def __init__(self, text):
+        Label.__init__(self)
+        self.def_size = (100,100)
+        self.def_cen = self.center
+        self.size = self.def_size
+        self.text = text
+
+    def respond_to_input(self, mev):
+        dist = abs(self.def_cen[0] - mev.x) + \
+                abs(self.def_cen[1] - mev.y)
+        if dist < 50:
+            print (self.text + " " + str(dist))
+
+class Keyboard(Widget):
+    letters = []
+    prev_paths = []
+    cur_path = None
+
+    # long-term speed
+    avg_speed = 0
+    # how far cutoff should be of considered letters
+    def_radius = 50
+    cur_radius = 50
+
+    def on_touch_down(self, touch):
+        if Keyboard.cur_path is not None:
+            Keyboard.prev_paths.append(Keyboard.cur_path)
+        Keyboard.cur_path = Path(touch.x,touch.y)
+
+    def on_touch_up(self, touch):
+        self.line.points.clear()
+
+    def motion(self, dev,etype, mev):
+        if mev.dx is not None and mev.dy is not None:
+            Keyboard.avg_speed = math.sqrt(mev.dx**2 + mev.dy**2)
+        #print(Keyboard.avg_speed)
+        Keyboard.cur_radius = Keyboard.def_radius + Keyboard.avg_speed
+
+        for letter in Keyboard.letters:
+            letter.respond_to_input(mev)
+
+        Keyboard.cur_path.respond(mev)
+
+        with self.canvas:
+            self.line.points += [mev.x,mev.y]
+
+    def __init__(self):
+        Widget.__init__(self)
+
+        Window.bind(on_motion=self.motion)
+
+        with self.canvas:
+            self.line = Line()
+
+        total_width = 490
+        total_height = 190
+        top = 350
+        left = 200
+
+        spacing = 1
+        width = total_width / len(LetterMap[0]) - spacing
+        height = (int)(total_height/3.0)
+        offset = width / 3
+
+        ridx = 0
+        for row in LetterMap:
+            y = top - (ridx * height + height/2)
+            cidx = 0
+            for col in row:
+                x = left + offset*ridx + (cidx*width+spacing)
+                letter = Letter(col)
+                letter.pos = (x,y)
+                self.add_widget(letter)
+                Keyboard.letters.append(letter)
+                cidx = cidx + 1
+            ridx= ridx+1
+

@@ -1,0 +1,51 @@
+package kbd.util 
+
+import scala.Array
+import java.nio.FloatBuffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
+import scala.reflect.ClassTag
+
+import kbd.graphics.Verts
+
+class RingBuffer[T:ClassTag](len:Int, ini_value:T) {
+
+  private val arr:Array[T] = Array.fill(len) { ini_value }
+
+  val length = len
+
+  var idx:Int = 0;
+
+  def +(i:T) {
+    arr(idx) = i
+
+    idx = idx + 1
+    if (idx >= len) idx = 0
+  }
+
+  def apply (i:Int ) = arr.apply(i)
+
+  def getArr () = arr
+
+}
+/*
+class RingFloatBuffer(len:Int) {
+
+  private val buf = ByteBuffer.allocateDirect(len*Verts.size).order(ByteOrder.nativeOrder()).asFloatBuffer();
+
+  var idx:Int = 0;
+
+  def +(i:Int) {
+    buf position idx
+    buf put i
+
+    idx = idx + 1
+    if (idx >= len) idx = 0
+  }
+
+  def apply (i:Int ) = buf.get(i % len)
+
+
+}
+*/

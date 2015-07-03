@@ -1,0 +1,10 @@
+
+
+def avg2(xs, samples, end_idx):
+    _sum = [0,0]
+    for x,y in xs[end_idx-samples:end_idx]:
+        _sum[0] += xs[0]
+        _sum[1] += xs[1]
+    _sum[0] /= (float)(samples)
+    _sum[1] /= (float)(samples)
+    return _sum

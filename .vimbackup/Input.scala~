@@ -1,0 +1,13 @@
+package kbd
+
+import org.lwjgl.glfw.GLFWCursorPosCallback
+
+object Input {
+
+  lazy val CursorPosCallback = new GLFWCursorPosCallback {
+    override def invoke(window: Long, x: Double, y: Double): Unit = {
+
+    }
+  }
+
+}

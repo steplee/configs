@@ -1,0 +1,36 @@
+
+import ring
+import kbd_signal as signal
+
+class Feature():
+    def __init__(self):
+        self.pos = (0,0)
+        self.speed = 0
+        self.primaries = []
+
+
+class Notch(Feature):
+    def __init__(self):
+        Feature.__init__(self)
+
+class Swoop(Feature):
+    def __init__(self):
+        Feature.__init__(self)
+
+class Path():
+    def __init__(self, x,y):
+        self.features = []
+        self.prev_vels = ring.Ring(40)
+        self.avg_speed = 0
+
+    def respond(self, mev):
+        self.prev_vels.append((mev.x,mev.y))
+        self.avg_speed = 0
+        accel = self.get_accel(mev)
+        print("accel  " + str(accel))
+
+    def get_accel(self, mev):
+        print (self.prev_vels)
+        _avg = signal.avg2(self.prev_vels, 10, len(self.prev_vels)-1)
+        accel = (mev.dx - _avg[0] , mev.dy - _avg[1])
+        return accel

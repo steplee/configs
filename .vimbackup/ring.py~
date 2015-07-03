@@ -1,0 +1,15 @@
+import collections as c
+
+class Ring(c.deque):
+    def __init__(self, size):
+        self.size = size
+        c.deque.__init__(self,[],maxlen=size)
+
+    def __getitem__(self, idx):
+        if isinstance ( idx , slice ) :
+            ind = idx.indices(self.size+10)
+            print ("ring " + str(ind[0]%self.size) + " " + str(ind[1]%self.size))
+            for x in range(ind[0]%self.size , ind[1]%self.size):
+                yield x
+        else:
+            return c.deque.__getitem__(self, idx%self.size)

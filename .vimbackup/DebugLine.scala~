@@ -1,0 +1,31 @@
+package kbd.graphics
+
+import scala.collection.mutable.ArrayBuffer
+import kbd.util.RingBuffer
+import kbd.graphics.{Vert, Verts}
+
+class DebugLine(len:Int) extends Renderable
+{
+
+  val v_buf = new RingBuffer[Vert](len, new Vert(Array(0,0,0,0) , Array(0,0,0,0)))
+
+  def init(width:Float, xy:Tuple2[Float,Float] ) = {
+    setup()
+  }
+
+  def alterVert() = {
+
+  }
+
+  def addVert(v:Vert): Unit = {
+    v_buf + v
+
+    //verts = v_buf.getArr()
+
+    println(verts.toString())
+
+    this.updateVertexBufferData(Verts.toFloatBuffer(v_buf))
+
+  }
+
+}

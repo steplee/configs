@@ -1,0 +1,1 @@
+/home/slee/.haskell-vim-now/.vim

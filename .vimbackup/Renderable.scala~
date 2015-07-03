@@ -1,0 +1,155 @@
+package kbd.graphics
+
+import java.nio.{FloatBuffer, IntBuffer}
+import com.hackoeur.jglm.Vec3
+import kbd.graphics.Shader
+import org.lwjgl._
+import org.lwjgl.opengl._
+import org.lwjgl.glfw._
+import org.lwjgl.glfw.GLFW
+import math._
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.IndexedSeq
+import kbd.Main;
+import com.hackoeur.jglm
+
+import kbd.util.RingBuffer
+
+case class Vert (pos:Array[Float], col:Array[Float]) {
+
+}
+
+object Matrix {
+  val arr       = Array(  1:Float,0,0,0,
+                          0,1,0,0,
+                          0,0,1,0,
+                          0,0,0,1)
+  val id = BufferUtils.createFloatBuffer(16)
+  id.put(arr)
+
+  id.position(0)
+
+//  private val _proj = Array.fill(16) {0f}
+//  val aspect:Float = Main.WIDTH.asInstanceOf[Float] / Main.HEIGHT
+//
+//  val fov = 60f / 2.0f
+//  _proj(5) = math.cos(math.toRadians(fov)).asInstanceOf[Float] / math.sin(math.toRadians(fov)).asInstanceOf[Float]
+//  _proj(0) = _proj(5) / aspect
+//  _proj(10) = ((100f+.1f)/100f-.1f)
+//  _proj(14) = -1f;
+//  _proj(11) = -((2f*.1f*100f)/100f-.1f)
+//  _proj(15) = 0
+//
+//  val proj = BufferUtils.createFloatBuffer(16)
+//  proj.put(_proj
+
+
+  //val vp = jglm.Matrices.lookAt(new jglm.Vec3(0,0,-1), new Vec3(0,0,0), new Vec3(0,1,0)).multiply(jglm.Matrices.ortho2d(-1f,1f,-1f,1f))
+  val vp = jglm.Matrices.ortho(0f,1f, 0f,1f, -.01f, 10f).multiply(  jglm.Matrices.lookAt(new jglm.Vec3(0,0,5), new Vec3(0,0,0), new Vec3(0,1,0))  )
+//  val vp = jglm.Matrices.ortho(-100,100,-100,100,.01f,100f)
+
+
+  var proj = BufferUtils.createFloatBuffer(16)
+  proj.put(vp.getBuffer.array())
+  proj.position(0)
+
+}
+
+object Verts {
+
+    val size = 4*2*4
+
+  def toFloatBuffer(verts:ArrayBuffer[Vert]):FloatBuffer = {
+    var fb:FloatBuffer = BufferUtils.createFloatBuffer(verts.size * 2 * 4)
+    verts.foreach( v => fb.put(v.pos).put(v.col) )
+    fb.position(0)
+    fb
+  }
+
+  def toFloatBuffer(rb:RingBuffer[Vert]):FloatBuffer = {
+    var fb:FloatBuffer = BufferUtils.createFloatBuffer(rb.length * 2 * 4)
+    var ii = 0;
+    while ( ii < rb.length ) {
+        fb.put(rb(ii).pos)
+        fb.put(rb(ii).col)
+        ii = ii + 1
+    }
+    fb.position(0)
+    fb
+  }
+
+}
+
+class Renderable {
+  var vbo:Int = _;
+  var vao:Int = _;
+
+  //var shader:Int = Shaders.basicShader
+  var shader:Int = _;
+  println("Using shader " + shader)
+
+
+  //lazy var verts = ArrayBuffer[Vert]();
+  var verts:ArrayBuffer[Vert] = new ArrayBuffer[Vert];
+
+
+  def setup(): Unit = {
+    shader = Shader.createProgram("src/main/resources/basic.vert", "src/main/resources/basic.frag")
+    shader = Shader.createProgram("src/main/resources/basic.vert", "src/main/resources/basic.frag")
+
+    vao = GL30.glGenVertexArrays();
+    GL30.glBindVertexArray(vao);
+
+    val _vbo = BufferUtils.createIntBuffer(1);
+    GL15.glGenBuffers(_vbo);
+    vbo = _vbo.get();
+
+
+    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
+    GL30.glBindVertexArray(0);
+  }
+
+  def updateVertexBufferData() { //Not restricted to FloatBuffer
+    GL30.glBindVertexArray(vao);
+    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo); //Bind buffer (also specifies type of buffer)
+
+    GL15.glBufferData(GL15.GL_ARRAY_BUFFER, Verts.toFloatBuffer(verts), GL15.GL_STATIC_DRAW); //Send up the data and specify usage hint.
+    GL20.glVertexAttribPointer(0, 4, GL11.GL_FLOAT, false, 4*4*2, 0)
+    GL20.glVertexAttribPointer(1, 4, GL11.GL_FLOAT, false, 4*4*2, 4)
+
+    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
+    GL30.glBindVertexArray(0);
+  }
+  def updateVertexBufferData(fb:FloatBuffer) { //Not restricted to FloatBuffer
+    GL30.glBindVertexArray(vao);
+    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo); //Bind buffer (also specifies type of buffer)
+
+    GL15.glBufferData(GL15.GL_ARRAY_BUFFER, fb, GL15.GL_STATIC_DRAW); //Send up the data and specify usage hint.
+    GL20.glVertexAttribPointer(0, 4, GL11.GL_FLOAT, false, 4*4*2, 0)
+    GL20.glVertexAttribPointer(1, 4, GL11.GL_FLOAT, false, 4*4*2, 4)
+
+    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
+    GL30.glBindVertexArray(0);
+  }
+
+  def beginRender(mode:Int): Unit = {
+
+    GL20.glUseProgram(shader)
+
+    GL30.glBindVertexArray(vao);
+    GL20.glEnableVertexAttribArray(0);
+    GL20.glEnableVertexAttribArray(1);
+
+    GL20.glUniformMatrix4fv(0, false, Matrix.proj)
+
+    //If you are not using IBOs:
+    GL11.glDrawArrays(mode, 0, verts.size);
+
+    GL20.glDisableVertexAttribArray(0)
+    GL20.glDisableVertexAttribArray(1)
+    GL30.glBindVertexArray(0);
+    GL20.glUseProgram(0);
+  }
+
+
+}

@@ -1,0 +1,21 @@
+package kbd.graphics
+
+
+
+import scala.collection.mutable.ArrayBuffer
+
+class Line extends Renderable
+{
+
+
+
+  def addVert(v:Vert): Unit = {
+    verts += v;
+
+    println(verts.toString())
+
+    this.updateVertexBufferData()
+
+  }
+
+}
