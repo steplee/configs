@@ -1,11 +1,29 @@
 <?xml version="1.0"?>
 <gconf>
-	<entry name="history-gnome-run" mtime="1435584374" type="list" ltype="string">
+	<entry name="history-gnome-run" mtime="1437488124" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>nautilus</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>thunar</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>CodeXL</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>sudo CodeXL</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>gnome-terminal</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>chsh bash</stringvalue>
+		</li>
 		<li type="string">
 			<stringvalue>terminator</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>nautilus</stringvalue>
+			<stringvalue>gedit</stringvalue>
 		</li>
 		<li type="string">
 			<stringvalue>rhide</stringvalue>

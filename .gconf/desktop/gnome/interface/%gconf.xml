@@ -16,7 +16,7 @@ selected_bg_color:#4d4d67679a9a
 tooltip_fg_color:#ffffffffffff
 tooltip_bg_color:#161616161616</stringvalue>
 	</entry>
-	<entry name="gtk-im-module" mtime="1435748172" type="string">
+	<entry name="gtk-im-module" mtime="1437564426" type="string">
 		<stringvalue>gtk-im-context-simple</stringvalue>
 	</entry>
 </gconf>

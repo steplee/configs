@@ -1,6 +1,21 @@
 <?xml version="1.0"?>
 <gconf>
-	<entry name="history-gedit2_search_for_entry" mtime="1433943320" type="list" ltype="string">
+	<entry name="history-gedit2_search_for_entry" mtime="1436881397" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>datatransfer</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>dataTransfer</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>getPacket</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>pushPAcket</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>pushPAckert</stringvalue>
+		</li>
 		<li type="string">
 			<stringvalue>nvidi</stringvalue>
 		</li>

@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
 <gconf>
-	<entry name="scrollbar_position" mtime="1435748178" type="string">
+	<entry name="scrollbar_position" mtime="1437488051" type="string">
 		<stringvalue>hidden</stringvalue>
 	</entry>
-	<entry name="use_theme_colors" mtime="1435748178" type="bool" value="false"/>
-	<entry name="background_type" mtime="1435748178" type="string">
+	<entry name="use_theme_colors" mtime="1437488051" type="bool" value="false"/>
+	<entry name="background_type" mtime="1437488051" type="string">
 		<stringvalue>transparent</stringvalue>
 	</entry>
-	<entry name="visible_name" mtime="1435748178" type="string">
+	<entry name="visible_name" mtime="1437488051" type="string">
 		<stringvalue>Default</stringvalue>
 	</entry>
-	<entry name="foreground_color" mtime="1435748178" type="string">
+	<entry name="foreground_color" mtime="1437488051" type="string">
 		<stringvalue>#B822D898F69C</stringvalue>
 	</entry>
-	<entry name="background_color" mtime="1435748178" type="string">
+	<entry name="background_color" mtime="1437488051" type="string">
 		<stringvalue>#000000000000</stringvalue>
 	</entry>
-	<entry name="silent_bell" mtime="1435748178" type="bool" value="true"/>
-	<entry name="default_show_menubar" mtime="1435748178" type="bool" value="false"/>
-	<entry name="bold_color" mtime="1435748178" type="string">
+	<entry name="silent_bell" mtime="1437488051" type="bool" value="true"/>
+	<entry name="default_show_menubar" mtime="1437488051" type="bool" value="false"/>
+	<entry name="bold_color" mtime="1437488051" type="string">
 		<stringvalue>#000000000000</stringvalue>
 	</entry>
-	<entry name="palette" mtime="1435748178" type="string">
+	<entry name="palette" mtime="1437488051" type="string">
 		<stringvalue>#85C2331F2CD8:#F40C1AD81AD8:#F0EB9AA3252E:#7E05F40C1867:#B66FF257395A:#04C7CE6EEEEE:#060698209A9A:#8EEEF2573959:#F5F5668D0000:#D11044B53015:#E6EDD5C94457:#555557575353:#52829C59FC95:#2C3CCCE0F5C1:#3434E2E2E2E2:#7373D2D21616</stringvalue>
 	</entry>
-	<entry name="background_darkness" mtime="1435748178" type="float" value="0.75263196229934692"/>
+	<entry name="background_darkness" mtime="1437488051" type="float" value="0.75263196229934692"/>
 	<entry name="alternate_screen_scroll" mtime="1432754010" type="bool" value="true"/>
 </gconf>

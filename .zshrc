@@ -1,9 +1,7 @@
 source ~/.zshrc_local
 source ~/.antigen.zsh
 
-# If not running interactively, do not do anything
-[[ $- != *i* ]] && return
-[[ -z "$TMUX" ]] && exec tmux -2
+
 
 antigen use oh-my-zsh
 
@@ -15,6 +13,17 @@ antigen theme pure
 #antigen theme gnzh
 
 antigen apply
+
+#####
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+bindkey '^u' backward-kill-line
+bindkey '^r' history-incremental-search-backward
+export KEYTIMEOUT=1
 
 #####
 
@@ -36,7 +45,7 @@ export SDRROOT=/var/redhawk/sdr
 export PYTHONPATH=${OSSIEHOME}/lib/python
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 export PATH=${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH
-export LD_LIBRARY_PATH="$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86/:/opt/clAmdFft-1.10.321/lib64"
+export LD_LIBRARY_PATH="$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86/:/opt/clAmdFft-1.10.321/lib64:"
 export AMDAPPSDKROOT="/home/slee/AMDAPPSDK-3.0-0-Beta"
 
 # bash-like ctrl-u
@@ -59,8 +68,19 @@ export AMDOCLINCL="/home/slee/AMDAPPSDK-3.0-0-Beta/include"
 #export ALTERAOCLSDKINC="/opt/altera/aocl-sdk/host/linux64/include"
 
 export ALTERAOCLSDKROOT="/opt/altera/13.1/hld"
+#export ALTERAOCLSDKROOT="/opt/altera/aocl-sdk"
 export AOCL_BOARD_PACKAGE_ROOT=$ALTERAOCLSDKROOT/board/pcie385n
-export LM_LICENSE_FILE='/data/aocl_license.dat'
+export LM_LICENSE_FILE="/data/aocl_license.dat"
 export PATH="$PATH:/opt/altera/13.1/hld/bin:/opt/altera/13.1/quartus/bin"
+#export QUARTUS_ROOTDIR="/opt/altera/13.1/quartus"
 export LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib:$LD_LIBRARY_PATH:/opt/altera/13.1/hld/host/linux64/lib
+#export LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib:$LD_LIBRARY_PATH:/opt/altera/aocl-sdk/host/linux64/lib
 
+export BIO_DIR="$HOME/workspace-so/bio"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/slee/workspace-so/mixin/build
+export PATH="$PATH:$HOME/perf/FlameGraph"
+
+## USE TMUX
+# If not running interactively, do not do anything
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux -2
