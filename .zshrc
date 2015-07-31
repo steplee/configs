@@ -28,7 +28,11 @@ alias chrome-dev="google-chrome-stable --disable-web-security --allow-file-acces
 export SCALA_HOME="/usr/share/scala"
 export PATH="$PATH:~/dev/chrome/depot_tools:$SCALA_HOME/"
 export PATH="$PATH:~/.cabal/bin"
+export PATH="$PATH:~/.local/bin"
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
 alias tmux="tmux -2"
+
+source /home/slee/.nix-profile/etc/profile.d/nix.sh
+

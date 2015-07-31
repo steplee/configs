@@ -80,7 +80,7 @@ Plugin 'derekwyatt/vim-scala'
 
 " Support bundles
 Bundle 'jgdavey/tslime.vim'
-Bundle 'Shougo/vimproc.vim'
+"Bundle 'Shougo/vimproc.vim'
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/syntastic'
 Bundle 'moll/vim-bbye'
@@ -110,7 +110,7 @@ Bundle 'christoomey/vim-tmux-navigator'
 " Haskell
 Bundle 'raichoo/haskell-vim'
 Bundle 'enomsg/vim-haskellConcealPlus'
-Bundle 'eagletmt/ghcmod-vim'
+"Bundle 'eagletmt/ghcmod-vim'
 Bundle 'eagletmt/neco-ghc'
 Bundle 'Twinside/vim-hoogle'
 
