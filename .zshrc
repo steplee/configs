@@ -1,6 +1,7 @@
 source ~/.zshrc_local
 source ~/.antigen.zsh
 
+EDITOR=vim
 
 
 antigen use oh-my-zsh
@@ -79,6 +80,11 @@ export LD_LIBRARY_PATH=/usr/lib64:/usr/local/lib:$LD_LIBRARY_PATH:/opt/altera/13
 export BIO_DIR="$HOME/workspace-so/bio"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/slee/workspace-so/mixin/build
 export PATH="$PATH:$HOME/perf/FlameGraph"
+
+
+# Haskell binaries from stack
+stackbin=""$HOME/.stack/snapshots/**/bin/""
+export PATH="${PATH}:`eval "echo ${stackbin}"`"
 
 ## USE TMUX
 # If not running interactively, do not do anything

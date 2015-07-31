@@ -629,20 +629,6 @@ nnoremap <silent> <leader>hz :HoogleClose<CR>
 
 " }}}
 
-" Conversion {{{
-
-function! Pointfree()
-  call setline('.', split(system('pointfree '.shellescape(join(getline(a:firstline, a:lastline), "\n"))), "\n"))
-endfunction
-vnoremap <silent> <leader>h. :call Pointfree()<CR>
-
-function! Pointful()
-  call setline('.', split(system('pointful '.shellescape(join(getline(a:firstline, a:lastline), "\n"))), "\n"))
-endfunction
-vnoremap <silent> <leader>h> :call Pointful()<CR>
-
-" }}}
-
 " Customization {{{
 
 if filereadable(expand("~/.vimrc.local"))
