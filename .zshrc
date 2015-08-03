@@ -33,6 +33,9 @@ setopt NO_NOMATCH
 # allows git log a..b
 #setopt NO_EXTENDED_GLOB
 
+# allow ctrl-s
+setopt flowcontrol
+
 alias chrome-dev="google-chrome-stable --disable-web-security --allow-file-access-from-files --allow-file-access --allow-cross-origin-auth-prompt"
 
 export PATH="$PATH:~/dev/chrome/depot_tools"

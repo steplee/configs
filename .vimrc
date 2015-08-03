@@ -68,6 +68,8 @@ Bundle 'gmarik/vundle'
 """"""""""""""""""""""""""""""""""""""
 " Stephen custom
 
+Bundle 'derekwyatt/vim-protodef'
+
 Bundle 'flazz/vim-colorschemes'
 Bundle 'travitch/hasksyn'
 Bundle 'xolox/vim-session'
@@ -638,7 +640,14 @@ endif
 
 " }}}
 
+" Stephen {{{
+
+
 colorscheme jellybeans
 
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+"let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
+
+
+
+" }}}
