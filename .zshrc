@@ -43,7 +43,7 @@ export PATH="$PATH:~/.cabal/bin"
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
-alias tmux="tmux -2"
+alias tmux="TERM=xterm-256color tmux -2"
 export OSSIEHOME=/usr/local/redhawk/core
 export SDRROOT=/var/redhawk/sdr
 export PYTHONPATH=${OSSIEHOME}/lib/python
