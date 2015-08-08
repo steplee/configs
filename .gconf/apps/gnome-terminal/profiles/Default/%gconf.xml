@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="use_theme_colors" mtime="1432728356" type="bool" value="false"/>
+	<entry name="background_type" mtime="1432728356" type="string">
+		<stringvalue>transparent</stringvalue>
+	</entry>
+	<entry name="visible_name" mtime="1432728356" type="string">
+		<stringvalue>Default</stringvalue>
+	</entry>
+	<entry name="foreground_color" mtime="1432728609" type="string">
+		<stringvalue>#B822D898F69C</stringvalue>
+	</entry>
+	<entry name="background_color" mtime="1432728356" type="string">
+		<stringvalue>#000000000000</stringvalue>
+	</entry>
+	<entry name="silent_bell" mtime="1432728356" type="bool" value="true"/>
+	<entry name="default_show_menubar" mtime="1432728356" type="bool" value="false"/>
+	<entry name="bold_color" mtime="1432728356" type="string">
+		<stringvalue>#000000000000</stringvalue>
+	</entry>
+	<entry name="palette" mtime="1432728948" type="string">
+		<stringvalue>#FCFCAFAF3E3E:#F40C1AD81AD8:#F850AA7F408F:#7E05F40C1867:#B66FF257395A:#04C7CE6EEEEE:#060698209A9A:#8EEEF2573959:#F5F579790000:#D11044B53015:#EDEDD4D40000:#555557575353:#52829C59FC95:#2C3CCCE0F5C1:#3434E2E2E2E2:#7373D2D21616</stringvalue>
+	</entry>
+	<entry name="background_darkness" mtime="1432728356" type="float" value="0.85263198614120483"/>
+	<entry name="alternate_screen_scroll" mtime="1432728356" type="bool" value="true"/>
+</gconf>

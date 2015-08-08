@@ -82,7 +82,7 @@ Plugin 'derekwyatt/vim-scala'
 
 " Support bundles
 Bundle 'jgdavey/tslime.vim'
-Bundle 'Shougo/vimproc.vim'
+"Bundle 'Shougo/vimproc.vim'
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/syntastic'
 Bundle 'moll/vim-bbye'
@@ -112,7 +112,7 @@ Bundle 'christoomey/vim-tmux-navigator'
 " Haskell
 Bundle 'raichoo/haskell-vim'
 Bundle 'enomsg/vim-haskellConcealPlus'
-Bundle 'eagletmt/ghcmod-vim'
+"Bundle 'eagletmt/ghcmod-vim'
 Bundle 'eagletmt/neco-ghc'
 Bundle 'Twinside/vim-hoogle'
 
@@ -641,13 +641,13 @@ endif
 " }}}
 
 " Stephen {{{
-
-
 colorscheme jellybeans
 
+colorscheme jellybeans
+" Stephen Custom
 "let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 
 
-" }}}
+"

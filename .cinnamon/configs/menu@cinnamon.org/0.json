@@ -14,20 +14,12 @@
     },
     "menu-icon": {
         "type": "iconfilechooser",
-<<<<<<< HEAD
-        "default": "/usr/share/cinnamon/theme/menu.svg",
-=======
         "default": "/usr/share/cinnamon/theme/menu-symbolic.svg",
->>>>>>> d7175ce31638578e4843fd7e752d0d2960e68923
         "description": "Icon",
         "tooltip": "Select an icon to show in the panel.",
         "dependency": "menu-icon-custom",
         "indent": "true",
-<<<<<<< HEAD
-        "value": "/usr/share/cinnamon/theme/menu.svg"
-=======
-        "value": "/usr/share/cinnamon/theme/menu.png"
->>>>>>> d7175ce31638578e4843fd7e752d0d2960e68923
+        "value": "/usr/share/cinnamon/theme/menu-symbolic.svg"
     },
     "menu-label": {
         "type": "entry",
@@ -55,11 +47,7 @@
         "default": false,
         "description": "Enable filesystem path entry in search box",
         "tooltip": "Allows path entry in the menu search box.",
-<<<<<<< HEAD
-        "value": true
-=======
         "value": false
->>>>>>> d7175ce31638578e4843fd7e752d0d2960e68923
     },
     "activate-on-hover": {
         "type": "checkbox",
@@ -85,9 +73,5 @@
         "callback": "_launch_editor",
         "tooltip": "Press this button to customize your menu entries."
     },
-<<<<<<< HEAD
-    "__md5__": "26921345f7470f51b53972f933e61158"
-=======
     "__md5__": "4a4171eb83415707a3bf1e180f68debb"
->>>>>>> d7175ce31638578e4843fd7e752d0d2960e68923
 }

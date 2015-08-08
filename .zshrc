@@ -38,8 +38,10 @@ setopt flowcontrol
 
 alias chrome-dev="google-chrome-stable --disable-web-security --allow-file-access-from-files --allow-file-access --allow-cross-origin-auth-prompt"
 
-export PATH="$PATH:~/dev/chrome/depot_tools"
+export SCALA_HOME="/usr/share/scala"
+export PATH="$PATH:~/dev/chrome/depot_tools:$SCALA_HOME/"
 export PATH="$PATH:~/.cabal/bin"
+export PATH="$PATH:~/.local/bin"
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
@@ -55,7 +57,7 @@ export AMDAPPSDKROOT="/home/slee/AMDAPPSDK-3.0-0-Beta"
 # bash-like ctrl-u
 bindkey \^U backward-kill-line
 alias gst="git status -uno"
-
+source /home/slee/.nix-profile/etc/profile.d/nix.sh
 # ctags tag all of /usr/include
 alias ctagsinc="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include"
 

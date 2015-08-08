@@ -7,9 +7,15 @@
             "nemo.desktop"
         ],
         "value": [
+<<<<<<< HEAD
             "gnome-terminal.desktop",
             "google-chrome.desktop",
             "nemo.desktop"
+=======
+            "nemo.desktop",
+            "google-chrome.desktop",
+            "terminator.desktop"
+>>>>>>> d7175ce31638578e4843fd7e752d0d2960e68923
         ]
     },
     "allow-dragging": {
