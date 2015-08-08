@@ -7,11 +7,9 @@ set foldlevelstart=99
 set foldcolumn=0
 
 " Stephen Custom
-"set formatoptions-=cro
+set formatoptions-=cro
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
-set formatoptions-=r  " disable annoying auto-commenting
-set formatoptions-=o
 "
 
 let useHs = 0
@@ -56,7 +54,6 @@ inoremap jk <esc>
 " }}}
 
 " Vundle {{{
-"
 
 set nocompatible
 filetype off
@@ -71,11 +68,14 @@ Bundle 'gmarik/vundle'
 """"""""""""""""""""""""""""""""""""""
 " Stephen custom
 
+Bundle 'derekwyatt/vim-protodef'
+
 Bundle 'flazz/vim-colorschemes'
 Bundle 'travitch/hasksyn'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
 Bundle 'tpope/vim-surround'
+Plugin 'derekwyatt/vim-scala'
 
 "
 """"""""""""""""""""""""""""""""""""""
@@ -127,7 +127,7 @@ endif
 " VIM user interface {{{
 
 " Set 7 lines to the cursor - when moving vertically using j/k
-set so=17
+set so=7
 
 " Turn on the WiLd menu
 set wildmenu
@@ -631,20 +631,6 @@ nnoremap <silent> <leader>hz :HoogleClose<CR>
 
 " }}}
 
-" Conversion {{{
-
-function! Pointfree()
-  call setline('.', split(system('pointfree '.shellescape(join(getline(a:firstline, a:lastline), "\n"))), "\n"))
-endfunction
-vnoremap <silent> <leader>h. :call Pointfree()<CR>
-
-function! Pointful()
-  call setline('.', split(system('pointful '.shellescape(join(getline(a:firstline, a:lastline), "\n"))), "\n"))
-endfunction
-vnoremap <silent> <leader>h> :call Pointful()<CR>
-
-" }}}
-
 " Customization {{{
 
 if filereadable(expand("~/.vimrc.local"))
@@ -653,11 +639,15 @@ endif
 
 
 " }}}
-"
+
+" Stephen {{{
 
 
-" Stephen Custom
-let g:session_autosave = 'no'
-let g:session_autoload = 'no'
-set formatoptions-=cro
-"
+colorscheme jellybeans
+
+"let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
+
+
+
+" }}}
