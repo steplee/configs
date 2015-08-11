@@ -85,9 +85,10 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/slee/workspace-so/mixin/build
 export PATH="$PATH:$HOME/perf/FlameGraph"
 
 
-# Haskell binaries from stack
+# Haskell binaries from stack & cabal
 stackbin=""$HOME/.stack/snapshots/**/bin/""
 export PATH="${PATH}:`eval "echo ${stackbin}"`"
+export PATH="${PATH}:${HOME}/.cabal/bin/"
 
 ## USE TMUX
 # If not running interactively, do not do anything

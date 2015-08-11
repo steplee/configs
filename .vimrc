@@ -71,6 +71,7 @@ Bundle 'gmarik/vundle'
 Bundle 'derekwyatt/vim-protodef'
 
 Bundle 'flazz/vim-colorschemes'
+Plugin 'rust-lang/rust.vim'
 Bundle 'travitch/hasksyn'
 Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
