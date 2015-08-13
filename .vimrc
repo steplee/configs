@@ -73,6 +73,7 @@ Bundle 'derekwyatt/vim-protodef'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'travitch/hasksyn'
 Bundle 'xolox/vim-session'
+Plugin 'rust-lang/rust.vim'
 Bundle 'xolox/vim-misc'
 Bundle 'tpope/vim-surround'
 Plugin 'derekwyatt/vim-scala'
@@ -648,6 +649,8 @@ colorscheme jellybeans
 "let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
+" haskell special characters settings
+let hscoptions="lhC"
 
 
 " }}}
