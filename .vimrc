@@ -117,6 +117,8 @@ Bundle 'eagletmt/ghcmod-vim'
 Bundle 'eagletmt/neco-ghc'
 Bundle 'Twinside/vim-hoogle'
 
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
 
 " Custom bundles
 if filereadable(expand("~/.vim.local/bundles.vim"))
