@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <gconf>
-	<entry name="use_theme_colors" mtime="1432728356" type="bool" value="false"/>
-	<entry name="background_type" mtime="1432728356" type="string">
+	<entry name="default_show_menubar" mtime="1452553542" type="bool" value="false"/>
+	<entry name="bold_color_same_as_fg" mtime="1452553392" type="bool" value="false"/>
+	<entry name="use_theme_colors" mtime="1452553392" type="bool" value="false"/>
+	<entry name="background_type" mtime="1452553392" type="string">
 		<stringvalue>transparent</stringvalue>
 	</entry>
-	<entry name="visible_name" mtime="1432728356" type="string">
-		<stringvalue>Default</stringvalue>
+	<entry name="visible_name" mtime="1452553423" type="string">
+		<stringvalue>new</stringvalue>
 	</entry>
-	<entry name="foreground_color" mtime="1432728609" type="string">
-		<stringvalue>#B822D898F69C</stringvalue>
+	<entry name="foreground_color" mtime="1452553392" type="string">
+		<stringvalue>#C4BBD93EE221</stringvalue>
 	</entry>
-	<entry name="background_color" mtime="1432728356" type="string">
-		<stringvalue>#000000000000</stringvalue>
+	<entry name="background_color" mtime="1452553411" type="string">
+		<stringvalue>#06DC088F0A3D</stringvalue>
 	</entry>
-	<entry name="silent_bell" mtime="1432728356" type="bool" value="true"/>
-	<entry name="default_show_menubar" mtime="1432728356" type="bool" value="false"/>
-	<entry name="bold_color" mtime="1432728356" type="string">
-		<stringvalue>#000000000000</stringvalue>
+	<entry name="silent_bell" mtime="1452553392" type="bool" value="true"/>
+	<entry name="bold_color" mtime="1452553392" type="string">
+		<stringvalue>#9393A1A1A1A1</stringvalue>
 	</entry>
-	<entry name="palette" mtime="1432728948" type="string">
-		<stringvalue>#FCFCAFAF3E3E:#F40C1AD81AD8:#F850AA7F408F:#7E05F40C1867:#B66FF257395A:#04C7CE6EEEEE:#060698209A9A:#8EEEF2573959:#F5F579790000:#D11044B53015:#EDEDD4D40000:#555557575353:#52829C59FC95:#2C3CCCE0F5C1:#3434E2E2E2E2:#7373D2D21616</stringvalue>
+	<entry name="palette" mtime="1452553392" type="string">
+		<stringvalue>#7345E73F0565:#CBCB4B4B1616:#8030F0A215A8:#2E2E34343636:#9D48AAECDA73:#6C6C7171C4C4:#FCFCAFAF3E3E:#FDFDF6F6E3E3:#8145F2571294:#DCDC32322F2F:#EF5FFA054101:#F5F579790000:#1F238231E3D6:#EB842B2D8848:#1539E197F4E7:#EEEEE8E8D5D5</stringvalue>
 	</entry>
-	<entry name="background_darkness" mtime="1432728356" type="float" value="0.85263198614120483"/>
-	<entry name="alternate_screen_scroll" mtime="1432728356" type="bool" value="true"/>
+	<entry name="background_darkness" mtime="1452553402" type="float" value="0.97198277711868286"/>
 </gconf>
