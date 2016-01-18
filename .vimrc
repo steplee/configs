@@ -76,6 +76,7 @@ Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
 Bundle 'tpope/vim-surround'
 Plugin 'derekwyatt/vim-scala'
+"Plugin 'chrisbra/unicode.vim'
 
 "
 """"""""""""""""""""""""""""""""""""""
