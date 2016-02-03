@@ -1,4 +1,4 @@
-source ~/.zshrc_local
+source ~/.zshrc_local 2>&1 /dev/null
 source ~/.antigen.zsh
 
 EDITOR=vim
@@ -48,7 +48,7 @@ bindkey \^U backward-kill-line
 ##### Haskell 
 ## binaries from stack & cabal
 stackbin=""$HOME/.stack/snapshots/**/bin/""
-export PATH="${PATH}:`eval "echo ${stackbin}"`"
+#export PATH="${PATH}:`eval "echo ${stackbin}"`"
 export PATH="${PATH}:${HOME}/.cabal/bin:/usr/local/share/npm/bin"
 
 
