@@ -1,4 +1,4 @@
-source ~/.zshrc_local 2>&1 /dev/null
+source ~/.zshrc.local 2>&1 /dev/null
 source ~/.antigen.zsh
 
 EDITOR=vim
@@ -7,6 +7,11 @@ antigen bundle git
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme pure
 antigen apply
+
+#####
+
+HISTSIZE=100000
+SAVEHIST=100000
 
 ##### 
 
@@ -29,10 +34,16 @@ export KEYTIMEOUT=1
 # allow ctrl-s
 setopt flowcontrol
 
+# JAVA
+
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+
 ##### Path setting
 
 export PATH="$PATH:~/dev/chrome/depot_tools"
 export PATH="$PATH:~/.cabal/bin"
+export PATH="$PATH:/opt/idea/bin"
+export PATH="$PATH:/opt/activator/"
 
 ##### Aliases
 
