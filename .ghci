@@ -1,0 +1,8 @@
+:set prompt " \ESC[32mλ\ESC[39m : "
+
+
+import qualified Control.Monad as M
+import qualified Data.Bytestring as B
+import qualified Data.Char as Ch
+import qualified Data.Text as T
+import qualified Data.Map as Map
