@@ -44,12 +44,18 @@ export PATH="$PATH:~/dev/chrome/depot_tools"
 export PATH="$PATH:~/.cabal/bin"
 export PATH="$PATH:/opt/idea/bin"
 export PATH="$PATH:/opt/activator/"
+export PATH="/home/lslee/anaconda2/bin:$PATH"
+export CONDA="/home/lslee/anaconda2"
+
+export PYTHONPATH="$PYTHONPATH:$CONDA/pkgs"
 
 ##### Aliases
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 alias gst="git status -uno"
 alias tmux="TERM=xterm-256color tmux -2"
+alias ipy="$CONDA/bin/ipython"
+alias condapy="$CONDA/bin/python"
 
 
 # bash-like ctrl-u
@@ -61,6 +67,7 @@ bindkey \^U backward-kill-line
 stackbin=""$HOME/.stack/snapshots/**/bin/""
 #export PATH="${PATH}:`eval "echo ${stackbin}"`"
 export PATH="${PATH}:${HOME}/.cabal/bin:/usr/local/share/npm/bin"
+export PATH="${PATH}:${HOME}/.local/bin" # -- stack's bin
 
 
 ##### Tmux initialization
