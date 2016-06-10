@@ -46,7 +46,7 @@ alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --dat
 alias tmux="TERM=xterm-256color tmux -2"
 export OSSIEHOME=/usr/local/redhawk/core
 export SDRROOT=/var/redhawk/sdr
-export PYTHONPATH=${OSSIEHOME}/lib/python
+export PYTHONPATH=${OSSIEHOME}/lib/python:/usr/local/lib64/python2.6/site-packages
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 export PATH=${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH
 export LD_LIBRARY_PATH="$OSSIEHOME/lib64:$OSSIEHOME/lib:$LD_LIBRARY_PATH:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86/:/opt/clAmdFft-1.10.321/lib64:"
@@ -94,3 +94,25 @@ export PATH="${PATH}:${HOME}/.cabal/bin/"
 # If not running interactively, do not do anything
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux -2
+
+# OpenLTE 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/slee/OpenLTE/openlte/build/liblte:/home/slee/OpenLTE/openlte/build/libtools
+
+# OSSIE
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/redhawk/core/lib
+
+# COLOR MAKE
+make()
+{
+  pathpat="[^\n]"
+  ccred=$(echo -e "\033[0;31m")
+  ccyellow=$(echo -e "\033[0;33m")
+  ccend=$(echo -e "\033[0m")
+  /usr/bin/make "$@" 2>&1 | sed -E -e "/[Ee]rror[: ]/ s%$pathpat%$ccred&$ccend%g" -e "/[Ww]arning[: ]/ s%$pathpat%$ccyellow&$ccend%g"
+  return ${PIPESTATUS[0]}
+}
+
+# zsh <Escape .> for last argument of last line, then <Escape m> for previous
+autoload -Uz copy-earlier-word
+zle -N copy-earlier-word
+bindkey "^[m" copy-earlier-word
