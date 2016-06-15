@@ -104,11 +104,22 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/redhawk/core/lib
 # COLOR MAKE
 make()
 {
-  pathpat="[^\n]"
+  pathpat=".*[^\n\r]"
   ccred=$(echo -e "\033[0;31m")
   ccyellow=$(echo -e "\033[0;33m")
   ccend=$(echo -e "\033[0m")
   /usr/bin/make "$@" 2>&1 | sed -E -e "/[Ee]rror[: ]/ s%$pathpat%$ccred&$ccend%g" -e "/[Ww]arning[: ]/ s%$pathpat%$ccyellow&$ccend%g"
+  return ${PIPESTATUS[0]}
+}
+
+# generic highlight script -- pipe to this to highlight it's first argument
+hl() {
+  if [[ -n $2 ]]; then col=$2; else col="1;31"; fi;
+  pathpat=".*[^\n\r]"
+  ccred=$(echo -e "\033[${col}m")
+  ccyellow=$(echo -e "\033[0;33m")
+  ccend=$(echo -e "\033[0m")
+  sed -E -e "/$1/ s%$pathpat%$ccred&$ccend%g"
   return ${PIPESTATUS[0]}
 }
 
