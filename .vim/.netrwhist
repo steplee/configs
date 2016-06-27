@@ -1,3 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/home/slee/cpp/Mach7/code/test/unit'
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/slee/sharedio/sharedio/src'
+let g:netrw_dirhist_2='/home/slee/sharedio/.metadata/.plugins'
+let g:netrw_dirhist_3='/home/slee/sharedio/framework-bulkioInterfaces/libsrc/cpp'
+let g:netrw_dirhist_4='/home/slee/phase1/sharedio/include'
+let g:netrw_dirhist_5='/home/slee/phase1/workspace/shared_src/cpp'

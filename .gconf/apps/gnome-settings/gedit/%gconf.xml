@@ -1,32 +1,32 @@
 <?xml version="1.0"?>
 <gconf>
-	<entry name="history-gedit2_search_for_entry" mtime="1436881397" type="list" ltype="string">
+	<entry name="history-gedit2_search_for_entry" mtime="1466541899" type="list" ltype="string">
 		<li type="string">
-			<stringvalue>datatransfer</stringvalue>
+			<stringvalue>copywindow</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>dataTransfer</stringvalue>
+			<stringvalue>ailed to sat</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>getPacket</stringvalue>
+			<stringvalue>path</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>pushPAcket</stringvalue>
+			<stringvalue>do_executei</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>pushPAckert</stringvalue>
+			<stringvalue>inthread</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>nvidi</stringvalue>
+			<stringvalue>bulk</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>checkP</stringvalue>
+			<stringvalue>execute</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>check</stringvalue>
+			<stringvalue>exec</stringvalue>
 		</li>
 		<li type="string">
-			<stringvalue>bashr</stringvalue>
+			<stringvalue>child</stringvalue>
 		</li>
 	</entry>
 	<entry name="history-gedit2_replace_with_entry" mtime="1432661200" type="list" ltype="string">

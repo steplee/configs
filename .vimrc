@@ -69,6 +69,9 @@ Bundle 'gmarik/vundle'
 " Stephen custom
 
 Bundle 'derekwyatt/vim-protodef'
+Plugin 'danro/rename.vim'
+"Plugin 'tpope/vim-obsession.vim' " resurrect plugin
+"Plugin 'airblade/vim-gitgutter.git' " dif
 
 Bundle 'flazz/vim-colorschemes'
 Plugin 'rust-lang/rust.vim'

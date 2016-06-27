@@ -113,6 +113,8 @@ make()
 }
 
 # generic highlight script -- pipe to this to highlight it's first argument
+#    arg 1 -- string to match against
+#    arg 2 -- color to use, ex. 1;33
 hl() {
   if [[ -n $2 ]]; then col=$2; else col="1;31"; fi;
   pathpat=".*[^\n\r]"
