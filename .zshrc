@@ -53,7 +53,7 @@ export PYTHONPATH="$PYTHONPATH:$CONDA/pkgs"
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 alias gst="git status -uno"
-alias tmux="TERM=xterm-256color tmux -2"
+alias tmux="tmux -2"
 alias ipy="$CONDA/bin/ipython"
 alias condapy="$CONDA/bin/python"
 
