@@ -84,6 +84,9 @@ export BIO_DIR="$HOME/workspace-so/bio"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/slee/workspace-so/mixin/build
 export PATH="$PATH:$HOME/perf/FlameGraph"
 
+# added by Anaconda3 4.1.1 installer
+export PATH="/home/slee/anaconda3/bin:$PATH"
+
 
 # Haskell binaries from stack & cabal
 stackbin=""$HOME/.stack/snapshots/**/bin/""
@@ -129,3 +132,4 @@ hl() {
 autoload -Uz copy-earlier-word
 zle -N copy-earlier-word
 bindkey "^[m" copy-earlier-word
+

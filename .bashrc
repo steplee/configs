@@ -75,3 +75,6 @@ export JAVA_HOME=/usr/lib/jvm/java
 export PATH="${OSSIEHOME}/bin:${JAVA_HOME}/bin:$PATH"
 export AMDAPPSDKROOT="/home/slee/AMDAPPSDK-3.0-0-Beta"
 export LD_LIBRARY_PATH="/var/lib/redhawk/core/lib64:/var/lib/redhawk/core/lib:/usr/local/redhawk/core/lib64:home/slee/amd-ocl/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/amd-ocl/AMDAPPSDK-3.0-0-Beta/lib/x86/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86_64/:/home/slee/AMDAPPSDK-3.0-0-Beta/lib/x86/"
+
+# added by Anaconda3 4.1.1 installer
+export PATH="/home/slee/anaconda3/bin:$PATH"
