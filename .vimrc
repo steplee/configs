@@ -1,3 +1,7 @@
+" Most of this is ripped from a repo turning vim into a Haskell IDE, which I found years ago.
+" As I don't use Haskell anymore, I removed all that configuration, as well as adding
+" a plethora of more plugins.
+
 " General {{{
 
 " use indentation for folds
@@ -12,10 +16,6 @@ let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 "
 
-let useHs = 0
-if isdirectory(".haskell-vim-now")
-  let useHs = 1
-endif
 
 " Sets how many lines of history VIM has to remember
 set history=700
@@ -40,10 +40,6 @@ set formatprg="PARINIT='rTbgqR B=.,?_A_a Q=_s>|' par\ -w72"
 " Use stylish haskell instead of par for haskell buffers
 autocmd FileType haskell let &formatprg="stylish-haskell"
 
-if  useHs 
-  " Find custom built ghc-mod, codex etc
-  let $PATH = $PATH . ':' . expand("~/.haskell-vim-now/bin")
-endif
 
 " Kill the damned Ex mode.
 nnoremap Q <nop>
@@ -110,11 +106,11 @@ Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'christoomey/vim-tmux-navigator'
 
 " Haskell
-Bundle 'raichoo/haskell-vim'
-Bundle 'enomsg/vim-haskellConcealPlus'
+"Bundle 'raichoo/haskell-vim'
+"Bundle 'enomsg/vim-haskellConcealPlus'
 "Bundle 'eagletmt/ghcmod-vim'
-Bundle 'eagletmt/neco-ghc'
-Bundle 'Twinside/vim-hoogle'
+"Bundle 'eagletmt/neco-ghc'
+"Bundle 'Twinside/vim-hoogle'
 
 
 " Custom bundles
@@ -328,14 +324,6 @@ noremap <c-k> <c-w>k
 noremap <c-j> <c-w>j
 noremap <c-l> <c-w>l
 
-" Disable highlight when <leader><cr> is pressed
-" but preserve cursor coloring
-nmap <silent> <leader><cr> :noh\|hi Cursor guibg=red<cr>
-augroup haskell
-  autocmd!
-  autocmd FileType haskell map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>:SyntasticReset<cr>
-  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-augroup END
 
 " Return to last edit position when opening files (You want this!)
 augroup last_edit
@@ -482,9 +470,6 @@ map <Leader>a<bar> :Align <bar><CR>
 " Prompt for align character
 map <leader>ap :Align
 
-" Enable some tabular presets for Haskell
-let g:haskell_tabular = 1
-
 " }}}
 
 " Tags {{{
@@ -528,25 +513,6 @@ map <leader>tg :!codex update<CR>:call system("git hscope")<CR><CR>:call LoadHsc
 
 map <leader>tt :TagbarToggle<CR>
 
-if ( useHs)
-  set csprg=~/.haskell-vim-now/bin/hscope
-  set csto=1 " search codex tags first
-  set cst
-  set csverb
-  nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
-  " Automatically make cscope connections
-  function! LoadHscope()
-    let db = findfile("hscope.out", ".;")
-    if (!empty(db))
-      let path = strpart(db, 0, match(db, "/hscope.out$"))
-      set nocscopeverbose " suppress 'duplicate connection' error
-      exe "cs add " . db . " " . path
-      set cscopeverbose
-    endif
-  endfunction
-  au BufEnter /*.hs call LoadHscope()
-endif
-" }}}
 
 " Git {{{
 
@@ -600,36 +566,6 @@ else " no gui
     inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
   endif
 endif
-
-" Show types in completion suggestions
-let g:necoghc_enable_detailed_browse = 1
-
-" Type of expression under cursor
-nmap <silent> <leader>ht :GhcModType<CR>
-" Insert type of expression under cursor
-nmap <silent> <leader>hT :GhcModTypeInsert<CR>
-" GHC errors and warnings
-nmap <silent> <leader>hc :SyntasticCheck ghc_mod<CR>
-" Haskell Lint
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['haskell'] }
-nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
-
-" Hoogle the word under the cursor
-nnoremap <silent> <leader>hh :Hoogle<CR>
-
-" Hoogle and prompt for input
-nnoremap <leader>hH :Hoogle 
-
-" Hoogle for detailed documentation (e.g. "Functor")
-nnoremap <silent> <leader>hi :HoogleInfo<CR>
-
-" Hoogle for detailed documentation and prompt for input
-nnoremap <leader>hI :HoogleInfo 
-
-" Hoogle, close the Hoogle window
-nnoremap <silent> <leader>hz :HoogleClose<CR>
-
-" }}}
 
 " Customization {{{
 
