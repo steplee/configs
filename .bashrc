@@ -69,3 +69,20 @@ ex ()
 
 # prompt
 #PS1='[\u@\h \W]\$ '
+# Yavide alias
+alias yavide="gvim --servername yavide -f -N -u /opt/yavide/yavide/.vimrc"
+# Yavide alias
+alias yavide="gvim --servername yavide -f -N -u /opt/yavide/.vimrc"
+# Yavide alias
+alias yavide="gvim --servername yavide -f -N -u /opt/yavide/.vimrc -u /opt/yavide/.vimrc"
+
+#export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH
+#export PATH=/usr/local/cuda-9.0/bin:$PATH
+
+# added by Anaconda3 installer
+export PATH="/home/slee/anaconda3/envs/terra/bin:/home/slee/anaconda3/bin:$PATH"
+export LD_LIBRARY_PATH="/home/slee/anaconda3/envs/terra/lib/:$LD_LIBRARY_PATH" # Highest priority
+#export LD_LIBRARY_PATH="/home/slee/anaconda3/envs/terra/lib/" # Highest priority
+#export PYTHONPATH="/home/slee/anaconda3/envs/terra/lib/python3.6"
+export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH
+export PATH=/usr/local/cuda-9.0/bin:$PATH

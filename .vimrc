@@ -64,6 +64,8 @@ Bundle 'gmarik/vundle'
 """"""""""""""""""""""""""""""""""""""
 " Stephen custom
 
+Plugin 'tidalcycles/vim-tidal'
+
 Bundle 'derekwyatt/vim-protodef'
 
 Bundle 'flazz/vim-colorschemes'
@@ -72,6 +74,8 @@ Bundle 'xolox/vim-session'
 Bundle 'xolox/vim-misc'
 Bundle 'tpope/vim-surround'
 Plugin 'derekwyatt/vim-scala'
+
+Plugin 'rhysd/vim-clang-format'
 
 "
 """"""""""""""""""""""""""""""""""""""
@@ -92,7 +96,9 @@ Bundle 'int3/vim-extradite'
 " Bars, panels, and files
 Bundle 'scrooloose/nerdtree'
 Bundle 'bling/vim-airline'
-Bundle 'kien/ctrlp.vim'
+"Bundle 'kien/ctrlp.vim'
+Bundle 'junegunn/fzf'
+Bundle 'junegunn/fzf.vim'
 Bundle 'majutsushi/tagbar'
 
 " Text manipulation
@@ -111,6 +117,26 @@ Bundle 'christoomey/vim-tmux-navigator'
 "Bundle 'eagletmt/ghcmod-vim'
 "Bundle 'eagletmt/neco-ghc'
 "Bundle 'Twinside/vim-hoogle'
+
+" ClangFormat
+let g:clang_format#style_options = {
+            \ "BasedOnStyle:" : " Google",
+            \ "AccessModifierOffset" : -2,
+            \ "BinPackArguments" : "false",
+            \ "BinPackParameters" : "false",
+            \ "ColumnLimit" : 120,
+            \ "IndentWidth" : 4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AllowShortBlocksOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11"}
+
+" map to <Leader>g in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>g :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>g :ClangFormat<CR>
+" if you install vim-operator-user
+"autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+nmap <Leader>C :ClangFormatAutoToggle<CR>
 
 
 " Custom bundles
@@ -586,4 +612,8 @@ nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 
 
-"
+let g:syntastic_python_python_exec = '/usr/bin/python3.5'
+
+" FZF helpers
+nmap <Leader>l :Lines<CR>
+nmap <leader>t :Files<CR>
