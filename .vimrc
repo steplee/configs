@@ -201,12 +201,6 @@ set mat=2
 set noerrorbells
 set vb t_vb=
 
-if &term =~ '256color'
-  " disable Background Color Erase (BCE) so that color schemes
-  " render properly when inside 256-color tmux and GNU screen.
-  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-  set t_ut=
-endif
 
 " Force redraw
 map <silent> <leader>r :redraw!<CR>
@@ -223,11 +217,6 @@ set mouse=a
 
 " Colors and Fonts {{{
 
-Bundle 'vim-scripts/wombat256.vim'
-try
-  colorscheme wombat256mod
-catch
-endtry
 
 " Enable syntax highlighting
 syntax enable
@@ -400,17 +389,6 @@ set laststatus=2
 
 " Editing mappings {{{
 
-" Delete trailing white space on save
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-
-augroup whitespace
-  autocmd!
-  autocmd BufWrite *.hs :call DeleteTrailingWS()
-augroup END
 
 " }}}
 
@@ -577,42 +555,17 @@ nnoremap <silent> <leader>g? :call CommittedFiles()<CR>:copen<CR>
 
 " }}}
 
-" Haskell Interrogation {{{
-
-set completeopt+=longest
-
-" Use buffer words as default tab completion
-let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
-
-" But provide (neco-ghc) omnicompletion
-if has("gui_running")
-  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-else " no gui
-  if has("unix")
-    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-  endif
-endif
-
-" Customization {{{
-
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
-
-
-" }}}
 
 " Stephen {{{
-colorscheme jellybeans
-
-colorscheme jellybeans
+"colorscheme jelleybeans
+colorscheme slee
 " Stephen Custom
 "let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 
 
-let g:syntastic_python_python_exec = '/usr/bin/python3.5'
+let g:syntastic_python_python_exec = '/usr/bin/python3'
 
 " FZF helpers
 nmap <Leader>l :Lines<CR>
