@@ -1,5 +1,10 @@
 # Readme (July 2020)
 
+### End Result
+![desktop](sample.jpg)
+
+### Install
+
 1. Install OS and git, vim, tmux, ipython, zsh, antigen, oh-my-zsh.
 2. Clone this dir and copy all the dot files to the home directory.
 3. Setup configurations:
