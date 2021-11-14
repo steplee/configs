@@ -570,3 +570,6 @@ let g:syntastic_python_python_exec = '/usr/bin/python3'
 " FZF helpers
 nmap <Leader>l :Lines<CR>
 nmap <leader>t :Files<CR>
+
+" Run clang-format on the current file. Note: MUST be saved to disk.
+map <leader>k :execute ":silent !clang-format %:p -i"<CR>:redraw!<CR>
