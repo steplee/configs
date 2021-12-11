@@ -40,7 +40,7 @@ let g:nvim_tree_show_icons = {
 " default will show icon by default if no icon is provided
 " default shows no icon by default
 let g:nvim_tree_icons = {
-    \ 'default': '',
+    \ 'default': '▫',
     \ 'symlink': '>',
     \ 'git': {
     \   'unstaged': "✗",
@@ -52,10 +52,10 @@ let g:nvim_tree_icons = {
     \   'ignored': "◌"
     \   },
     \ 'folder': {
-    \   'arrow_open': "",
-    \   'arrow_closed': "",
-    \   'default': "",
-    \   'open': "",
+    \   'arrow_open': "◇",
+    \   'arrow_closed': "▫",
+    \   'default': "",
+    \   'open': "◇",
     \   'empty': "",
     \   'empty_open': "",
     \   'symlink': ">",
