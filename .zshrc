@@ -1,7 +1,11 @@
 source ~/.antigen.zsh
 
-EDITOR=vim
+EDITOR=nvim
 
+
+HISTSIZE=99999
+HISTFILESIZE=999999
+SAVEHIST=$HISTSIZE
 
 antigen use oh-my-zsh
 
@@ -44,7 +48,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 alias gitLogCommits='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 
-alias tmux="TERM=xterm-256color tmux -2"
+alias tmux="TERM=st-256color tmux -2"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/"
 
 # bash-like ctrl-u
@@ -57,7 +61,7 @@ alias ctagsinc="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include"
 ## USE TMUX
 # If not running interactively, do not do anything
 [[ $- != *i* ]] && return
-[[ -z "$TMUX" ]] && exec tmux -2
+[[ -z "$TMUX" ]] && exec tmux
 export PATH=$HOME/local/bin:$PATH
 
 #export PATH="/home/slee/anaconda3/bin:$PATH"
@@ -77,3 +81,20 @@ export PATH="$PATH:$GOROOT/bin:/usr/lib/go-1.10/bin"
 #fi
 function find_last () { find "${1:-.}" -type f -printf '%TY-%Tm-%Td %TH:%TM %P\n' 2>/dev/null | sort | tail -n "${2:-10}" }
 
+function rsync2() {
+  rsync -Pru $1 ${1##*/};
+  rsync -Pru ${1##*/} $2;
+  rm ${1##*/};
+}
+
+if [ -f "${HOME}/.zshrc.local" ]; then
+	source ${HOME}/.zshrc.local
+fi
+
+swapFile() {
+	mv $1 $1.tmp
+	mv $2 $1
+	mv $1.tmp $2
+}
+
+export GCM_CREDENTIAL_STORE=plaintext
