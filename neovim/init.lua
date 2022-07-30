@@ -14,7 +14,8 @@
 vim.g.mapleader = ';'
 vim.g.maplocalleader = '|'
 
---require('plugins/impatient_nvim')
+-- Only saves 3-4ms on my desktop...
+require('impatient')
 
 local execute = vim.api.nvim_command
 local fn = vim.fn
@@ -137,12 +138,12 @@ function setup_colors()
 
 	local cmd = vim.cmd
 	--vim.api.nvim_exec("source fnamemodify($MYVIMRC,':h')/localPlugins/uwu.vim", false)
-	cmd("source localPlugins/uwu.vim");
+	-- cmd("source localPlugins/uwu.vim");
+	cmd("source ~/.config/nvim/localPlugins/uwu.vim");
 
 	-- want to get rid of this soon, shouldn't load then replace a big lua table
 	cmd('colorscheme rvcs')
-
-	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#606080 | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable")
+	--cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#606080 | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable")
 
 end
 
@@ -310,8 +311,9 @@ function setup_config()
 						]])
 end
 
-return require('packer').startup(function()
+return require('packer').startup{function()
 			use 'wbthomason/packer.nvim'
+			use 'lewis6991/impatient.nvim'
 
 			use {'nvim-telescope/telescope.nvim', requires = {
 				{'nvim-lua/popup.nvim'},
@@ -1186,5 +1188,7 @@ return require('packer').startup(function()
 	setup_maps()
 	setup_config()
 	setup_colors()
-end
-)
+end, config = {
+  -- Move to lua dir so impatient.nvim can cache it
+  compile_path = vim.fn.stdpath('config')..'/plugin/packer_compiled.lua'
+}}
