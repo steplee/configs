@@ -1,5 +1,15 @@
 #!/bin/bash
 
+echo ' - Installing ag and ripgrep'
+sudo apt-get install silversearcher-ag
+isUbuntu16=$( lsb_release -a | grep 'Ubuntu 16' | wc -l )
+isUbuntu18=$( lsb_release -a | grep 'Ubuntu 18' | wc -l )
+if [[ $isUbuntu16 -eq "1" || $isUbuntu18 -eq "1" ]]; then
+	sudo snap install ripgrep
+else
+	sudo apt-get install ripgrep
+fi
+
 echo ''
 echo ' - Installing fonts.'
 mkdir fonts

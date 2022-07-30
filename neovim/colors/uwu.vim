@@ -23,6 +23,9 @@ let s:uwu15_gui = "#cccccc"
 let s:uwubg_gui = "#131A1C"
 let s:uwufg_gui = "#C5C8C9"
 
+let s:uwu_float = "#bf6628"
+let s:uwu_errBg = "#361616"
+
 let s:UwuNR_fg = s:uwu7_gui
 
 hi clear
@@ -53,7 +56,7 @@ endif
 exe "hi CursorLineNR guifg=" .s:UwuNR_fg
 exe "hi CursorLine guibg=" .s:uwu0_gui
 
-exe "hi ErrorMsg guifg=" .s:uwu1_gui." guibg=".s:uwu8_gui
+exe "hi ErrorMsg guifg=" .s:uwu1_gui." guibg=".s:uwu_errBg
 exe "hi WarningMsg guifg=" .s:uwu0_gui
 
 exe "hi PreProc guifg=" .s:uwu4_gui
@@ -71,7 +74,7 @@ exe "hi PreCondit guifg=" .s:uwu5_gui
 exe "hi Debug guifg=" .s:uwu13_gui
 exe "hi SpecialChar guifg=" .s:uwu4_gui
 exe "hi Conditional guifg=" .s:uwu1_gui
-exe "hi Todo guifg=" .s:uwu5_gui
+" exe "hi Todo guifg=" .s:uwu5_gui
 exe "hi Special guifg=" .s:uwu4_gui
 exe "hi Label guifg=" .s:uwu12_gui
 exe "hi Delimiter guifg=" .s:uwu7_gui
@@ -139,7 +142,7 @@ exe "hi TSConstMacro guifg=".s:uwu3_gui
 exe "hi TSConstructor guifg=".s:uwu4_gui
 exe "hi TSException guifg=".s:uwu8_gui
 exe "hi TSField guifg=".s:uwu1_gui
-exe "hi TSFloat guifg=".s:uwu8_gui
+exe "hi TSFloat guifg=".s:uwu_float
 exe "hi TSFunction guifg=".s:uwu1_gui
 exe "hi TSFuncBuiltin guifg=".s:uwu14_gui
 exe "hi TSFuncMacro guifg=".s:uwu2_gui
@@ -179,7 +182,7 @@ exe "hi TSMath guifg=".s:uwu6_gui
 exe "hi TSTextReference guifg=".s:uwu6_gui
 exe "hi TSEnvirontment guifg=".s:uwu5_gui
 exe "hi TSEnvironmentName guifg=".s:uwu3_gui
-exe "hi TSNote guifg=".s:uwu8_gui
+" exe "hi TSNote guifg=".s:uwu8_gui
 exe "hi TSWarning guifg=".s:uwu0_gui." guibg=".s:uwu1_gui
 exe "hi TSDanger guifg=".s:uwu8_gui
 exe "hi TSType guifg=".s:uwu3_gui
@@ -206,7 +209,7 @@ exe "hi cCppString guifg=".s:uwu2_gui
 exe "hi cCurlyError guifg=".s:uwu7_gui." guibg=".s:uwu9_gui
 exe "hi cErrInBracket guifg=".s:uwu7_gui." guibg=".s:uwu9_gui
 exe "hi cErrInParen guifg=".s:uwu7_gui." guibg=".s:uwu9_gui
-exe "hi cFloat guifg=".s:uwu8_gui
+exe "hi cFloat guifg=".s:uwu_float
 exe "hi cFormat guifg=".s:uwu4_gui
 exe "hi cMutli guifg=".s:uwu3_gui
 exe "hi cOperator guifg=".s:uwu4_gui
@@ -272,7 +275,7 @@ exe "hi goTSString guifg=".s:uwu10_gui
 exe "hi goTSType guifg=".s:uwu3_gui
 exe "hi goTSTypeBuiltin guifg=".s:uwu3_gui
 exe "hi goTSVariable guifg=".s:uwu5_gui
-exe "hi goTodo guifg=".s:uwu3_gui
+" exe "hi goTodo guifg=".s:uwu3_gui
 exe "hi goType guifg=".s:uwu3_gui
 
 " NvimTree Highlights

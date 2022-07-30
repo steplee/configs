@@ -144,7 +144,12 @@ function setup_colors()
 
 	-- want to get rid of this soon, shouldn't load then replace a big lua table
 	cmd('colorscheme rvcs')
-	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#606080 | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable")
+	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#69698a | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeSymlink guifg=#7a3a5a | hi NvimTreeOpenedFile guifg=#73a3ff | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable | hi! Statement guifg=#73439a")
+	cmd([[
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun]])
 
 end
 
@@ -315,6 +320,18 @@ end
 return require('packer').startup{function()
 			use 'wbthomason/packer.nvim'
 			use 'lewis6991/impatient.nvim'
+			use { -- Supposed to be faster then the default filtetype.vim
+					'nathom/filetype.nvim',
+							config = function() require('filetype').setup({
+								overrides = {
+									extensions = {
+										ll = "llvm"
+									}
+								}
+							})
+						vim.g.did_load_filetypes = 1
+						end
+			}
 
 			use {'nvim-telescope/telescope.nvim', requires = {
 				{'nvim-lua/popup.nvim'},
@@ -1086,7 +1103,7 @@ return require('packer').startup{function()
 						enable  = {"c", "cpp", "python", "javascript"}, -- enable = true (false will disable the whole extension)
 						custom_captures = {
 						-- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-						["foo.bar"] = "Identifier",
+							["foo.bar"] = "Identifier",
 						},
 						-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
 						-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
@@ -1180,6 +1197,32 @@ return require('packer').startup{function()
 						use_lsp_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
 					}
 			end
+	}
+
+	use { --  Use treesitter to auto close and auto rename html tag, work with html,tsx,vue,svelte,php.
+			"windwp/nvim-ts-autotag",
+			requires = {
+				{'nvim-treesitter/nvim-treesitter'},
+			},
+			config = function()
+				require('nvim-ts-autotag').setup({
+					filetypes = { 'html', 'javascript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue' },
+				})
+			end
+	}
+
+	-- Usage:
+	--       TodoQuickFix
+	--       TodoLocList
+	--       TodoTrouble
+	--       TodoTelescope
+	use {
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("todo-comments").setup {
+			}
+		end
 	}
 
 
