@@ -1,3 +1,16 @@
+--
+-- My (@steplee) vim rc.
+--
+-- Based in large part on [roshnivim, which seems to have been renamed Abstract](https://github.com/Abstract-IDE/Abstract)
+-- I prefer having everything in one file though, so this file is pretty long.
+--
+-- NOTE: If you are trying to edit this in ~/.config/nvim/, you probably don't want to.
+--       Instead, edit it in the repo then run 'installConfig.sh'
+--       If you really do want to edit it, run 'chmod u+w ~/.config/nvim/init.lua'
+--
+
+
+
 vim.g.mapleader = ';'
 vim.g.maplocalleader = '|'
 
@@ -25,8 +38,8 @@ function toggle_lsp()
 	end
 end
 
--- todo FIX THIS
-function lsp_on_attach(client, bufnr)
+-- todo TEST THIS
+function my_lsp_on_attach(client, bufnr)
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -474,6 +487,12 @@ return require('packer').startup(function()
 			end
 		}
 
+		use { -- lua `fork` of vim-web-devicons for neovim
+				'kyazdani42/nvim-web-devicons',
+				config = function()
+					require'nvim-web-devicons'.get_icons()
+				end
+		}
 		use {
 			'akinsho/nvim-bufferline.lua',
 			requires = 'kyazdani42/nvim-web-devicons',
@@ -936,113 +955,13 @@ return require('packer').startup(function()
 		end
 	}
 
-	-- Lsp stuff
-	--[[
-	use { -- A collection of common configurations for Neovim's built-in language server client
-			'neovim/nvim-lspconfig',
-			config = function()
-					vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-					vim.lsp.diagnostic.on_publish_diagnostics, {
-						underline = true,
-						signs = true,
-						update_in_insert = false,
-						virtual_text = {
-							true,
-							spacing = 6,
-							--severity_limit='Error'  -- Only show virtual text on error
-						},
-					}
-					)
-
-					vim.api.nvim_command "sign define DiagnosticSignError text=✗ texthl=DiagnosticSignError linehl= numhl="
-					vim.api.nvim_command "sign define DiagnosticSignWarn  text=⚠ texthl=DiagnosticSignWarn  linehl= numhl="
-					vim.api.nvim_command "sign define DiagnosticSignInfo  text= texthl=DiagnosticSignInfo  linehl= numhl="
-					vim.api.nvim_command "sign define DiagnosticSignHint  text= texthl=DiagnosticSignHint  linehl= numhl="
-					vim.api.nvim_command "hi DiagnosticUnderlineError cterm=underline gui=underline guisp=#840000"
-					vim.api.nvim_command "hi DiagnosticUnderlineHint cterm=underline  gui=underline guisp=#17D6EB"
-					vim.api.nvim_command "hi DiagnosticUnderlineWarn cterm=underline  gui=underline guisp=#2f2905"
-
-			end
-	}
-	use {
-			'williamboman/nvim-lsp-installer',
-			config = function()
-					lsp_installer = require("nvim-lsp-installer")
-					local function make_server_ready(attach)
-						lsp_installer.on_server_ready(function(server)
-							local opts = {}
-							opts.on_attach = attach
-
-							opts.autostart = false
-
-							if server.name == "clangd" then
-								--print(server.name, server._default_options)
-								--table.insert(server._default_options.cmd, "-log=verbose")
-								--print("ClangdOpts",table.concat(server._default_options.cmd,", "))
-							end
-
-							-- for lua
-							if server.name == "sumneko_lua" then
-								-- only apply these settings for the "sumneko_lua" server
-								opts.settings = {
-									Lua = {
-									diagnostics = {
-										-- Get the language server to recognize the 'vim', 'use' global
-										globals = {'vim', 'use', 'require'},
-									},
-									workspace = {
-										-- Make the server aware of Neovim runtime files
-										library = vim.api.nvim_get_runtime_file("", true),
-									},
-									-- Do not send telemetry data containing a randomized but unique identifier
-									telemetry = {
-										enable = false,
-									},
-									},
-								}
-							end
-
-							-- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-							server:setup(opts)
-							vim.cmd "do User LspAttachBuffers"
-						end)
-					end
-
-					local function install_server(server)
-						local lsp_installer_servers = require'nvim-lsp-installer.servers'
-						local ok, server_analyzer = lsp_installer_servers.get_server(server)
-						if ok then
-							if not server_analyzer:is_installed() then
-							server_analyzer:install(server)   -- will install in background
-							-- lsp_installer.install(server)     -- install window will popup
-							end
-						end
-					end
-					--─────────────────────────────────────────────────--
-
-					local servers = {
-					"sumneko_lua",        -- for Lua
-					-- "rust_analyzer",      -- for Rust
-					-- "pyright",            -- for Python
-					-- "clangd",             -- for C/C++
-					-- "bashls",             -- for Bash
-					}
-
-					-- setup the LS
-					make_server_ready(lsp_on_attach)    -- LSP mappings
-
-					-- install the LS
-					for _, server in ipairs(servers) do
-					install_server(server)
-					end
-			end
-	}
-	use { "williamboman/mason.nvim",
-		config = function()
-			require('mason').setup()
-		end
-	}
-	--]]
+	-- The interaction of nvim's LSP client, the lspconfig helper, and the mason helper
+	-- is pretty confusing, and I still don't fully understand it.
+	-- But I have it configured as I want:
+	-- I can use :LspInstall clangd
+	-- Then :LspStart when I want it on
+	-- Also, <space>l will toggle it on/off
+	-- Note: the function @my_lsp_on_attach is executed when attached
 	use {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
@@ -1052,21 +971,211 @@ return require('packer').startup(function()
 	require("mason-lspconfig").setup()
 	require('mason-lspconfig').setup_handlers {
 		function (server_name)
-			require('lspconfig')[server_name].setup{
-				autostart=false
+			require('lspconfig')[server_name].setup {
+				autostart=false,
+				on_attach=my_lsp_on_attach
 			}
 		end
 	}
-	
-	use { -- Utility functions for getting diagnostic status and progress messages from LSP servers, for use in the Neovim statusline
+	use {
 			'nvim-lua/lsp-status.nvim',
-			--config = [[ require('plugins/lspstatus') ]]
 	}
+
+	use {
+		'kyazdani42/nvim-tree.lua',
+		config = function()
+			local gl        = vim.g
+			local keymap    = vim.api.nvim_set_keymap
+			local options   = { noremap=true, silent=true }
+			local tree_cb   = require'nvim-tree.config'.nvim_tree_callback
+			local cmd       = vim.cmd           -- execute Vim commands
+			cmd('autocmd ColorScheme * highlight highlight NvimTreeBg guibg=None')
+			cmd('autocmd FileType NvimTree setlocal winhighlight=Normal:NvimTreeBg')
+			--gl.nvim_tree_quit_on_open          = 1   --0 by default, closes the tree when you open a file
+			--gl.nvim_tree_indent_markers        = 1   --0 by default, this option shows indent markers when folders are open
+			--gl.nvim_tree_highlight_opened_files= 1   --0 by default, will enable folder and file icon highlight for opened files/directories.
+			require'nvim-tree'.setup {
+				renderer = {
+					highlight_opened_files = "name"
+				},
+				actions = {
+					open_file = {
+						quit_on_open = true,
+						resize_window = false,
+					},
+				},
+				respect_buf_cwd = false,
+
+				disable_netrw       = true,
+				hijack_netrw        = true,
+				open_on_setup       = false,
+				ignore_ft_on_setup  = {},
+				--auto_close          = false,
+				open_on_tab         = false,
+				hijack_cursor       = false,
+				update_cwd          = false,
+				-- option was renamed
+				--update_to_buf_dir   = {
+				hijack_directories   = {
+					enable = true,
+					auto_open = true,
+				},
+				diagnostics = {
+					enable = false,
+					icons = {
+						hint = "",
+						info = "",
+						warning = "",
+						error = "",
+					}
+				},
+				git = {
+					enable = false,
+				},
+				update_focused_file = {
+					enable      = true,
+					update_cwd  = true, -- XXX(SLEE) Looks like this is what I want: if file is not an ancestor, then cwd to its parent
+					ignore_list = {}
+				},
+				system_open = {
+					cmd  = nil,
+					args = {}
+				},
+				filters = {
+					dotfiles = false,
+					custom = {}
+				},
+
+				view = {
+					width = 45,
+					height = 30,
+					hide_root_folder = false,
+					side = 'left',
+					--auto_resize = false,
+					mappings = {
+						custom_only = false,
+						list = {
+							{ key = "g?",     cb = tree_cb("toggle_help") },
+							{ key = "-",     cb = ":lua require'nvim-tree'.on_keypress('dir_up')<CR>:lua require'nvim-tree'.on_keypress('refresh')<CR>" },
+						}
+					}
+				}
+			}
+
+			-- Note: global map
+			keymap('n', '<leader>f',   ':NvimTreeFindFileToggle<CR>',      options)
+		end
+	}
+
+	use {
+			'nvim-treesitter/nvim-treesitter',
+			run = ':TSUpdate',
+			config = function()
+				require'nvim-treesitter.configs'.setup {
+					highlight = {
+						enable  = {"c", "cpp", "python", "javascript"}, -- enable = true (false will disable the whole extension)
+						custom_captures = {
+						-- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+						["foo.bar"] = "Identifier",
+						},
+						-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+						-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+						-- Using this option may slow down your editor, and you may see some duplicate highlights.
+						-- Instead of true it can also be a list of languages
+						additional_vim_regex_highlighting = false,
+					},
+				}
+			end
+	}
+
+	use { -- Smart and powerful comment plugin for neovim. Supports commentstring, dot repeat, left-right/up-down motions, hooks, and more
+			'numToStr/Comment.nvim',
+			config = function()
+				require('Comment').setup({
+					padding = true,
+					sticky = true,
+					ignore = nil,
+					pre_hook = nil,
+					post_hook = nil,
+					mappings = {
+						basic = true,       ---Includes `gcc`, `gcb`, `gc[count]{motion}` and `gb[count]{motion}`
+						extra = true,       ---Includes `gco`, `gcO`, `gcA`
+						extended = false,   ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
+					},
+
+					---LHS of toggle mapping in NORMAL
+					---@type table
+					toggler = {
+						line = 'cc',    ---line-comment keymap
+						block = 'gcb',  ---block-comment keymap
+					},
+
+					---LHS of operator-pending mapping in VISUAL mode
+					---@type table
+					opleader = {
+						line = 'gc',    ---line-comment keymap
+						block = 'gb',   ---block-comment keymap
+					},
+				})
+			end
+	}
+
+	use {
+			'folke/trouble.nvim',
+			config = function()
+					require("trouble").setup {
+						position    = "bottom", -- position of the list can be: bottom, top, left, right
+						height      = 7, -- height of the trouble list when position is top or bottom
+						width       = 50, -- width of the list when position is left or right
+						icons       = true, -- use devicons for filenames
+						mode        = "workspace_diagnostics", -- lsp_document_diagnostics", "quickfix", "lsp_references", "loclist"
+						fold_open   = "", -- icon used for open folds
+						fold_closed = "", -- icon used for closed folds
+					--[[
+						action_keys = { -- key mappings for actions in the trouble list
+							-- map to {} to remove a mapping, for example:
+							-- close = {},
+							close           = "q", -- close the list
+							cancel          = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+							refresh         = "r", -- manually refresh
+							jump            = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
+							open_split      = { "<c-x>" }, -- open buffer in new split
+							open_vsplit     = { "<c-v>" }, -- open buffer in new vsplit
+							open_tab        = { "<c-t>" }, -- open buffer in new tab
+							jump_close      = {"o"}, -- jump to the diagnostic and close the list
+							toggle_mode     = "m", -- toggle between "workspace" and "document" diagnostics mode
+							toggle_preview  = "P", -- toggle auto_preview
+							hover           = "K", -- opens a small poup with the full multiline message
+							preview         = "p", -- preview the diagnostic location
+							close_folds     = {"zM", "zm"}, -- close all folds
+							open_folds      = {"zR", "zr"}, -- open all folds
+							toggle_fold     = {"zA", "za"}, -- toggle fold of current file
+							previous        = "k", -- preview item
+							next            = "j" -- next item
+						},
+					]]
+						indent_lines    = true, -- add an indent guide below the fold icons
+						auto_open       = false, -- automatically open the list when you have diagnostics
+						auto_close      = true, -- automatically close the list when you have no diagnostics
+						auto_preview    = false, -- automatyically preview the location of the diagnostic. <esc> to close preview and go back to last window
+						auto_fold       = false, -- automatically fold a file trouble list at creation
+						signs = {
+							-- icons / text used for a diagnostic
+							error       = "",
+							warning     = "",
+							hint        = "",
+							information = "",
+							other       = "﫠"
+						},
+						use_lsp_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
+					}
+			end
+	}
+
 
 	if packer_bootstrap then
 		require('packer').sync()
 	end	
-
 	setup_maps()
 	setup_config()
 	setup_colors()
