@@ -1,6 +1,9 @@
 # Readme (July 2020)
 
-### End Result
+### End Result (nvim)
+*todo*
+![desktop](sampleNeovim.jpg)
+### End Result (vim)
 ![desktop](sample.jpg)
 
 ### Install
