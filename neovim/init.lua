@@ -139,11 +139,12 @@ function setup_colors()
 	local cmd = vim.cmd
 	--vim.api.nvim_exec("source fnamemodify($MYVIMRC,':h')/localPlugins/uwu.vim", false)
 	-- cmd("source localPlugins/uwu.vim");
-	cmd("source ~/.config/nvim/localPlugins/uwu.vim");
+	-- cmd("source ~/.config/nvim/localPlugins/uwu.vim");
+	-- actually, just place in <cfg>/nvim/colors
 
 	-- want to get rid of this soon, shouldn't load then replace a big lua table
 	cmd('colorscheme rvcs')
-	--cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#606080 | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable")
+	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#606080 | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable")
 
 end
 
