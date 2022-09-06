@@ -143,7 +143,7 @@ function setup_colors()
 	-- actually, just place in <cfg>/nvim/colors
 
 	-- want to get rid of this soon, shouldn't load then replace a big lua table
-	cmd('colorscheme rvcs')
+	-- cmd('colorscheme rvcs')
 	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#69698a | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeSymlink guifg=#7a3a5a | hi NvimTreeOpenedFile guifg=#73a3ff | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable | hi! Statement guifg=#73439a")
 	cmd([[
 function! SynGroup()
@@ -411,7 +411,9 @@ return require('packer').startup{function()
 				--       --> show all availabe MAPPING
 				keymap('n', "<leader>M", "<cmd>lua require('telescope.builtin').keymaps() <CR>", {silent=true, noremap=true})
 				--       --> show buffers/opened files
-				keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() <CR>", {silent=true, noremap=true})
+				--keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() <CR>", {silent=true, noremap=true})
+				-- keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() sort_lastused=1 only_cwd=1<CR>", {silent=true, noremap=true})
+				keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers({sort_lastused=1, only_cwd=1})<CR>", {silent=true, noremap=true})
 				--       --> Find Files
 				-- NOTE1: to get project root's directory, extra plugin (github.com/ygm2/rooter.nvim) is used.
 				-- any config related to project root is in seperate config file (lua/plugin_confs/rooter_nvim.lua)
@@ -520,9 +522,11 @@ return require('packer').startup{function()
 					require'nvim-web-devicons'.get_icons()
 				end
 		}
+		--[[
 		use {
 			'akinsho/nvim-bufferline.lua',
 			requires = 'kyazdani42/nvim-web-devicons',
+			enabled=false,
 			config = function()
 				require('bufferline').setup {
 					options = {
@@ -626,6 +630,7 @@ return require('packer').startup{function()
 				keymap('n', '<Leader>9', ':BufferLineGoToBuffer 9<CR>', options)
 			end
 		}
+		--]]
 
 		-- The Status Line / Status Bar
 		use {
