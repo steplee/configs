@@ -143,8 +143,8 @@ function setup_colors()
 	-- actually, just place in <cfg>/nvim/colors
 
 	-- want to get rid of this soon, shouldn't load then replace a big lua table
-	cmd('colorscheme rvcs')
-	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#69698a | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeSymlink guifg=#7a3a5a | hi NvimTreeOpenedFile guifg=#73a3ff | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable | hi! Statement guifg=#73439a")
+	-- cmd('colorscheme rvcs')
+	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#69698a | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeFolderIcon guifg=#7a7aaa | hi NvimTreeSymlink guifg=#9a4a7a | hi NvimTreeOpenedFile guifg=#73a3ff | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable | hi! Statement guifg=#73439a")
 	cmd([[
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
@@ -526,7 +526,7 @@ return require('packer').startup{function()
 			config = function()
 				require('bufferline').setup {
 					options = {
-						numbers                 = "ordinal", -- "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string
+						numbers                 = "buffer_id", -- "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string
 						always_show_bufferline = false, -- don't show bufferline if there is only one file is opened
 						--- @deprecated, please specify numbers as a function to customize the styling
 						-- number_style            = "ssubscript",  -- options -> "superscript" | "" | { "none", "subscript" }, buffer_id at index 1, ordinal at index 2
@@ -537,7 +537,9 @@ return require('packer').startup{function()
 						-- NOTE: this plugin is designed with this icon in mind,
 						-- and so changing this is NOT recommended, this is intended
 						-- as an escape hatch for people who cannot bear it for whatever reason
-						indicator_icon = '▎',
+						indicator = {
+							style = "icon",
+							icon = '▎' },
 						--indicator_icon      = '',
 						buffer_close_icon   = '',
 						modified_icon       = '●',
@@ -558,14 +560,15 @@ return require('packer').startup{function()
 
 						max_name_length = 18,
 						max_prefix_length = 15, -- prefix used when a buffer is de-duplicate
-						tab_size = 18,
+						tab_size = 6,
 
 						show_close_icon = false,
 						show_buffer_icons = true,   -- disable filetype icons for buffers
 						show_buffer_close_icons = false,
 						show_tab_indicators = false,
 
-						view = "multiwindow",
+						-- mode = "tabs",
+						mode = "buffers",
 						-- can also be a table containing 2 custom separators
 						-- [focused and unfocused]. eg: { '|', '|' }
 						separator_style = {"", ""}, -- options "slant" | "thick" | "thin" | { 'any', 'any' },
@@ -574,21 +577,29 @@ return require('packer').startup{function()
 
 					highlights = {
 						fill = {
-							guibg = "#21252d",
+							--bg = "#111520",
 						},
 						background  = {
-							guifg = '#FFFFFF',
-							guibg = "#21252d",
+							fg = '#babada',
+							--bg = "#212540",
+						},
+						tab_selected  = {
+							fg = '#FFFFFF',
+							bg = "#41496d",
+						},
+						buffer_selected  = {
+							fg = '#FFFFFF',
+							bg = "#121232",
 						},
 						separator_selected = {
-							guifg = "#060606"
+							fg = "#324666"
 						},
 						separator = {
-							guifg = "#141414"
+							fg = "#212540"
 						},
 						close_button_selected = {
-							guibg = "#21252d",
-							guifg = "#F1252d",
+							bg = "#21252d",
+							fg = "#F1252d",
 						},
 					},
 				}
@@ -866,7 +877,7 @@ return require('packer').startup{function()
 							str = ' ',
 							hl = {
 								fg = 'black',
-								bg = 'bg',
+								bg = 'bgInactive',
 							}
 						},
 						-- 'slant_right'
@@ -878,7 +889,9 @@ return require('packer').startup{function()
 			local colors = {
 				fg          = '#C8C8C8',
 				--bg          = '#1F1F23',
-				bg          = '#101020',
+				-- bg          = '#101020',
+				bg          = '#121225',
+				bgInactive          = '#060609',
 				black       = "#000000",
 				--black1      = '#1B1B1B',
 				black1          = '#101020',
@@ -891,7 +904,7 @@ return require('packer').startup{function()
 				red         = '#D10000',
 				violet      = '#9E93E8',
 				white       = '#FFFFFF',
-				white1      = '#808080',
+				white1      = '#606070',
 				yellow      = '#E1E120'
 			}
 
@@ -1029,6 +1042,9 @@ return require('packer').startup{function()
 					open_file = {
 						quit_on_open = true,
 						resize_window = false,
+						window_picker ={
+							enable = false
+						}
 					},
 				},
 				respect_buf_cwd = false,
