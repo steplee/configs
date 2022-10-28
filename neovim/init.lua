@@ -350,6 +350,16 @@ return require('packer').startup{function()
 							'--smart-case'
 						},
 
+						mappings = {
+							n = {
+								['<c-q>'] = require('telescope.actions').delete_buffer
+							},
+							i = {
+								['<c-q>'] = require('telescope.actions').delete_buffer
+							}
+						},
+
+
 						initial_mode = "insert",
 						selection_strategy  = "reset",
 						sorting_strategy    = "ascending",
@@ -411,7 +421,11 @@ return require('packer').startup{function()
 				--       --> show all availabe MAPPING
 				keymap('n', "<leader>M", "<cmd>lua require('telescope.builtin').keymaps() <CR>", {silent=true, noremap=true})
 				--       --> show buffers/opened files
-				keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() <CR>", {silent=true, noremap=true})
+				--keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() <CR>", {silent=true, noremap=true})
+				-- keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() sort_lastused=1 only_cwd=1<CR>", {silent=true, noremap=true})
+				-- keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers({sort_lastused=1, only_cwd=1})<CR>", {silent=true, noremap=true})
+				keymap('n', "<leader>d", "<cmd>lua require('telescope.builtin').buffers({sort_lastused=1, only_cwd=1})<CR>", {silent=true, noremap=true})
+				keymap('n', "<leader>b", "<cmd>lua require('telescope.builtin').buffers({sort_lastused=1})<CR>", {silent=true, noremap=true})
 				--       --> Find Files
 				-- NOTE1: to get project root's directory, extra plugin (github.com/ygm2/rooter.nvim) is used.
 				-- any config related to project root is in seperate config file (lua/plugin_confs/rooter_nvim.lua)
@@ -520,9 +534,11 @@ return require('packer').startup{function()
 					require'nvim-web-devicons'.get_icons()
 				end
 		}
+		--[[
 		use {
 			'akinsho/nvim-bufferline.lua',
 			requires = 'kyazdani42/nvim-web-devicons',
+			enabled=false,
 			config = function()
 				require('bufferline').setup {
 					options = {
@@ -637,10 +653,12 @@ return require('packer').startup{function()
 				keymap('n', '<Leader>9', ':BufferLineGoToBuffer 9<CR>', options)
 			end
 		}
+		--]]
 
 		-- The Status Line / Status Bar
 		use {
-		'feline-nvim/feline.nvim', tag = 'v0.3.3',
+		-- 'feline-nvim/feline.nvim', tag = 'v0.3.3',
+		'feline-nvim/feline.nvim',
 		requires = {
 			'nvim-lua/lsp-status.nvim',
 		},
@@ -782,20 +800,20 @@ return require('packer').startup{function()
 					enabled = function() return lsp.diagnostics_exist('Error') end,
 					hl = { fg = 'red' }
 				},
-				{
+				--[[{
 					provider = 'diagnostic_warnings',
 					enabled = function() return lsp.diagnostics_exist('Warning') end,
 					hl = { fg = 'yellow' }
 				},
 				{
-					provider = 'diagnostic_hints',
-					enabled = function() return lsp.diagnostics_exist('Hint') end,
-					hl = { fg = 'cyan' }
-				},
-				{
 					provider = 'diagnostic_info',
 					enabled = function() return lsp.diagnostics_exist('Information') end,
 					hl = { fg = 'skyblue' }
+				},--]]
+				{
+					provider = 'diagnostic_hints',
+					enabled = function() return lsp.diagnostics_exist('Hint') end,
+					hl = { fg = 'cyan' }
 				},
 				{
 					provider = function()
@@ -984,7 +1002,7 @@ return require('packer').startup{function()
 			}
 
 			require('feline').setup({
-				colors = colors,
+				theme = colors,
 				separators = separators,
 				vi_mode_colors = vi_mode_colors,
 				force_inactive = force_inactive,
@@ -1091,7 +1109,7 @@ return require('packer').startup{function()
 
 				view = {
 					width = 45,
-					height = 30,
+					-- height = 30,
 					hide_root_folder = false,
 					side = 'left',
 					--auto_resize = false,
@@ -1112,6 +1130,7 @@ return require('packer').startup{function()
 
 	use {
 			'nvim-treesitter/nvim-treesitter',
+			commit='4cccb6f494eb255b32a290d37c35ca12584c74d0',
 			run = ':TSUpdate',
 			config = function()
 				require'nvim-treesitter.configs'.setup {
