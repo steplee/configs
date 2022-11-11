@@ -38,6 +38,7 @@ setopt NO_NOMATCH
 #setopt NO_EXTENDED_GLOB
 
 # allow ctrl-s
+setopt NO_NOMATCH
 setopt flowcontrol
 
 #alias chrome-dev="google-chrome-stable --disable-web-security --allow-file-access-from-files --allow-file-access --allow-cross-origin-auth-prompt"
