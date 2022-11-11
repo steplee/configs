@@ -106,6 +106,13 @@ bindkey "^W" backward-kill-word
 bindkey \^U backward-kill-line
 #####################
 
+
+## USE TMUX
+# If not running interactively, do not do anything
+alias tmux="TERM=st-256color tmux -2"
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux
+
 export GCM_CREDENTIAL_STORE=plaintext
 
 export PATH="$PATH:/usr/local/cuda/bin"
