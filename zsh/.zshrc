@@ -104,6 +104,8 @@ bindkey "^H" backward-delete-char
 bindkey "^W" backward-kill-word
 # bash-like ctrl-u
 bindkey \^U backward-kill-line
+# Allow shift-tab to go backwards in menuselect
+bindkey "^[[Z" reverse-menu-complete
 #####################
 
 
@@ -113,7 +115,59 @@ alias tmux="TERM=st-256color tmux -2"
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux
 
+# Wait for arg1 to exit (may be pid, or string of program name), then execute arg2.
+waitForProcess() {
+	if [ "$#" -ne 2 -a "$#" -ne 3 ]; then
+		printf " - You must pass two/three args: <pid-or-program-to-wait-for> <command-to-execute> [<sleep-time>]\n"
+		return 1
+	fi
+
+	sleep_time=${3:-30}
+	#echo " - sleep_time ${sleep_time}"
+
+	re='^[0-9]+$'
+	if [[ $1 =~ $re ]] ; then
+		echo ' - Detected input as pid.'
+		pid=$1
+	else
+		echo ' - Detected input as program-name, using pgrep.'
+		procs=$(pgrep -f $1)
+		n=$(echo ${procs} | wc -w)
+		echo " - input ${1}, n ${n}, procs ${procs}"
+		if [[ ${n} -eq 1 ]]; then
+			pid=${procs}
+		elif [[ ${n} -gt 1 ]]; then
+			printf ' - Too many procceses, the program name must be unique!\n'
+			return 1
+		elif [[ ${n} -eq 0 ]]; then
+			printf " - No process with name ${1}!\n"
+			return 1
+		fi
+	fi
+
+	if ! [[ -d /proc/$pid ]]; then
+		echo " - pid $pid didn't exist on first run, can't sleep, exiting."
+		return 1
+	fi
+
+	echo " - waiting on pid $pid"
+
+	while [[ -d /proc/${pid} ]]; do
+		sleep ${sleep_time}
+	done
+	printf '\n - Detected change, running command now.\n\n'
+	${SHELL} -c $2
+	return $?
+}
+
 export GCM_CREDENTIAL_STORE=plaintext
+
+TIMEFMT=$'
+================
+CPU	%P
+user	%U
+system	%S
+total	%E'
 
 export PATH="$PATH:/usr/local/cuda/bin"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64/
