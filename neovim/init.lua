@@ -424,8 +424,8 @@ return require('packer').startup{function()
 				--keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() <CR>", {silent=true, noremap=true})
 				-- keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() sort_lastused=1 only_cwd=1<CR>", {silent=true, noremap=true})
 				-- keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers({sort_lastused=1, only_cwd=1})<CR>", {silent=true, noremap=true})
-				keymap('n', "<leader>d", "<cmd>lua require('telescope.builtin').buffers({sort_lastused=1, only_cwd=1})<CR>", {silent=true, noremap=true})
-				keymap('n', "<leader>b", "<cmd>lua require('telescope.builtin').buffers({sort_lastused=1})<CR>", {silent=true, noremap=true})
+				keymap('n', "<leader>d", "<cmd>lua require('telescope.builtin').buffers({sort_mru=1, only_cwd=1, ignore_current_buffer=1})<CR>", {silent=true, noremap=true})
+				keymap('n', "<leader>b", "<cmd>lua require('telescope.builtin').buffers({sort_mru=1})<CR>", {silent=true, noremap=true})
 				--       --> Find Files
 				-- NOTE1: to get project root's directory, extra plugin (github.com/ygm2/rooter.nvim) is used.
 				-- any config related to project root is in seperate config file (lua/plugin_confs/rooter_nvim.lua)
