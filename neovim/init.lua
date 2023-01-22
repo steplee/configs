@@ -479,6 +479,7 @@ return require('packer').startup{function()
 			-- compile, run or compile and run program.
 			-- it depends on python script, https://github.com/shaeinst/lazy-builder. visit to know more.
 
+			--[[
 			local lazy_builder_py = "~/.local/share/nvim/custom_tools/lazy-builder/build.py"
 			local build_path = "~/.cache/build_files"
 			local run       = ":w | :FloatermNew python "..lazy_builder_py.." -o "..build_path.." -r 1 % <CR>"
@@ -487,6 +488,14 @@ return require('packer').startup{function()
 			keymap('n', '<Leader>r', run,       { noremap=true, silent=true }) -- Run
 			keymap('n', '<Leader>o', build,     { noremap=true, silent=true }) -- build
 			keymap('n', '<Leader>O', buildrun,  { noremap=true, silent=true }) -- build and run
+			--]]
+
+			-- Write-all, search for last command with 'make', then execute it, then pop up floaterm.
+			-- Note: floaterm window must already exist!
+			-- Zsh version (history -N):
+			local build       = vim.api.nvim_replace_termcodes(":FloatermSend $(history -32 | grep make | grep -v history | tail -1 | cut -f 3,4,5,6,7,8,9,10,11,12,13,14  -d \\ )",true,true,true)
+			keymap('n', '<Leader>o', ":wa | execute('" .. build .. "') | :FloatermToggle <CR>", {noremap=true, silent=true})
+
 		end}
 
 		use { 
