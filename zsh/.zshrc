@@ -20,12 +20,18 @@ alias glo='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
 
 setopt HIST_SAVE_NO_DUPS
+setopt share_history
 
 autoload -U compinit; compinit
 _comp_options+=(globdots) # With hidden files
 
 fpath=(${ZDOTDIR} $fpath)
 autoload -Uz pureTheme; pureTheme
+
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 
 bindkey -e
 bindkey -v
@@ -106,6 +112,8 @@ bindkey "^W" backward-kill-word
 bindkey \^U backward-kill-line
 # Allow shift-tab to go backwards in menuselect
 bindkey "^[[Z" reverse-menu-complete
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
 #####################
 
 
