@@ -21,6 +21,7 @@ alias glol='git log --graph --oneline --decorate'
 
 setopt HIST_SAVE_NO_DUPS
 setopt share_history
+setopt autopushd
 
 autoload -U compinit; compinit
 _comp_options+=(globdots) # With hidden files
@@ -190,4 +191,8 @@ swapFile() {
 
 # source /path/to/my/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 
