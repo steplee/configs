@@ -19,12 +19,20 @@ alias grs='git remote show'
 alias glo='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
 
+setopt HIST_SAVE_NO_DUPS
+setopt share_history
+setopt autopushd
 
 autoload -U compinit; compinit
 _comp_options+=(globdots) # With hidden files
 
 fpath=(${ZDOTDIR} $fpath)
 autoload -Uz pureTheme; pureTheme
+
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 
 bindkey -e
 bindkey -v
@@ -113,6 +121,10 @@ bindkey "^W" backward-kill-word
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 # bash-like ctrl-u
 bindkey \^U backward-kill-line
+# Allow shift-tab to go backwards in menuselect
+bindkey "^[[Z" reverse-menu-complete
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
 #####################
 
 
@@ -144,7 +156,59 @@ bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux
 
+# Wait for arg1 to exit (may be pid, or string of program name), then execute arg2.
+waitForProcess() {
+	if [ "$#" -ne 2 -a "$#" -ne 3 ]; then
+		printf " - You must pass two/three args: <pid-or-program-to-wait-for> <command-to-execute> [<sleep-time>]\n"
+		return 1
+	fi
+
+	sleep_time=${3:-30}
+	#echo " - sleep_time ${sleep_time}"
+
+	re='^[0-9]+$'
+	if [[ $1 =~ $re ]] ; then
+		echo ' - Detected input as pid.'
+		pid=$1
+	else
+		echo ' - Detected input as program-name, using pgrep.'
+		procs=$(pgrep -f $1)
+		n=$(echo ${procs} | wc -w)
+		echo " - input ${1}, n ${n}, procs ${procs}"
+		if [[ ${n} -eq 1 ]]; then
+			pid=${procs}
+		elif [[ ${n} -gt 1 ]]; then
+			printf ' - Too many procceses, the program name must be unique!\n'
+			return 1
+		elif [[ ${n} -eq 0 ]]; then
+			printf " - No process with name ${1}!\n"
+			return 1
+		fi
+	fi
+
+	if ! [[ -d /proc/$pid ]]; then
+		echo " - pid $pid didn't exist on first run, can't sleep, exiting."
+		return 1
+	fi
+
+	echo " - waiting on pid $pid"
+
+	while [[ -d /proc/${pid} ]]; do
+		sleep ${sleep_time}
+	done
+	printf '\n - Detected change, running command now.\n\n'
+	${SHELL} -c $2
+	return $?
+}
+
 export GCM_CREDENTIAL_STORE=plaintext
+
+TIMEFMT=$'
+================
+CPU	%P
+user	%U
+system	%S
+total	%E'
 
 export PATH="$PATH:/usr/local/cuda/bin"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64/
@@ -159,4 +223,8 @@ swapFile() {
 
 # source /path/to/my/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 
