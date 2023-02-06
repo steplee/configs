@@ -19,7 +19,6 @@ alias grs='git remote show'
 alias glo='git log --pretty="oneline"'
 alias glol='git log --graph --oneline --decorate'
 
-setopt HIST_SAVE_NO_DUPS
 
 autoload -U compinit; compinit
 _comp_options+=(globdots) # With hidden files
@@ -31,11 +30,20 @@ bindkey -e
 bindkey -v
 export KEYTIMEOUT=1
 
+
+# Use menu for completion
 zmodload zsh/complist
+zstyle ':completion:*' menu select
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
+
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' complete-options true
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors true
+
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
@@ -102,14 +110,37 @@ bindkey "^X^N" infer-next-history
 bindkey "^P" up-line-or-history
 bindkey "^H" backward-delete-char
 bindkey "^W" backward-kill-word
+bindkey -M menuselect '^[[Z' reverse-menu-complete
 # bash-like ctrl-u
 bindkey \^U backward-kill-line
 #####################
 
 
+# Share history in between sessions
+setopt HIST_SAVE_NO_DUPS
+setopt share_history
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+
+# no cd
+setopt auto_cd
+
+
+
+# Up-arrow searches histroy with current prefix
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search # Up
+bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down
+# bindkey "${terminfo[kcuu1]}" history-beginning-search-backward
+# bindkey "${terminfo[kcud1]}" history-beginning-search-forward
+
 ## USE TMUX
 # If not running interactively, do not do anything
-alias tmux="TERM=st-256color tmux -2"
+# alias tmux="TERM=st-256color tmux -2"
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux
 

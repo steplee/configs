@@ -1261,6 +1261,14 @@ return require('packer').startup{function()
 	}
 
 
+	use {
+		'stevearc/aerial.nvim',
+		config = function() require('aerial').setup {
+			vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
+		}
+		end
+	}
+
 	if packer_bootstrap then
 		require('packer').sync()
 	end	
