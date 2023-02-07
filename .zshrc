@@ -21,6 +21,7 @@ antigen apply
 
 #####
 
+bindkey -v
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^?' backward-delete-char
@@ -28,6 +29,20 @@ bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^u' backward-kill-line
 bindkey '^r' history-incremental-search-backward
+bindkey \^U backward-kill-line
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
+bindkey "^A" beginning-of-line
+bindkey "^D" delete-char-or-list
+bindkey "^E" end-of-line
+bindkey "^G" send-break
+bindkey "^H" backward-delete-char
+bindkey "^I" expand-or-complete
+bindkey "^J" accept-line
+bindkey "^K" kill-line
+bindkey "^L" clear-screen
+# Allow shift-tab to go backwards in menuselect
+bindkey "^[[Z" reverse-menu-complete
 export KEYTIMEOUT=1
 
 #####
