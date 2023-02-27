@@ -439,6 +439,9 @@ return require('packer').startup{function()
 				-- for more see :help builtin.lsp_code_actions() or :help builtin.lsp_range_code_actions()
 				keymap('n', "<leader>ca", "<cmd>lua  require('telescope.builtin').lsp_code_actions( {layout_config={width=50, height=20} } ) <CR>", {silent=true, noremap=true})
 				keymap('x', "<leader>ca", "<cmd>lua  require('telescope.builtin').lsp_range_code_actions( {layout_config={width=50, height=25} } ) <CR>", {silent=true, noremap=true})
+
+				-- live_grep, but not in "build" dir.
+				keymap('n', "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({file_ignore_pattern={\"build\"}}) <CR>", {silent=true, noremap=true})
 			end
 		}
 
@@ -1054,7 +1057,6 @@ return require('packer').startup{function()
 			local gl        = vim.g
 			local keymap    = vim.api.nvim_set_keymap
 			local options   = { noremap=true, silent=true }
-			local tree_cb   = require'nvim-tree.config'.nvim_tree_callback
 			local cmd       = vim.cmd           -- execute Vim commands
 			cmd('autocmd ColorScheme * highlight highlight NvimTreeBg guibg=None')
 			cmd('autocmd FileType NvimTree setlocal winhighlight=Normal:NvimTreeBg')
@@ -1125,7 +1127,6 @@ return require('packer').startup{function()
 					mappings = {
 						custom_only = false,
 						list = {
-							{ key = "g?",     cb = tree_cb("toggle_help") },
 							{ key = "-",     cb = ":lua require'nvim-tree'.on_keypress('dir_up')<CR>:lua require'nvim-tree'.on_keypress('refresh')<CR>" },
 						}
 					}
