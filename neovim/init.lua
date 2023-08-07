@@ -32,30 +32,36 @@ local keymap = vim.api.nvim_set_keymap
 function toggle_lsp()
 	if table.getn(vim.lsp.get_active_clients()) == 0 then
 		vim.cmd('LspStart');
-		print('Turning LSP On')
+		-- print('Turning LSP On')
 	else
 		vim.cmd('LspStop');
-		print('Turning LSP Off')
+		-- print('Turning LSP Off')
 	end
 end
 
 -- todo TEST THIS
-function my_lsp_on_attach(client, bufnr)
-	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+-- function my_lsp_on_attach(client, bufnr)
+	-- print('attach lsp to', bufnr)
+function my_lsp_on_attach()
+	print('attach lsp')
+	-- local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+	-- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+	-- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-	-- Enable completion triggered by <c-x><c-o>
-	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+	local buf_set_keymap = function(mode, lhs, rhs, opts)
+      vim.keymap.set(mode, lhs, rhs, opts)
+    end
 
 	-- Mappings.
-	local opts = { noremap=true, silent=true }
+	local opts = { noremap=true, silent=true, buffer=true }
 
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	--─────────────────────────────────────────────────--
-	buf_set_keymap('n', '<space>e',   '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',  opts)
-	buf_set_keymap('n', '[d',         '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',              opts)
-	buf_set_keymap('n', ']d',         '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>',              opts)
-	buf_set_keymap('n', '<space>q',   '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',            opts)
+	--[[
+	buf_set_keymap('n', '<space>e',   '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>',  opts)
+	buf_set_keymap('n', '[d',         '<cmd>lua vim.diagnostic.goto_prev()<CR>',              opts)
+	buf_set_keymap('n', ']d',         '<cmd>lua vim.diagnostic.goto_next()<CR>',              opts)
+	buf_set_keymap('n', '<space>q',   '<cmd>lua vim.diagnostic.set_loclist()<CR>',            opts)
 
 	buf_set_keymap('n', 'gD',         '<Cmd>lua vim.lsp.buf.declaration()<CR>',                   opts)
 	buf_set_keymap('n', 'gd',         '<Cmd>lua vim.lsp.buf.definition()<CR>',                    opts)
@@ -66,6 +72,30 @@ function my_lsp_on_attach(client, bufnr)
 	buf_set_keymap('n', '<space>rn',  '<cmd>lua vim.lsp.buf.rename()<CR>',                        opts)
 	buf_set_keymap('n', 'gr',         '<cmd>lua vim.lsp.buf.references()<CR>',                    opts)
 	buf_set_keymap("n", "<space>f",   '<cmd>lua vim.lsp.buf.formatting()<CR>',                    opts)
+	buf_set_keymap("n", "<C-m>",      '<cmd>lua vim.lsp.buf.completion()<CR>',                    opts)
+	buf_set_keymap("n", "<C-h>",      '<cmd>lua vim.lsp.buf.incoming_calls()<CR>',                    opts)
+	buf_set_keymap("n", "<C-g>",      '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>',                    opts)
+	--]]
+
+	-- New keymaps that mostly use '\' as a prefix
+	buf_set_keymap('n', '\\e',   '<cmd>lua vim.diagnostic.open_float()<CR>',  opts)
+	buf_set_keymap('n', '\\[',         '<cmd>lua vim.diagnostic.goto_prev()<CR>',              opts)
+	buf_set_keymap('n', '\\]',         '<cmd>lua vim.diagnostic.goto_next()<CR>',              opts)
+	buf_set_keymap('n', '\\q',   '<cmd>lua vim.diagnostic.set_loclist()<CR>',            opts)
+
+	buf_set_keymap('n', '\\D',         '<Cmd>lua vim.lsp.buf.declaration()<CR>',                   opts)
+	buf_set_keymap('n', '\\d',         '<Cmd>lua vim.lsp.buf.definition()<CR>',                    opts)
+	buf_set_keymap('n', 'K',          '<Cmd>lua vim.lsp.buf.hover()<CR>',                         opts)
+	buf_set_keymap('n', '\\i',         '<cmd>lua vim.lsp.buf.implementation()<CR>',                opts)
+	buf_set_keymap('n', '\\s',        '<cmd>lua vim.lsp.buf.signature_help()<CR>',                opts)
+	buf_set_keymap('n', '\\D',   '<cmd>lua vim.lsp.buf.type_definition()<CR>',               opts)
+	buf_set_keymap('n', '\\r',  '<cmd>lua vim.lsp.buf.rename()<CR>',                        opts)
+	buf_set_keymap('n', '\\l',         '<cmd>lua vim.lsp.buf.references()<CR>',                    opts)
+	buf_set_keymap("n", "\\f",   '<cmd>lua vim.lsp.buf.formatting()<CR>',                    opts)
+	buf_set_keymap("n", "<C-m>",      '<cmd>lua vim.lsp.buf.completion()<CR>',                    opts)
+	buf_set_keymap("n", "\\g",      '<cmd>lua vim.lsp.buf.incoming_calls()<CR>',                    opts)
+	buf_set_keymap("n", "\\h",      '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>',                    opts)
+
 	-- code action is integrated with telescope, for more see "telescope.lua" file
 	-- buf_set_keymap('n', '<space>ca',    '<cmd>lua vim.lsp.buf.code_action()<CR>',                   opts)
 	-- buf_set_keymap('n', '<leader>wa',    '<cmd>lua vim.lsp.buf.add_workleader_folder()<CR>',          opts)
@@ -79,7 +109,7 @@ function setup_maps()
 
 	keymap('', '<C-h>', '<C-w>h', {noremap=true})
 	keymap('', '<C-k>', '<C-w>k', {noremap=true})
-	keymap('', '<C-j>', '<C-w>j', {noremap=true})
+	-- keymap('', '<C-j>', '<C-w>j', {noremap=true})
 	keymap('', '<C-l>', '<C-w>l', {noremap=true})
 	keymap('n', '<leader>w', [[:%s/\s\+$//e<CR>]], {noremap=true})
 
@@ -145,6 +175,8 @@ function setup_colors()
 	-- want to get rid of this soon, shouldn't load then replace a big lua table
 	-- cmd('colorscheme rvcs')
 	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#69698a | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeFolderIcon guifg=#7a7aaa | hi NvimTreeSymlink guifg=#9a4a7a | hi NvimTreeOpenedFile guifg=#73a3ff | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable | hi! Statement guifg=#73439a")
+	cmd("hi! link @type.qualifier.cpp keyword | hi! link @type.cpp TSType | hi! link @type.builtin.cpp TSType | hi! link @storageclass.cpp keyword")
+	cmd("hi! @constant.cpp guifg=#5080f0")
 	cmd([[
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
@@ -1032,21 +1064,37 @@ return require('packer').startup{function()
 	-- Then :LspStart when I want it on
 	-- Also, <space>l will toggle it on/off
 	-- Note: the function @my_lsp_on_attach is executed when attached
+	-- use {
+		-- "williamboman/mason.nvim",
+		-- "williamboman/mason-lspconfig.nvim",
+		-- "neovim/nvim-lspconfig",
+	-- }
 	use {
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
-	}
-	require("mason").setup()
-	require("mason-lspconfig").setup()
-	require('mason-lspconfig').setup_handlers {
-		function (server_name)
-			require('lspconfig')[server_name].setup {
-				autostart=false,
-				on_attach=my_lsp_on_attach
+		config = [[
+			require("mason").setup()
+			require("mason-lspconfig").setup()
+
+			require('mason-lspconfig').setup_handlers {
+			function (server_name)
+				require('lspconfig')[server_name].setup {
+					autostart=false,
+					-- on_attach=my_lsp_on_attach
+				}
+			end
 			}
-		end
+			vim.api.nvim_create_autocmd('LspAttach', {
+				desc = 'LSP actions',
+				callback = my_lsp_on_attach })
+
+
+		]],
+		requires = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		}
 	}
+
 	use {
 			'nvim-lua/lsp-status.nvim',
 	}
@@ -1080,8 +1128,8 @@ return require('packer').startup{function()
 
 				disable_netrw       = true,
 				hijack_netrw        = true,
-				open_on_setup       = false,
-				ignore_ft_on_setup  = {},
+				--open_on_setup       = false,
+				--ignore_ft_on_setup  = {},
 				--auto_close          = false,
 				open_on_tab         = false,
 				hijack_cursor       = false,
@@ -1124,12 +1172,12 @@ return require('packer').startup{function()
 					hide_root_folder = false,
 					side = 'left',
 					--auto_resize = false,
-					mappings = {
+					--[[mappings = {
 						custom_only = false,
 						list = {
 							{ key = "-",     cb = ":lua require'nvim-tree'.on_keypress('dir_up')<CR>:lua require'nvim-tree'.on_keypress('refresh')<CR>" },
 						}
-					}
+					}--]]
 				}
 			}
 
@@ -1140,15 +1188,21 @@ return require('packer').startup{function()
 
 	use {
 			'nvim-treesitter/nvim-treesitter',
-			commit='4cccb6f494eb255b32a290d37c35ca12584c74d0',
+			-- commit='4cccb6f494eb255b32a290d37c35ca12584c74d0',
+			-- commit='239bb86b54d07a955caa0200053484298879ca59',
 			run = ':TSUpdate',
 			config = function()
 				require'nvim-treesitter.configs'.setup {
 					highlight = {
-						enable  = {"c", "cpp", "python", "javascript"}, -- enable = true (false will disable the whole extension)
+						enable  = {"c", "cpp", "python", "javascript", "lua", "rust"}, -- enable = true (false will disable the whole extension)
 						custom_captures = {
 						-- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-							["foo.bar"] = "Identifier",
+							-- ["foo.bar"] = "Identifier",
+							["type.qualifier.cpp"] = "Keyword", -- THIS IS BROKEN v0.10
+							["type.cpp"] = "TSType",
+							["type.builtin.cpp"] = "TSType",
+							["storageclass.cpp"] = "Keyword",
+							["storageclass"] = "Keyword",
 						},
 						-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
 						-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
@@ -1244,6 +1298,7 @@ return require('packer').startup{function()
 			end
 	}
 
+	--[[
 	use { --  Use treesitter to auto close and auto rename html tag, work with html,tsx,vue,svelte,php.
 			"windwp/nvim-ts-autotag",
 			requires = {
@@ -1255,6 +1310,7 @@ return require('packer').startup{function()
 				})
 			end
 	}
+	--]]
 
 	-- Usage:
 	--       TodoQuickFix
@@ -1278,6 +1334,147 @@ return require('packer').startup{function()
 		}
 		end
 	}
+
+	use {
+		'dcampos/nvim-snippy',
+		event = 'InsertEnter',
+		requires = {
+			{'honza/vim-snippets', before='nvim-snippy'}
+		},
+
+		config = function() require('snippy').setup {
+			mappings = {
+				is = {
+					['<Tab>'] = 'expand_or_advance',
+					['<S-Tab>'] = 'previous',
+					-- ['<C-g>'] = 'expand_or_advance',
+					-- ['<C-r>'] = 'previous',
+				},
+				nx = {
+					['<leader>x'] = 'cut_text',
+				},
+			},
+		}
+		end
+
+	}
+
+	use {
+		'hrsh7th/nvim-cmp',
+		event = 'InsertEnter',
+		requires = {
+			{ 'hrsh7th/cmp-nvim-lsp', after='nvim-cmp'}, -- nvim-cmp source for neovim builtin LSP client
+			{ 'hrsh7th/cmp-nvim-lua', after='nvim-cmp'}, -- nvim-cmp source for nvim lua
+			{ 'hrsh7th/cmp-buffer', after='nvim-cmp'}, -- nvim-cmp source for buffer words.
+			{ 'hrsh7th/cmp-path', after='nvim-cmp'}, -- nvim-cmp source for filesystem paths.
+			-- { 'saadparwaiz1/cmp_luasnip', after='nvim-cmp'}, -- luasnip completion source for nvim-cmp
+		},
+
+		-- Here I disable the annoying autocomplete and you must type C-j to enter complete mode.
+		config = function()
+			local cmp = require('cmp')
+			cmp.setup {
+				completion = {autocomplete=false},
+				snippet = {
+					-- REQUIRED - you must specify a snippet engine
+					expand = function(args)
+						-- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+						-- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+						require('snippy').expand_snippet(args.body) -- For `snippy` users.
+						-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+					end,
+				},
+
+				formatting = {
+					fields = {'menu', 'abbr', 'kind'},
+					format = function(entry, item)
+						local menu_icon = {
+							nvim_lsp = 'λ',
+							luasnip = '⋗',
+							snippy = '⋗',
+							buffer = 'Ω',
+							path = '/',
+						}
+
+						item.menu = menu_icon[entry.source.name]
+						return item
+					end,
+				},
+
+				window = {
+				-- completion = cmp.config.window.bordered(),
+				-- documentation = cmp.config.window.bordered(),
+				},
+				-- mapping = cmp.mapping.preset.insert({
+				mapping = {
+					['<C-f>'] = cmp.mapping.scroll_docs(-4),
+					['<C-b>'] = cmp.mapping.scroll_docs(-4),
+					['<C-f>'] = cmp.mapping.scroll_docs(4),
+					-- ['<C-Space>'] = cmp.mapping.complete({config={sources={{name='snippy'}}}}),
+					['<C-Space>'] = cmp.mapping.complete(),
+					-- Don't need this because it overrides C-n
+					['<C-j>'] = function() if cmp.visible() then cmp.select_next_item() else cmp.complete() end end,
+					['<C-e>'] = cmp.mapping.abort(),
+					['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+					['<C-l>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+				-- }),
+				},
+				sources = cmp.config.sources({
+					{ name = 'nvim_lsp' },
+					-- { name = 'vsnip' }, -- For vsnip users.
+					-- { name = 'luasnip' }, -- For luasnip users.
+					-- { name = 'ultisnips' }, -- For ultisnips users.
+					{ name = 'snippy' }, -- For snippy users.
+					{ name = 'path' }, -- Show fs path
+				}, {
+					{ name = 'buffer' },
+				})
+			}
+			-- Set configuration for specific filetype.
+			cmp.setup.filetype('gitcommit', {
+				sources = cmp.config.sources({
+					{ name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+				}, {
+					{ name = 'buffer' },
+				})
+			})
+
+			-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+			cmp.setup.cmdline({ '/', '?' }, {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+				{ name = 'buffer' }
+				}
+			})
+
+			-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+			cmp.setup.cmdline(':', {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+				{ name = 'path' }
+				}, {
+				{ name = 'cmdline' }
+				})
+			})
+
+			-- Set up lspconfig.
+			local capabilities = require('cmp_nvim_lsp').default_capabilities()
+			-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+			-- require('lspconfig')['<YOUR_LSP_SERVER>'].setup { capabilities = capabilities }
+			-- FIXME: This is a little incorrect, because we call the setup() in mason. How to just update capabilityies?
+			-- require('lspconfig')['clangd'].setup { capabilities = capabilities }
+		end
+	}
+
+	use { --  Add/change/delete surrounding delimiter pairs with ease.
+		'kylechui/nvim-surround',
+		-- event = 'InsertEnter',
+		keys = {'c'},
+		-- config = [[ require('plugins/nvim-surround') ]]
+		config = function() require('nvim-surround').setup {
+		} end
+	}
+
 
 	if packer_bootstrap then
 		require('packer').sync()

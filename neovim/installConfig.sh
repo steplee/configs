@@ -2,6 +2,8 @@
 
 dir=$(dirname -- "$( readlink -f -- "$0"; )")
 
+if [ -d "neovim" -a ! -h "neovim" ]; then cd neovim; fi
+
 rm -f ~/.config/nvim/init.lua
 mkdir -p ~/.config/nvim
 
