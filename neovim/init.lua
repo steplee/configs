@@ -176,7 +176,8 @@ function setup_colors()
 	-- cmd('colorscheme rvcs')
 	cmd("colorscheme uwu | hi Normal guibg=#010102 | hi Whitespace guibg=#010104 | hi Comment guifg=#69698a | hi! link TSComment Comment | hi CursorLine guibg=#101016 | hi SignColumn guibg=none | hi NvimTreeFolderIcon guifg=#7a7aaa | hi NvimTreeSymlink guifg=#9a4a7a | hi NvimTreeOpenedFile guifg=#73a3ff | hi NvimTreeFolderName guifg=#63639a | hi VertSplit guibg=#151522 | hi Search guifg=black guibg=#AFbe20 | hi Pmenu guifg=gray guibg=#101010 | hi PmenuSel guifg=vanilla guibg=#101030 | hi TSNumber guifg=lightyellow | hi bashTSParameter guifg=#f0d0f0 | hi! link cppTSField cppTSVariable | hi! Statement guifg=#73439a")
 	cmd("hi! link @type.qualifier.cpp keyword | hi! link @type.cpp TSType | hi! link @type.builtin.cpp TSType | hi! link @storageclass.cpp keyword")
-	cmd("hi! @constant.cpp guifg=#5080f0")
+	cmd("hi! @constant.cpp guifg=#5080f0 | hi! link @boolean.cpp @number.cpp")
+	cmd("hi! TabLineFill guibg=#020202 | hi! TabLine guibg=#050505 gui=none guifg=#909090 | hi! TabLineSel guibg=#000000 gui=bold guifg=#e0e0e0")
 	cmd([[
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
@@ -352,6 +353,8 @@ end
 return require('packer').startup{function()
 			use 'wbthomason/packer.nvim'
 			use 'lewis6991/impatient.nvim'
+
+			--[[
 			use { -- Supposed to be faster then the default filtetype.vim
 					'nathom/filetype.nvim',
 							config = function() require('filetype').setup({
@@ -364,6 +367,7 @@ return require('packer').startup{function()
 						vim.g.did_load_filetypes = 1
 						end
 			}
+			--]]
 
 			use {'nvim-telescope/telescope.nvim', requires = {
 				{'nvim-lua/popup.nvim'},
