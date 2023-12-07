@@ -132,7 +132,7 @@ bindkey "^[OB" down-line-or-beginning-search
 setopt HIST_SAVE_NO_DUPS
 setopt share_history
 setopt hist_ignore_space
-setopt hist_verify
+# setopt hist_verify
 setopt inc_append_history
 
 # no cd

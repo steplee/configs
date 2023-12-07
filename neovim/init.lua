@@ -40,13 +40,19 @@ function toggle_lsp()
 end
 
 -- todo TEST THIS
--- function my_lsp_on_attach(client, bufnr)
+--[[
+function my_lsp_on_attach(client, bufnr)
 	-- print('attach lsp to', bufnr)
-function my_lsp_on_attach()
-	print('attach lsp')
+-- function my_lsp_on_attach()
+	-- print('attach lsp')
 	-- local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 	-- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 	-- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+	-- Disable LSP highlighting since I use treesitter
+	for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+		vim.api.nvim_set_hl(0, group, {})
+	end
 
 	local buf_set_keymap = function(mode, lhs, rhs, opts)
       vim.keymap.set(mode, lhs, rhs, opts)
@@ -57,25 +63,6 @@ function my_lsp_on_attach()
 
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	--─────────────────────────────────────────────────--
-	--[[
-	buf_set_keymap('n', '<space>e',   '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>',  opts)
-	buf_set_keymap('n', '[d',         '<cmd>lua vim.diagnostic.goto_prev()<CR>',              opts)
-	buf_set_keymap('n', ']d',         '<cmd>lua vim.diagnostic.goto_next()<CR>',              opts)
-	buf_set_keymap('n', '<space>q',   '<cmd>lua vim.diagnostic.set_loclist()<CR>',            opts)
-
-	buf_set_keymap('n', 'gD',         '<Cmd>lua vim.lsp.buf.declaration()<CR>',                   opts)
-	buf_set_keymap('n', 'gd',         '<Cmd>lua vim.lsp.buf.definition()<CR>',                    opts)
-	buf_set_keymap('n', 'K',          '<Cmd>lua vim.lsp.buf.hover()<CR>',                         opts)
-	buf_set_keymap('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>',                opts)
-	buf_set_keymap('n', '[ls',        '<cmd>lua vim.lsp.buf.signature_help()<CR>',                opts)
-	buf_set_keymap('n', '<space>D',   '<cmd>lua vim.lsp.buf.type_definition()<CR>',               opts)
-	buf_set_keymap('n', '<space>rn',  '<cmd>lua vim.lsp.buf.rename()<CR>',                        opts)
-	buf_set_keymap('n', 'gr',         '<cmd>lua vim.lsp.buf.references()<CR>',                    opts)
-	buf_set_keymap("n", "<space>f",   '<cmd>lua vim.lsp.buf.formatting()<CR>',                    opts)
-	buf_set_keymap("n", "<C-m>",      '<cmd>lua vim.lsp.buf.completion()<CR>',                    opts)
-	buf_set_keymap("n", "<C-h>",      '<cmd>lua vim.lsp.buf.incoming_calls()<CR>',                    opts)
-	buf_set_keymap("n", "<C-g>",      '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>',                    opts)
-	--]]
 
 	-- New keymaps that mostly use '\' as a prefix
 	buf_set_keymap('n', '\\e',   '<cmd>lua vim.diagnostic.open_float()<CR>',  opts)
@@ -102,6 +89,66 @@ function my_lsp_on_attach()
 	-- buf_set_keymap('n', '<leader>wr',    '<cmd>lua vim.lsp.buf.remove_workleader_folder()<CR>',       opts)
 	-- buf_set_keymap('n', '<leader>wl',   '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workleader_folders()))<CR>', opts)
 end
+--]]
+--
+local my_lsp_on_attach = function(client, bufnr)
+
+	-- lsp support on winbar
+	--[[
+	local import_navic, navic = pcall(require, "nvim-navic")
+	if import_navic then
+		if client.server_capabilities.documentSymbolProvider then
+			navic.attach(client, bufnr)
+		end
+	end
+	--]]
+
+	local function buf_set_keymap(...) api.nvim_buf_set_keymap(bufnr, ...) end
+	local function buf_set_option(...) api.nvim_buf_set_option(bufnr, ...) end
+
+	---------------------
+	-- Avoiding LSP formatting conflicts
+	-- ref: https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
+	-- 2nd red: https://github.com/neovim/nvim-lspconfig/issues/1891#issuecomment-1157964108
+	-- neovim 0.8
+	client.server_capabilities.documentFormattingProvider = false
+	client.server_capabilities.documentRangeFormattingProvider = false
+	--------------------------
+
+	-- Enable completion triggered by <c-x><c-o>
+	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+	-- Mappings.
+	local options = {noremap = true, silent = true}
+
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	-- ───────────────────────────────────────────────── --
+	buf_set_keymap('n', '<Space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', options)
+	buf_set_keymap('n', '<Space>q', '<cmd>lua vim.diagnostic.set_loclist({})<CR>', options)
+	buf_set_keymap('n', '<Space>n', '<cmd>lua vim.diagnostic.goto_next()<CR>', options)
+	buf_set_keymap('n', '<Space>b', '<cmd>lua vim.diagnostic.goto_prev()<CR>', options)
+
+	buf_set_keymap('n', '<Space>d', '<Cmd>lua vim.lsp.buf.definition()<CR>', options)
+	buf_set_keymap('n', '<Space>D', '<Cmd>lua vim.lsp.buf.declaration()<CR>', options)
+	buf_set_keymap('n', '<Space>T', '<cmd>lua vim.lsp.buf.type_definition()<CR>', options)
+	buf_set_keymap('n', '<Space>i', '<cmd>lua vim.lsp.buf.implementation()<CR>', options)
+	buf_set_keymap('n', '<Space>s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', options)
+	buf_set_keymap('n', '<Space>h', '<Cmd>lua vim.lsp.buf.hover()<CR>', options)
+	buf_set_keymap('n', 'K',        '<Cmd>lua vim.lsp.buf.hover()<CR>', options)
+	-- using 'filipdutescu/renamer.nvim' for rename
+	-- buf_set_keymap('n', '<space>rn',	'<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+	buf_set_keymap('n', '<Space>r', '<cmd>Telescope lsp_references<CR>', options)
+	buf_set_keymap("n", "<Space>f", '<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>', options)
+
+	buf_set_keymap('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>',       options)
+	buf_set_keymap('x', '<Space>a', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', options)
+
+	buf_set_keymap('n', '<space>ca',    '<cmd>lua vim.lsp.buf.code_action()<CR>',                   opts)
+
+	-- buf_set_keymap('n', '<leader>wa',   '<cmd>lua vim.lsp.buf.add_workleader_folder()<CR>',          opts)
+	-- buf_set_keymap('n', '<leader>wr',   '<cmd>lua vim.lsp.buf.remove_workleader_folder()<CR>',       opts)
+	-- buf_set_keymap('n', '<leader>wl',   '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workleader_folders()))<CR>', opts)
+end
 
 function setup_maps()
 	local keymap = vim.api.nvim_set_keymap
@@ -124,6 +171,7 @@ function setup_maps()
 
 	-- Toggle LSP
 	keymap('n', '<space>l', [[<Cmd>lua toggle_lsp()<CR>]], {silent=true})
+	keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', {silent=true}) -- code action
 
 	-- to quit vim
 	cmd([[ autocmd BufEnter * nmap silent <buffer> <Leader>q :bd<CR> ]])
@@ -164,7 +212,7 @@ function setup_maps()
 
 end
 
-function setup_colors()
+function setup_colors_custom()
 
 	local cmd = vim.cmd
 	--vim.api.nvim_exec("source fnamemodify($MYVIMRC,':h')/localPlugins/uwu.vim", false)
@@ -183,6 +231,48 @@ function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun]])
+
+end
+
+function setup_colors_aug2023()
+	-- vim.cmd("colorscheme catppuccin") -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+	-- vim.cmd("colorscheme momiji")
+	-- vim.cmd("hi Normal guibg=#010102 | hi Whitespace guibg=#010104")
+	-- vim.cmd("colorscheme kanagawa")
+
+	-- Overrides for 'rose-pine-main'.
+	-- I don't like in the original:
+	--      - search results are too hard to pick out.
+	--      - the background is *just* to light.
+	vim.cmd([[
+function! MyHighlights() abort
+	" highlight IncSearch guibg=#d8c491 guifg=#101015
+	" highlight Search guibg=#587781 guifg=#101015
+	highlight Search guibg=#78b0a8 guifg=#101015
+	" highlight Search    guibg=#a06060 guifg=#141020
+	"highlight Normal    guibg=#191724
+	highlight Normal    guibg=#15141f
+	highlight NormalNC    guibg=#14131b
+	highlight Conditional    guifg=#a184cf
+	highlight Comment    guifg=#7e7a96
+	highlight NvimTreeOpenedFile guibg=none guifg=#cf90ff
+	highlight @namespace guifg=#af9998
+	highlight @type.qualifier.cpp guifg=#70a0d2
+	highlight @field guifg=#dab9df
+	highlight StorageClass guifg=#ca7a7a
+	highlight String guifg=#afceac " Strings a little too bright imo.
+	highlight Visual guibg=#383d39
+
+endfunction
+
+augroup MyColors
+    autocmd!
+    autocmd ColorScheme rose-pine-main call MyHighlights()
+augroup END
+]])
+	vim.cmd("colorscheme rose-pine-main")
+	-- vim.cmd("colorscheme kanagawa")
+
 
 end
 
@@ -213,7 +303,7 @@ function setup_config()
 		vert        = ' ',      -- remove ugly vertical lines on window division
 	}
 
-
+	set.conceallevel = 0 -- Don't hide e.g. Markdown brackets and such
 
 	if root then
 		set.shada         = ''            -- Don't create root-owned files.
@@ -305,7 +395,7 @@ function setup_config()
 	exec([[
 	augroup YankHighlight
 	autocmd!
-	autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=500, on_visual=true}
+	autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=200, on_visual=true}
 	augroup end
 	]], false)
 
@@ -368,6 +458,7 @@ return require('packer').startup{function()
 						end
 			}
 			--]]
+			use {'nvim-telescope/telescope-ui-select.nvim' }
 
 			use {'nvim-telescope/telescope.nvim', requires = {
 				{'nvim-lua/popup.nvim'},
@@ -409,8 +500,17 @@ return require('packer').startup{function()
 								mirror = false
 							},
 						},
-						file_ignore_patterns= {},
-						file_sorter         =  require'telescope.sorters'.get_fuzzy_file,
+						file_ignore_patterns= {
+							"__pycache__/", "__pycache__/*",
+							"build/",       "gradle/", "node_modules/", "node_modules/*", "obj/Debug",
+							"smalljre_*/*", "target/", "vendor/*",      "bin/Debug",      "venv/",
+							".dart_tool/", ".git/", ".github/", ".gradle/",".idea/", ".vscode/",
+							"%.sqlite3", "%.ipynb", "%.lock", "%.pdb",   "%.so",
+							"%.dll",     "%.class", "%.exe",  "%.cache", "%.pdf",  "%.dylib",
+							"%.jar",     "%.docx",  "%.met",  "%.burp",  "%.mp4",  "%.mkv",   "%.rar",
+							"%.zip",     "%.7z",    "%.tar",  "%.bz2",   "%.epub", "%.flac",  "%.tar.gz",
+						},
+						file_sorter         = require'telescope.sorters'.get_fuzzy_file,
 						generic_sorter      = require'telescope.sorters'.get_generic_fuzzy_sorter,
 						file_previewer      = require'telescope.previewers'.vim_buffer_cat.new,
 						grep_previewer      = require'telescope.previewers'.vim_buffer_vimgrep.new,
@@ -438,10 +538,17 @@ return require('packer').startup{function()
 							override_generic_sorter   = false,    -- override the generic sorter
 							override_file_sorter      = true,     -- override the file sorter
 							case_mode                 = "smart_case", -- or "ignore_case" or "respect_case". the default case_mode is "smart_case"
+						},
+						["ui-select"] = {
+							-- require("telescope.themes").get_dropdown {
+							require("telescope.themes").get_cursor {
+							}
 						}
 					}
 				}
 				require('telescope').load_extension('fzf')
+				require('telescope').load_extension('ui-select')
+
 				vim.api.nvim_command[[
 				augroup ReplaceNetrw
 				autocmd VimEnter * silent! autocmd! FileExplorer
@@ -473,14 +580,22 @@ return require('packer').startup{function()
 				--       --> Code Action
 				-- for example, in flutter/dart you can wrap or delete widgets using code action.
 				-- for more see :help builtin.lsp_code_actions() or :help builtin.lsp_range_code_actions()
-				keymap('n', "<leader>ca", "<cmd>lua  require('telescope.builtin').lsp_code_actions( {layout_config={width=50, height=20} } ) <CR>", {silent=true, noremap=true})
-				keymap('x', "<leader>ca", "<cmd>lua  require('telescope.builtin').lsp_range_code_actions( {layout_config={width=50, height=25} } ) <CR>", {silent=true, noremap=true})
+				-- NOTE: Telescope has remove support for code actions -- must use nvim api.
+				-- keymap('n', "<leader>ca", "<cmd>lua  require('telescope.builtin').lsp_code_actions( {layout_config={width=50, height=20} } ) <CR>", {silent=true, noremap=true})
+				-- keymap('x', "<leader>ca", "<cmd>lua  require('telescope.builtin').lsp_range_code_actions( {layout_config={width=50, height=25} } ) <CR>", {silent=true, noremap=true})
 
-				-- live_grep, but not in "build" dir.
-				keymap('n', "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({file_ignore_pattern={\"build\"}}) <CR>", {silent=true, noremap=true})
+				-- live_grep, but not in any "build*" dir.
+				keymap('n', "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({file_ignore_pattern={\"build*\"}}) <CR>", {silent=true, noremap=true})
+
+				-- ;r resumes last telescope window, very useful for live_grep.
+				keymap('n', "<leader>r", "<cmd>lua require('telescope.builtin').resume() <CR>", {silent=true, noremap=true})
+
+				-- man pages
+				keymap('n', "<leader>m", "<cmd>lua require('telescope.builtin').man_pages{sections={\"ALL\"}} <CR>", {silent=true, noremap=true})
 			end
 		}
 
+		--[[
 		use { -- Use (neo)vim terminal in the floating/popup window.
 		'voldikss/vim-floaterm',
 		config = function()
@@ -518,16 +633,6 @@ return require('packer').startup{function()
 			-- compile, run or compile and run program.
 			-- it depends on python script, https://github.com/shaeinst/lazy-builder. visit to know more.
 
-			--[[
-			local lazy_builder_py = "~/.local/share/nvim/custom_tools/lazy-builder/build.py"
-			local build_path = "~/.cache/build_files"
-			local run       = ":w | :FloatermNew python "..lazy_builder_py.." -o "..build_path.." -r 1 % <CR>"
-			local build     = ":w | :FloatermNew time python "..lazy_builder_py.." -o "..build_path.." -b 1 % <CR>"
-			local buildrun  = ":w | :FloatermNew time python "..lazy_builder_py.." -o "..build_path.." -br 1 % <CR>"
-			keymap('n', '<Leader>r', run,       { noremap=true, silent=true }) -- Run
-			keymap('n', '<Leader>o', build,     { noremap=true, silent=true }) -- build
-			keymap('n', '<Leader>O', buildrun,  { noremap=true, silent=true }) -- build and run
-			--]]
 
 			-- Write-all, search for last command with 'make', then execute it, then pop up floaterm.
 			-- Note: floaterm window must already exist!
@@ -536,8 +641,27 @@ return require('packer').startup{function()
 			keymap('n', '<Leader>o', ":wa | execute('" .. build .. "') | :FloatermToggle <CR>", {noremap=true, silent=true})
 
 		end}
+		--]]
+		--
+		use { -- Use (neo)vim terminal in the floating/popup window.
+			'numToStr/FTerm.nvim',
+			config = function()
+				require 'FTerm'.setup ({
+					dimensions  = {
+						height = 0.8,
+						width = 0.6,
+					},
+				})
+				-- local fterm = require('FTerm');
+				vim.api.nvim_create_user_command('FTermToggle', require('FTerm').toggle, { bang = true })
+				vim.keymap.set('n', '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
+				vim.keymap.set('t', '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>') -- Just open
+				vim.keymap.set({'t','n'}, '<A-r>', '<C-\\><C-n><CMD>lua require("FTerm").run(\'r\')<CR>') -- Repeat
+				vim.keymap.set({'t','n'}, '<A-n>', '<C-\\><C-n><CMD>lua require("FTerm").run(\'ninja\')<CR>') -- Ninja
+			end
+		}
 
-		use { 
+		use {
 			'norcalli/nvim-colorizer.lua',
 			config = function()
 				require 'colorizer'.setup ({
@@ -550,14 +674,13 @@ return require('packer').startup{function()
 					'vim';
 					'dart';
 					'python';
-					'*';
-
 				},
 				{
 					mode = 'background';
 					names = true;
 					css = true;
 					css_fn = true;
+					rgb_fn = true;
 				})
 			end
 		}
@@ -956,8 +1079,8 @@ return require('packer').startup{function()
 				fg          = '#C8C8C8',
 				--bg          = '#1F1F23',
 				-- bg          = '#101020',
-				bg          = '#121225',
-				bgInactive          = '#060609',
+				bg          = '#2a2a40',
+				bgInactive          = 'none',
 				black       = "#000000",
 				--black1      = '#1B1B1B',
 				black1          = '#101020',
@@ -1075,7 +1198,7 @@ return require('packer').startup{function()
 	-- }
 	use {
 		"neovim/nvim-lspconfig",
-		config = [[
+		config = function()
 			require("mason").setup()
 			require("mason-lspconfig").setup()
 
@@ -1083,16 +1206,17 @@ return require('packer').startup{function()
 			function (server_name)
 				require('lspconfig')[server_name].setup {
 					autostart=false,
-					-- on_attach=my_lsp_on_attach
+					--on_attach=my_lsp_on_attach
 				}
 			end
 			}
-			vim.api.nvim_create_autocmd('LspAttach', {
-				desc = 'LSP actions',
-				callback = my_lsp_on_attach })
+
+			--[[ vim.api.nvim_create_autocmd('LspAttach', {
+				 desc = 'LSP actions',
+				 callback = my_lsp_on_attach })--]]
 
 
-		]],
+			end,
 		requires = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
@@ -1101,6 +1225,32 @@ return require('packer').startup{function()
 
 	use {
 			'nvim-lua/lsp-status.nvim',
+	}
+
+
+	use {
+		'rmagatti/goto-preview',
+		config = function()
+			require('goto-preview').setup {}
+			vim.keymap.set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
+			vim.keymap.set("n", "gpt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", {noremap=true})
+			vim.keymap.set("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", {noremap=true})
+			vim.keymap.set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", {noremap=true})
+			vim.keymap.set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", {noremap=true})
+		end
+	}
+
+	-- I do not like this. Disabled.
+	use {
+	'stevearc/oil.nvim',
+		config = function()
+			require('oil').setup({
+
+			})
+			vim.keymap.set("n", "<leader>o", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+		end,
+		cond=false
+
 	}
 
 	use {
@@ -1137,7 +1287,9 @@ return require('packer').startup{function()
 				--auto_close          = false,
 				open_on_tab         = false,
 				hijack_cursor       = false,
-				update_cwd          = false,
+				update_cwd          = true,
+				respect_buf_cwd = false,
+				sync_root_with_cwd = true, -- NOTE: New.
 				-- option was renamed
 				--update_to_buf_dir   = {
 				hijack_directories   = {
@@ -1158,7 +1310,8 @@ return require('packer').startup{function()
 				},
 				update_focused_file = {
 					enable      = true,
-					update_cwd  = true, -- XXX(SLEE) Looks like this is what I want: if file is not an ancestor, then cwd to its parent
+					-- update_cwd  = true, -- XXX(SLEE) Looks like this is what I want: if file is not an ancestor, then cwd to its parent
+					update_cwd  = false, -- XXX(SLEE) Looks like this is what I want: if file is not an ancestor, then cwd to its parent
 					ignore_list = {}
 				},
 				system_open = {
@@ -1167,13 +1320,15 @@ return require('packer').startup{function()
 				},
 				filters = {
 					dotfiles = false,
-					custom = {}
+					custom = {
+						"__pycache__",
+					}
 				},
 
 				view = {
 					width = 45,
 					-- height = 30,
-					hide_root_folder = false,
+					-- hide_root_folder = false,
 					side = 'left',
 					--auto_resize = false,
 					--[[mappings = {
@@ -1250,6 +1405,22 @@ return require('packer').startup{function()
 			end
 	}
 
+	use ({
+		'nvimdev/lspsaga.nvim',
+		after = 'nvim-lspconfig',
+		config = function()
+			require('lspsaga').setup({
+				-- https://github.com/nvimdev/lspsaga.nvim/blob/main/lua/lspsaga/init.lua
+				lightbulb = { virtual_text = false },
+				outline = {
+					keys = { toggle_or_jump = '<CR>' }
+				}
+			})
+			vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<cr>", {silent=true, noremap=true})
+		end,
+	})
+
 	use {
 			'folke/trouble.nvim',
 			config = function()
@@ -1299,6 +1470,12 @@ return require('packer').startup{function()
 						},
 						use_lsp_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
 					}
+
+					vim.keymap.set("n", "<Space>t", "<cmd>TroubleToggle<cr>", {silent=true, noremap=true})
+					vim.keymap.set("n", "<Space>q", "<cmd>TroubleToggle quickfix<cr>", {silent=true, noremap=true})
+					vim.keymap.set("n", "<Space>y", "<cmd>TroubleToggle lsp_document_diagonstics<cr>", {silent=true, noremap=true})
+
+
 			end
 	}
 
@@ -1346,6 +1523,8 @@ return require('packer').startup{function()
 			{'honza/vim-snippets', before='nvim-snippy'}
 		},
 
+		cond = false, -- NOTE: I've turned this off, never really used it.
+
 		config = function() require('snippy').setup {
 			mappings = {
 				is = {
@@ -1365,6 +1544,9 @@ return require('packer').startup{function()
 
 	use {
 		'hrsh7th/nvim-cmp',
+
+		cond = false, -- NOTE: I've turned this off, never really used it.
+
 		event = 'InsertEnter',
 		requires = {
 			{ 'hrsh7th/cmp-nvim-lsp', after='nvim-cmp'}, -- nvim-cmp source for neovim builtin LSP client
@@ -1473,19 +1655,53 @@ return require('packer').startup{function()
 	use { --  Add/change/delete surrounding delimiter pairs with ease.
 		'kylechui/nvim-surround',
 		-- event = 'InsertEnter',
-		keys = {'c'},
+		-- keys = {'c'},
 		-- config = [[ require('plugins/nvim-surround') ]]
 		config = function() require('nvim-surround').setup {
 		} end
 	}
 
+	use {
+		'~/.config/nvim/lua/decl2def',
+		-- config = function() require('decl2def').setup{key='yd'}
+		config = function() require('decl2def').setup{key='dy'}
+		end
+	}
+
+	use "rebelot/kanagawa.nvim"
+	use { 'dasupradyumna/midnight.nvim' }
+	use "rose-pine/neovim"
+	use "Abstract-IDE/Abstract-cs"
+	--[[
+	use "AhmedAbdulrahman/aylin.vim"
+	use { "catppuccin/nvim", as = "catppuccin" }
+	use 'ramojus/mellifluous.nvim'
+	use "savq/melange-nvim"
+	use 'nyoom-engineering/nyoom.nvim'
+	use 'yonlu/omni.vim'
+	use 'navarasu/onedark.nvim'
+	use "rafamadriz/neon"
+	use 'sainnhe/edge'
+	 use 'ishan9299/modus-theme-vim'
+	 use { 'ofirgall/ofirkai.nvim', branch = 'exp' }
+	 use 'titanzero/zephyrium'
+	-- use("water-sucks/darkrose.nvim")
+	use "kyoh86/momiji"
+	use "AlessandroYorba/Alduin"
+	use "danilo-augusto/vim-afterglow"
+	use "AlexvZyl/nordic.nvim"
+	use "ayu-theme/ayu-vim"
+	--]]
+
 
 	if packer_bootstrap then
 		require('packer').sync()
-	end	
+	end
 	setup_maps()
 	setup_config()
-	setup_colors()
+	-- setup_colors_custom()
+	setup_colors_aug2023()
+
 end, config = {
   -- Move to lua dir so impatient.nvim can cache it
   compile_path = vim.fn.stdpath('config')..'/plugin/packer_compiled.lua'
