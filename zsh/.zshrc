@@ -225,6 +225,11 @@ swapFile() {
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
+if [ -f ~/.config/zsh/.zshrc.local ]; then
+	. ~/.config/zsh/.zshrc.local
+fi
 

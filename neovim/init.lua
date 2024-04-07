@@ -39,116 +39,6 @@ function toggle_lsp()
 	end
 end
 
--- todo TEST THIS
---[[
-function my_lsp_on_attach(client, bufnr)
-	-- print('attach lsp to', bufnr)
--- function my_lsp_on_attach()
-	-- print('attach lsp')
-	-- local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-	-- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-	-- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-	-- Disable LSP highlighting since I use treesitter
-	for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-		vim.api.nvim_set_hl(0, group, {})
-	end
-
-	local buf_set_keymap = function(mode, lhs, rhs, opts)
-      vim.keymap.set(mode, lhs, rhs, opts)
-    end
-
-	-- Mappings.
-	local opts = { noremap=true, silent=true, buffer=true }
-
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	--─────────────────────────────────────────────────--
-
-	-- New keymaps that mostly use '\' as a prefix
-	buf_set_keymap('n', '\\e',   '<cmd>lua vim.diagnostic.open_float()<CR>',  opts)
-	buf_set_keymap('n', '\\[',         '<cmd>lua vim.diagnostic.goto_prev()<CR>',              opts)
-	buf_set_keymap('n', '\\]',         '<cmd>lua vim.diagnostic.goto_next()<CR>',              opts)
-	buf_set_keymap('n', '\\q',   '<cmd>lua vim.diagnostic.set_loclist()<CR>',            opts)
-
-	buf_set_keymap('n', '\\D',         '<Cmd>lua vim.lsp.buf.declaration()<CR>',                   opts)
-	buf_set_keymap('n', '\\d',         '<Cmd>lua vim.lsp.buf.definition()<CR>',                    opts)
-	buf_set_keymap('n', 'K',          '<Cmd>lua vim.lsp.buf.hover()<CR>',                         opts)
-	buf_set_keymap('n', '\\i',         '<cmd>lua vim.lsp.buf.implementation()<CR>',                opts)
-	buf_set_keymap('n', '\\s',        '<cmd>lua vim.lsp.buf.signature_help()<CR>',                opts)
-	buf_set_keymap('n', '\\D',   '<cmd>lua vim.lsp.buf.type_definition()<CR>',               opts)
-	buf_set_keymap('n', '\\r',  '<cmd>lua vim.lsp.buf.rename()<CR>',                        opts)
-	buf_set_keymap('n', '\\l',         '<cmd>lua vim.lsp.buf.references()<CR>',                    opts)
-	buf_set_keymap("n", "\\f",   '<cmd>lua vim.lsp.buf.formatting()<CR>',                    opts)
-	buf_set_keymap("n", "<C-m>",      '<cmd>lua vim.lsp.buf.completion()<CR>',                    opts)
-	buf_set_keymap("n", "\\g",      '<cmd>lua vim.lsp.buf.incoming_calls()<CR>',                    opts)
-	buf_set_keymap("n", "\\h",      '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>',                    opts)
-
-	-- code action is integrated with telescope, for more see "telescope.lua" file
-	-- buf_set_keymap('n', '<space>ca',    '<cmd>lua vim.lsp.buf.code_action()<CR>',                   opts)
-	-- buf_set_keymap('n', '<leader>wa',    '<cmd>lua vim.lsp.buf.add_workleader_folder()<CR>',          opts)
-	-- buf_set_keymap('n', '<leader>wr',    '<cmd>lua vim.lsp.buf.remove_workleader_folder()<CR>',       opts)
-	-- buf_set_keymap('n', '<leader>wl',   '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workleader_folders()))<CR>', opts)
-end
---]]
---
-local my_lsp_on_attach = function(client, bufnr)
-
-	-- lsp support on winbar
-	--[[
-	local import_navic, navic = pcall(require, "nvim-navic")
-	if import_navic then
-		if client.server_capabilities.documentSymbolProvider then
-			navic.attach(client, bufnr)
-		end
-	end
-	--]]
-
-	local function buf_set_keymap(...) api.nvim_buf_set_keymap(bufnr, ...) end
-	local function buf_set_option(...) api.nvim_buf_set_option(bufnr, ...) end
-
-	---------------------
-	-- Avoiding LSP formatting conflicts
-	-- ref: https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
-	-- 2nd red: https://github.com/neovim/nvim-lspconfig/issues/1891#issuecomment-1157964108
-	-- neovim 0.8
-	client.server_capabilities.documentFormattingProvider = false
-	client.server_capabilities.documentRangeFormattingProvider = false
-	--------------------------
-
-	-- Enable completion triggered by <c-x><c-o>
-	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-	-- Mappings.
-	local options = {noremap = true, silent = true}
-
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	-- ───────────────────────────────────────────────── --
-	buf_set_keymap('n', '<Space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', options)
-	buf_set_keymap('n', '<Space>q', '<cmd>lua vim.diagnostic.set_loclist({})<CR>', options)
-	buf_set_keymap('n', '<Space>n', '<cmd>lua vim.diagnostic.goto_next()<CR>', options)
-	buf_set_keymap('n', '<Space>b', '<cmd>lua vim.diagnostic.goto_prev()<CR>', options)
-
-	buf_set_keymap('n', '<Space>d', '<Cmd>lua vim.lsp.buf.definition()<CR>', options)
-	buf_set_keymap('n', '<Space>D', '<Cmd>lua vim.lsp.buf.declaration()<CR>', options)
-	buf_set_keymap('n', '<Space>T', '<cmd>lua vim.lsp.buf.type_definition()<CR>', options)
-	buf_set_keymap('n', '<Space>i', '<cmd>lua vim.lsp.buf.implementation()<CR>', options)
-	buf_set_keymap('n', '<Space>s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', options)
-	buf_set_keymap('n', '<Space>h', '<Cmd>lua vim.lsp.buf.hover()<CR>', options)
-	buf_set_keymap('n', 'K',        '<Cmd>lua vim.lsp.buf.hover()<CR>', options)
-	-- using 'filipdutescu/renamer.nvim' for rename
-	-- buf_set_keymap('n', '<space>rn',	'<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	buf_set_keymap('n', '<Space>r', '<cmd>Telescope lsp_references<CR>', options)
-	buf_set_keymap("n", "<Space>f", '<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>', options)
-
-	buf_set_keymap('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>',       options)
-	buf_set_keymap('x', '<Space>a', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', options)
-
-	buf_set_keymap('n', '<space>ca',    '<cmd>lua vim.lsp.buf.code_action()<CR>',                   opts)
-
-	-- buf_set_keymap('n', '<leader>wa',   '<cmd>lua vim.lsp.buf.add_workleader_folder()<CR>',          opts)
-	-- buf_set_keymap('n', '<leader>wr',   '<cmd>lua vim.lsp.buf.remove_workleader_folder()<CR>',       opts)
-	-- buf_set_keymap('n', '<leader>wl',   '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workleader_folders()))<CR>', opts)
-end
 
 function setup_maps()
 	local keymap = vim.api.nvim_set_keymap
@@ -182,8 +72,10 @@ function setup_maps()
 	keymap('n', '<C-s>',    '<ESC>:w <CR>', { noremap=true, silent=true })
 
 	-- scroll window up/down
-	keymap('i', '<C-e>', '<ESC><C-e>', { silent=true })
-	keymap('i', '<C-y>', '<ESC><C-y>', { silent=true })
+	-- keymap('i', '<C-e>', '<ESC><C-e>', { silent=true })
+	-- keymap('i', '<C-y>', '<ESC><C-y>', { silent=true })
+	-- keymap('i', '<C-e>', '<C-x><C-e>', { silent=true, noremap=true })
+	-- keymap('i', '<C-y>', '<C-x><C-y>', { silent=true, noremap=true })
 	keymap('n', '<C-h>', 'zh', { silent=true })     -- left
 	keymap('n', '<C-l>', 'zl', { silent=true })     -- right
 
@@ -209,6 +101,9 @@ function setup_maps()
 	-- move selected line(s) up or down
 	keymap('v', 'J', ":m '>+1<CR>gv=gv", {noremap=true, silent=true})
 	keymap('v', 'K', ":m '<-2<CR>gv=gv", {noremap=true, silent=true})
+
+	-- Complete file name (default in i mode is <C-x><C-f>, let's map just <C-f>)
+	keymap('i', '<C-f>', "<C-x><C-f>", {noremap=true, silent=true})
 
 end
 
@@ -257,11 +152,20 @@ function! MyHighlights() abort
 	highlight Comment    guifg=#7e7a96
 	highlight NvimTreeOpenedFile guibg=none guifg=#cf90ff
 	highlight @namespace guifg=#af9998
+	"highlight @type.builtin.cpp guifg=#a080e2
+	"highlight @function guifg=#0838ea
+	"highlight @type.cpp guifg=#a0a0d2
 	highlight @type.qualifier.cpp guifg=#70a0d2
 	highlight @field guifg=#dab9df
 	highlight StorageClass guifg=#ca7a7a
 	highlight String guifg=#afceac " Strings a little too bright imo.
 	highlight Visual guibg=#383d39
+
+	" highlight @property guifg=#eeeeee
+	" highlight @property guifg=#ffffff
+	highlight @property guifg=none
+	highlight @property guifg=#dab9df
+	highlight link @module @namespace
 
 endfunction
 
@@ -587,11 +491,18 @@ return require('packer').startup{function()
 				-- live_grep, but not in any "build*" dir.
 				keymap('n', "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({file_ignore_pattern={\"build*\"}}) <CR>", {silent=true, noremap=true})
 
+				-- live_grep current word
+				vim.cmd([[nnoremap <leader>G :execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>]])
+
 				-- ;r resumes last telescope window, very useful for live_grep.
 				keymap('n', "<leader>r", "<cmd>lua require('telescope.builtin').resume() <CR>", {silent=true, noremap=true})
 
 				-- man pages
 				keymap('n', "<leader>m", "<cmd>lua require('telescope.builtin').man_pages{sections={\"ALL\"}} <CR>", {silent=true, noremap=true})
+
+				-- man pages, current word
+				vim.cmd([[nnoremap K :execute 'Telescope man_pages sections={"2","3","5","7"} default_text=' . expand('<cword>')<cr>]])
+
 			end
 		}
 
@@ -674,6 +585,7 @@ return require('packer').startup{function()
 					'vim';
 					'dart';
 					'python';
+					'lua';
 				},
 				{
 					mode = 'background';
@@ -684,6 +596,7 @@ return require('packer').startup{function()
 				})
 			end
 		}
+
 
 		use { "shaeinst/roshnivim-cs" }
 		-- Now I included this locally
@@ -696,6 +609,7 @@ return require('packer').startup{function()
 				vim.g.indentLine_char = '▏'
 				--vim.g.indentLine_char_list = ['|', '¦', '┆', '┊']
 				vim.g.indentLine_color_gui = '#1a2030'
+				vim.g.indentLine_setConceal = 0
 			end
 		}
 
@@ -826,10 +740,108 @@ return require('packer').startup{function()
 		}
 		--]]
 
+		use {
+			'nvim-lualine/lualine.nvim',
+			requires = {
+				{'nvim-tree/nvim-web-devicons', opt = true},
+				{'linrongbin16/lsp-progress.nvim', config = function() require('lsp-progress').setup() end },
+			},
+			config = function()
+				-- Based on "horizon"
+				local colors = {
+					black        = '#1c1e26',
+					white        = '#6C6F93',
+					red          = '#F43E5C',
+					green        = '#49F740',
+					blue         = '#15B2FC',
+					yellow       = '#F09383',
+					mutedGreen   = '#aaffcc',
+					mutedRose     = '#ddaaca',
+					darkgray     = '#1f1C2a',
+					darkgrayIns     = '#1a1f2f',
+					lightgray    = '#2E203E',
+					lightgray2    = '#4E505E',
+					inactivegray = '#1f1E2f',
+				}
+				local my_theme = {
+					normal = {
+						-- a = { bg = colors.mutedGreen, fg = colors.black, },
+						a = { bg = colors.mutedRose, fg = colors.black, },
+						b = { bg = colors.lightgray, fg = colors.white },
+						c = { bg = colors.darkgray, fg = colors.white },
+					},
+					insert = {
+						a = { bg = colors.blue, fg = colors.black, gui = 'bold' },
+						b = { bg = colors.lightgray, fg = colors.white },
+						c = { bg = colors.darkgrayIns, fg = colors.white },
+					},
+					visual = {
+						a = { bg = colors.yellow, fg = colors.black, gui = 'bold' },
+						b = { bg = colors.lightgray, fg = colors.white },
+						c = { bg = colors.darkgray, fg = colors.white },
+					},
+					replace = {
+						a = { bg = colors.red, fg = colors.black, gui = 'bold' },
+						b = { bg = colors.lightgray, fg = colors.white },
+						c = { bg = colors.darkgray, fg = colors.white },
+					},
+					command = {
+						a = { bg = colors.green, fg = colors.black, gui = 'bold' },
+						b = { bg = colors.lightgray, fg = colors.white },
+						c = { bg = colors.darkgray, fg = colors.white },
+					},
+					inactive = {
+						a = { bg = colors.inactivegray, fg = colors.lightgray2, gui = 'bold' },
+						b = { bg = colors.inactivegray, fg = colors.lightgray2 },
+						c = { bg = colors.inactivegray, fg = colors.lightgray2 },
+					},
+				}
+
+
+				require('lualine').setup({
+					-- options = {theme = 'horizon'},
+					options = {theme = my_theme},
+					sections = {
+						lualine_a = { {'mode', fmt = function(str) return string.format("%-7s",string.lower(str)) end} },
+						-- NOTE: branch + diff are nice but slow.
+						-- lualine_b = {'branch', 'diff'},
+						lualine_b = {
+							{'diagnostics', sources={'nvim_lsp', 'nvim_diagnostic'}, always_visible=false },
+						},
+						lualine_c = {'filename',
+							require('lsp-progress').progress,
+						},
+						lualine_x = {'encoding', 'fileformat', 'filetype' },
+						-- lualine_x = {'encoding', 'fileformat', 'filetype' },
+						lualine_y = {'progress'},
+						lualine_z = {'location'}
+					},
+					inactive_sections = {
+						lualine_a = {},
+						lualine_b = {},
+						lualine_c = {'filename'},
+						lualine_x = {'location'},
+						lualine_y = {},
+						lualine_z = {}
+					},
+
+				})
+
+			vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+			vim.api.nvim_create_autocmd("User", {
+				group = "lualine_augroup",
+				pattern = "LspProgressStatusUpdated",
+				callback = require("lualine").refresh,
+			})
+
+			end
+		}
+
 		-- The Status Line / Status Bar
 		use {
 		-- 'feline-nvim/feline.nvim', tag = 'v0.3.3',
 		'feline-nvim/feline.nvim',
+		enabled = false,
 		requires = {
 			'nvim-lua/lsp-status.nvim',
 		},
@@ -1184,6 +1196,7 @@ return require('packer').startup{function()
 		end
 	}
 
+
 	-- The interaction of nvim's LSP client, the lspconfig helper, and the mason helper
 	-- is pretty confusing, and I still don't fully understand it.
 	-- But I have it configured as I want:
@@ -1206,14 +1219,18 @@ return require('packer').startup{function()
 			function (server_name)
 				require('lspconfig')[server_name].setup {
 					autostart=false,
-					--on_attach=my_lsp_on_attach
+					on_attach=function(client,buf) end
 				}
 			end
 			}
 
-			--[[ vim.api.nvim_create_autocmd('LspAttach', {
+
+			vim.api.nvim_create_autocmd('LspAttach', {
 				 desc = 'LSP actions',
-				 callback = my_lsp_on_attach })--]]
+				 callback = function(ev)
+					-- local client = vim.lsp.get_client_by_id(args.data.client_id)
+					vim.cmd([[set signcolumn=yes]])
+				 end})
 
 
 			end,
@@ -1349,6 +1366,7 @@ return require('packer').startup{function()
 			'nvim-treesitter/nvim-treesitter',
 			-- commit='4cccb6f494eb255b32a290d37c35ca12584c74d0',
 			-- commit='239bb86b54d07a955caa0200053484298879ca59',
+			commit='bd5517989398145c36d859927fb4e76a45c66cf6',
 			run = ':TSUpdate',
 			config = function()
 				require'nvim-treesitter.configs'.setup {
@@ -1416,8 +1434,17 @@ return require('packer').startup{function()
 					keys = { toggle_or_jump = '<CR>' }
 				}
 			})
-			vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<cr>", {silent=true, noremap=true})
-			vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>f", "<cmd>Lspsaga finder<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>d", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>D", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>Q", "<cmd>Lspsaga show_buf_diagnostics<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>i", "<cmd>Lspsaga goto_definition<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>I", "<cmd>Lspsaga peek_definition<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>a", "<cmd>Lspsaga code_action<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>c", "<cmd>Lspsaga incoming_calls<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>C", "<cmd>Lspsaga outgoing_calls<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>O", "<cmd>Lspsaga outline<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space>h", "<cmd>Lspsaga hover<cr>", {silent=true, noremap=true})
 		end,
 	})
 
@@ -1473,7 +1500,7 @@ return require('packer').startup{function()
 
 					vim.keymap.set("n", "<Space>t", "<cmd>TroubleToggle<cr>", {silent=true, noremap=true})
 					vim.keymap.set("n", "<Space>q", "<cmd>TroubleToggle quickfix<cr>", {silent=true, noremap=true})
-					vim.keymap.set("n", "<Space>y", "<cmd>TroubleToggle lsp_document_diagonstics<cr>", {silent=true, noremap=true})
+					-- vim.keymap.set("n", "<Space>y", "<cmd>TroubleToggle lsp_document_diagonstics<cr>", {silent=true, noremap=true})
 
 
 			end
@@ -1661,16 +1688,21 @@ return require('packer').startup{function()
 		} end
 	}
 
+	--[[
 	use {
 		'~/.config/nvim/lua/decl2def',
 		-- config = function() require('decl2def').setup{key='yd'}
 		config = function() require('decl2def').setup{key='dy'}
 		end
 	}
+	--]]
 
 	use "rebelot/kanagawa.nvim"
 	use { 'dasupradyumna/midnight.nvim' }
-	use "rose-pine/neovim"
+	use {
+		"rose-pine/neovim",
+		commit = '92762f4fa2144c05db760ea254f4c399a56a7ef5'
+	}
 	use "Abstract-IDE/Abstract-cs"
 	--[[
 	use "AhmedAbdulrahman/aylin.vim"
@@ -1694,6 +1726,27 @@ return require('packer').startup{function()
 	--]]
 
 
+	--[[
+	use {
+		'ggandor/leap.nvim',
+		config = function()
+			vim.api.nvim_set_keymap('n', '<leader>s', 's',  {noremap=true})
+			vim.api.nvim_set_keymap('n', '<leader>S', 'S', {noremap=true})
+			require('leap').setup({})
+			require('leap').add_default_mappings()
+		end
+	}
+	--]]
+
+	use {
+		'junegunn/vim-easy-align',
+		config = function()
+			vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)',  {noremap=true})
+			vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)',  {noremap=true})
+		end
+	}
+
+
 	if packer_bootstrap then
 		require('packer').sync()
 	end
@@ -1701,6 +1754,9 @@ return require('packer').startup{function()
 	setup_config()
 	-- setup_colors_custom()
 	setup_colors_aug2023()
+
+	vim.cmd([[set conceallevel=0]])
+
 
 end, config = {
   -- Move to lua dir so impatient.nvim can cache it
