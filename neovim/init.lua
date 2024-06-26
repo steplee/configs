@@ -1219,7 +1219,9 @@ return require('packer').startup{function()
 			function (server_name)
 				require('lspconfig')[server_name].setup {
 					autostart=false,
-					on_attach=function(client,buf) end
+					on_attach=function(client,buf)
+						vim.cmd([[set signcolumn=yes]])
+					end
 				}
 			end
 			}
@@ -1439,6 +1441,7 @@ return require('packer').startup{function()
 			vim.keymap.set("n", "<Space>D", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent=true, noremap=true})
 			vim.keymap.set("n", "<Space>Q", "<cmd>Lspsaga show_buf_diagnostics<cr>", {silent=true, noremap=true})
 			vim.keymap.set("n", "<Space>i", "<cmd>Lspsaga goto_definition<cr>", {silent=true, noremap=true})
+			vim.keymap.set("n", "<Space><Space>i", "<cmd>lua vim.lsp.buf.definition()<cr>", {silent=true, noremap=true})
 			vim.keymap.set("n", "<Space>I", "<cmd>Lspsaga peek_definition<cr>", {silent=true, noremap=true})
 			vim.keymap.set("n", "<Space>a", "<cmd>Lspsaga code_action<cr>", {silent=true, noremap=true})
 			vim.keymap.set("n", "<Space>c", "<cmd>Lspsaga incoming_calls<cr>", {silent=true, noremap=true})
