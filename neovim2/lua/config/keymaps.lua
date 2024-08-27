@@ -29,8 +29,8 @@ function setup_maps()
 	cmd([[ autocmd BufWinEnter quickfix map <buffer> <C-c> :q<CR> ]])
 
 	-- Toggle LSP
-	keymap('n', '<localleader>l', [[<Cmd>lua toggle_lsp()<CR>]], {silent=true, desc="toggle lsp"})
-	keymap('n', '<localleader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', {silent=true}) -- code action
+	keymap('n', '<Space>l', [[<Cmd>lua toggle_lsp()<CR>]], {silent=true, desc="toggle lsp"})
+	-- keymap('n', '<localleader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', {silent=true}) -- code action
 
 	-- to quit vim
 	cmd([[ autocmd BufEnter * nmap silent <buffer> <Leader>q :bd<CR> ]])
@@ -74,6 +74,17 @@ function setup_maps()
 	-- Complete file name (default in i mode is <C-x><C-f>, let's map just <C-f>)
 	keymap('i', '<C-f>', "<C-x><C-f>", {noremap=true, silent=true})
 
+	-- Allow C-w C-w in terminal mode
+	keymap('t', '<C-w>', '<C-\\><C-w>', {noremap=true})
+	keymap('t', 'jk', '<Esc>', {noremap=true})
+
+	-- A-m simply once prompts omnifunc popup.
+	-- And A-m when in popupmenu does same as C-n (down one)
+	-- cmd('inoremap <expr> <C-m> pumvisible() ? "<C-n>" : "<C-x><C-o>"')
+	cmd('imap <expr> <A-n> pumvisible() ? "<C-n>" : "<C-x><C-o>"')
+	-- make a-n and a-p act like c-n and c-p
+	cmd('imap <expr> <A-p> pumvisible() ? "<C-p>" : "<A-p>"')
+	-- cmd('imap <A-n> <C-n>')
 end
 
 

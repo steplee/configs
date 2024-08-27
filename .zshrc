@@ -114,3 +114,5 @@ swapFile() {
 }
 
 export GCM_CREDENTIAL_STORE=plaintext
+
+alias n=ninja -j9

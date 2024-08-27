@@ -181,7 +181,7 @@ return {
 {
   "folke/noice.nvim",
   event = "VeryLazy",
-  -- enabled = false,
+  enabled = false,
   opts = {
     lsp = {
       override = {
@@ -192,7 +192,16 @@ return {
     },
 
 	-- cmdline = {enabled=false, view="cmdline", opts = {replace = false}, replace=false},
+	cmdline = {view="cmdline_popup", opts = {replace = false}, replace=false},
     routes = {
+      {
+        view = "notify",
+        filter = {
+			event = "msg_showmode",
+			["not"] = { find = "INSERT" },
+		},
+      },
+
       {
         filter = {
           event = "msg_show",

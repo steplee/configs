@@ -18,9 +18,8 @@ return {
 
 				},
 
-				config = function()
-					require('telescope').setup{
-					}
+				config = function(_,opts)
+					require('telescope').setup(opts)
 					require('telescope').load_extension('fzf')
 					require('telescope').load_extension('ui-select')
 				end,
@@ -33,7 +32,10 @@ return {
 						desc = "Switch Buffer",
 					},
 
-					{ "<localleader>/", "<cmd>lua require('telescope.builtin').live_grep({file_ignore_pattern={\"build*\"}}) <CR>", desc = "Grep (Root Dir)" },
+					{ "<localleader>\\", "<cmd>lua require('telescope.builtin').builtin()<CR>", desc = "Telescope" },
+
+					{ "<localleader>/", "<cmd>lua require('telescope.builtin').live_grep({file_ignore_pattern={\"build*\"}}) <CR>", desc = "Live Grep (Root Dir)" },
+					{ "<localleader>ss", "<cmd>lua require('telescope.builtin').live_grep({file_ignore_pattern={\"build*\"}}) <CR>", desc = "Live Grep (Root Dir)" },
 					-- { "<localleader>sg", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
 					-- { "<localleader>sG", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
 
@@ -44,7 +46,7 @@ return {
 					{ "<localleader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files (cwd)" },
 					{ "<localleader>fF", "<cmd>Telescope find_files root=false<cr>", desc = "Find Files (cwd)" },
 					{ "<localleader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Files (git-files)" },
-					{ "<localleader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+					{ "<localleader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent / Old Files" },
 					-- { "<localleader>fR", LazyVim.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
 					-- { "<localleader>fc", LazyVim.pick.config_files(), desc = "Find Config File" },
 
@@ -76,8 +78,27 @@ return {
 					-- { "<leader>sW", LazyVim.pick("grep_string", { root = false }), mode = "v", desc = "Selection (cwd)" },
 					-- { "<leader>uC", LazyVim.pick("colorscheme", { enable_preview = true }), desc = "Colorscheme with Preview" },
 					{ "<localleader>uC", "<cmd>Telescope colorscheme enable_preview=true<cr>", desc = "Colorscheme with Preview" },
+					{ '<leader>b', "<cmd>lua require('telescope.builtin').buffers({sort_mru=1})<CR>", silent=true, noremap=true, desc="Buffers"},
+					{ '<leader>d', "<cmd>lua require('telescope.builtin').buffers({sort_mru=1, only_cwd=1, ignore_current_buffer=1})<CR>", silent=true, noremap=true, desc="Buffers (cwd)"},
+
+					-- LSP
+					{ "<Space>r", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", desc = "LspReferences" },
+					{ "<Space>c", "<cmd>lua require('telescope.builtin').lsp_incoming_calls()<cr>", desc = "LspIncomingCalls" },
+					{ "<Space>C", "<cmd>lua require('telescope.builtin').lsp_outgoing_calls()<cr>", desc = "LspOutgoingCalls" },
+					{ "<Space>s", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>", desc = "LspDocumentSymbols" },
+					{ "<Space>S", "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>", desc = "LspWorkspaceSymbols" },
+					{ "<Space>W", "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>", desc = "LspDynamicWorkspaceSymbols" },
+					{ "<Space>d", "<cmd>lua require('telescope.builtin').diagnostics({bufnr=0})<cr>", desc = "LspBufDiagnostics" },
+					{ "<Space>D", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", desc = "LspAllDiagnostics" },
+					{ "<Space>i", "<cmd>lua require('telescope.builtin').lsp_implementations()<cr>", desc = "LspImplementations" },
+					{ "<Space>I", "<cmd>lua require('telescope.builtin').lsp_definitions()<cr>", desc = "LspDefinitions" },
+					{ "<Space>t", "<cmd>lua require('telescope.builtin').lsp_type_definitions()<cr>", desc = "LspTypeDefinitions" },
+
+
+
+
 					{
-						"<localleader>ss",
+						"<localleader>sy",
 						function()
 							require("telescope.builtin").lsp_document_symbols({
 								-- symbols = LazyVim.config.get_kind_filter(),
@@ -86,7 +107,7 @@ return {
 						desc = "Goto Symbol",
 					},
 					{
-						"<localleader>sS",
+						"<localleader>sY",
 						function()
 							require("telescope.builtin").lsp_dynamic_workspace_symbols({
 								-- symbols = LazyVim.config.get_kind_filter(),
@@ -117,8 +138,11 @@ return {
 
 					return {
 						defaults = {
-							prompt_prefix = " ",
-							selection_caret = " ",
+							-- prompt_prefix = " ",
+							-- selection_caret = " ",
+							prompt_prefix       = "🔎︎ ",
+							selection_caret     = "➤ ",
+							use_less            = true,
 							-- open files in the first window that is an actual file.
 							-- use the current window if no other window is available.
 							get_selection_window = function()
@@ -134,7 +158,7 @@ return {
 							end,
 							mappings = {
 								i = {
-									["<c-t>"] = open_with_trouble,
+									-- ["<c-t>"] = open_with_trouble,
 									["<a-t>"] = open_with_trouble,
 									["<a-i>"] = find_files_no_ignore,
 									["<a-h>"] = find_files_with_hidden,
@@ -142,11 +166,39 @@ return {
 									["<C-Up>"] = actions.cycle_history_prev,
 									["<C-f>"] = actions.preview_scrolling_down,
 									["<C-b>"] = actions.preview_scrolling_up,
+									['<c-q>'] = actions.delete_buffer -- remove entry after marking with `Tab` and pressing C-q
 								},
 								n = {
 									["q"] = actions.close,
+									['<c-q>'] = actions.delete_buffer -- remove entry after marking with `Tab` and pressing C-q
 								},
 							},
+
+							file_ignore_patterns= {
+								"__pycache__/", "__pycache__/*",
+								"build/",       "gradle/", "node_modules/", "node_modules/*", "obj/Debug",
+								"smalljre_*/*", "target/", "vendor/*",      "bin/Debug",      "venv/",
+								".dart_tool/", ".git/", ".github/", ".gradle/",".idea/", ".vscode/",
+								"%.sqlite3", "%.ipynb", "%.lock", "%.pdb",   "%.so",
+								"%.dll",     "%.class", "%.exe",  "%.cache", "%.pdf",  "%.dylib",
+								"%.jar",     "%.docx",  "%.met",  "%.burp",  "%.mp4",  "%.mkv",   "%.rar",
+								"%.zip",     "%.7z",    "%.tar",  "%.bz2",   "%.epub", "%.flac",  "%.tar.gz",
+							},
+
+							initial_mode = "insert",
+							selection_strategy  = "reset",
+							sorting_strategy    = "ascending",
+							layout_strategy     = "horizontal",
+							layout_config = {
+								horizontal = {
+									mirror = false,
+									prompt_position = "top"
+								},
+								vertical = {
+									mirror = false
+								},
+							},
+
 						},
 					}
 				end,

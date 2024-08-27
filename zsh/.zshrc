@@ -233,3 +233,4 @@ if [ -f ~/.config/zsh/.zshrc.local ]; then
 	. ~/.config/zsh/.zshrc.local
 fi
 
+setopt magic_equal_subst

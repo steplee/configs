@@ -84,6 +84,7 @@ return {
 	-- Use (neo)vim terminal in the floating/popup window.
 	{
 		'numToStr/FTerm.nvim',
+		enabled = false,
 		config = function()
 			require 'FTerm'.setup ({
 				dimensions  = {
@@ -98,6 +99,62 @@ return {
 			vim.keymap.set({'t','n'}, '<A-r>', '<C-\\><C-n><CMD>lua require("FTerm").run(\'r\')<CR>') -- Repeat
 			vim.keymap.set({'t','n'}, '<A-n>', '<C-\\><C-n><CMD>lua require("FTerm").run(\'ninja\')<CR>') -- Ninja
 		end
+	},
+
+	-- Better terminal.
+	{
+		'akinsho/toggleterm.nvim',
+		version = "*",
+		keys = {
+			{'<A-i>', '<cmd>0ToggleTerm<cr>', noremap=true, silent=true, mode={'n','i','t'} },
+			{'<A-v>', '<cmd>5ToggleTerm direction="vertical" size=80<cr>', noremap=true, silent=true, mode={'n','i','t'} },
+
+			-- Exec last python command and show
+			-- {'<A-p>', '<cmd>0TermExec cmd=<C-r>python<cr>', noremap=true, silent=true, mode={'n','i','t'} },
+
+			-- Exec ninja and either show (A-r) or do not show (A-t)
+			{'<A-r>', '<cmd>0TermExec cmd=<C-r>ninja<Enter>', noremap=true, silent=true, mode={'n','i','t'} },
+			{'<A-t>', '<cmd>0TermExec go_back=0 open=0 cmd=<C-r>ninja<cr>', noremap=true, silent=true, mode={'n','i','t'} },
+		},
+		opts = {
+			direction = 'float',
+
+			-- needed when using :TermExec with open=0
+			on_open = function(term)
+				vim.cmd("startinsert!")
+				vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+			end,
+
+			winbar = {
+				enabled = false,
+				name_formatter = function(term) --  term: Terminal
+					return term.name
+				end
+			},
+			float_opts = {
+				border = 'single',
+				title_pos = 'right',
+				width = function()
+					return math.ceil(vim.o.columns * 0.75)
+				end,
+				height = function()
+					return math.ceil(vim.o.lines * 0.8)
+				end,
+
+				col = function()
+					return math.ceil(vim.o.columns * 0.2)
+				end,
+				row = function()
+					return math.ceil(vim.o.lines * 0.1)
+				end,
+			},
+			highlights = {
+				FloatBorder = {
+					guifg = "#333333",
+					-- guibg = "#333",
+				},
+			},
+		}
 	},
 
 
@@ -146,6 +203,7 @@ return {
 
 	{
 		"folke/todo-comments.nvim",
+		event = 'BufEnter',
 		dependencies = "nvim-lua/plenary.nvim",
 		lazy = true,
 		config = function()
@@ -156,13 +214,22 @@ return {
 
 	{
 		'stevearc/aerial.nvim',
-		enabled = false,
-		lazy = true,
-		keys = {'<leader>a', '<cmd>AerialToggle!<CR>'},
+		enabled = true,
+		-- lazy = true,
+		keys = {
+			{'<leader>a', '<cmd>lua require("aerial").toggle()<cr>', desc="ToggleAerial"},
+		},
+		opts = {
+			backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
+		},
 		-- config = function() require('aerial').setup {
 			-- vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
 		-- }
-		-- end
+		-- end,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons"
+		},
 	},
 
 	--  Add/change/delete surrounding delimiter pairs with ease.
