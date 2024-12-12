@@ -90,8 +90,8 @@ return {
 					{ "<Space>W", "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>", desc = "LspDynamicWorkspaceSymbols" },
 					{ "<Space>d", "<cmd>lua require('telescope.builtin').diagnostics({bufnr=0})<cr>", desc = "LspBufDiagnostics" },
 					{ "<Space>D", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", desc = "LspAllDiagnostics" },
-					{ "<Space>i", "<cmd>lua require('telescope.builtin').lsp_implementations()<cr>", desc = "LspImplementations" },
-					{ "<Space>I", "<cmd>lua require('telescope.builtin').lsp_definitions()<cr>", desc = "LspDefinitions" },
+					{ "<Space>I", "<cmd>lua require('telescope.builtin').lsp_implementations()<cr>", desc = "LspImplementations" },
+					{ "<Space>i", "<cmd>lua require('telescope.builtin').lsp_definitions()<cr>", desc = "LspDefinitions" },
 					{ "<Space>t", "<cmd>lua require('telescope.builtin').lsp_type_definitions()<cr>", desc = "LspTypeDefinitions" },
 
 

@@ -114,6 +114,13 @@ set.wildignore      = set.wildignore + '*.o,*.rej,*.so' -- patterns to ignore du
 set.completeopt     = 'menuone,noselect,noinsert'       -- completion options
 
 
+-- Dec 2024: Add default folding from Treesitter
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+
+
 ------------------------------------------------
 --    Automation
 ------------------------------------------------

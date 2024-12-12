@@ -125,6 +125,16 @@ bindkey \^U backward-kill-line
 bindkey "^[[Z" reverse-menu-complete
 bindkey "^[OA" up-line-or-beginning-search
 bindkey "^[OB" down-line-or-beginning-search
+
+# Delete to slash behind cursor
+backward-kill-dir () {
+    local WORDCHARS=${WORDCHARS/\/}
+    zle backward-kill-word
+    zle -f kill
+}
+zle -N backward-kill-dir
+bindkey '^[^?' backward-kill-dir
+#
 #####################
 
 
