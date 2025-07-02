@@ -1546,6 +1546,7 @@ return require('packer').startup{function()
 		end
 	}
 
+	--[[
 	use {
 		'dcampos/nvim-snippy',
 		event = 'InsertEnter',
@@ -1569,8 +1570,8 @@ return require('packer').startup{function()
 			},
 		}
 		end
-
 	}
+	--]]
 
 	use {
 		'hrsh7th/nvim-cmp',

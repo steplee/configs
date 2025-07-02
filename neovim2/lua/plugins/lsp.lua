@@ -11,12 +11,43 @@ local set_lsp_maps = function()
 end
 
 return {
+
+	{
+		"mason-org/mason-lspconfig.nvim",
+
+		config = function()
+			require("mason").setup()
+			require("mason-lspconfig").setup {
+				-- automatic_enable = true
+				automatic_enable = false
+			}
+
+
+			vim.api.nvim_create_autocmd('LspAttach', {
+				 desc = 'LSP actions',
+				 callback = function(ev)
+					vim.cmd([[set signcolumn=yes]])
+					set_lsp_maps()
+				 end})
+
+		end,
+
+		dependencies = {
+			"mason-org/mason.nvim",
+			"neovim/nvim-lspconfig",
+		},
+	},
+
+	--[==[
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
 			require("mason").setup()
-			require("mason-lspconfig").setup()
+			require("mason-lspconfig").setup({
+				automatic_enable = false
+			})
 
+			--[=[
 			require('mason-lspconfig').setup_handlers {
 			function (server_name)
 				require('lspconfig')[server_name].setup {
@@ -29,6 +60,7 @@ return {
 				}
 			end
 			}
+			--]=]
 
 
 			vim.api.nvim_create_autocmd('LspAttach', {
@@ -48,11 +80,14 @@ return {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			{
+				-- NOTE: Broke as of Apr 23 2025, so disabled.
 				"SmiteshP/nvim-navic",
+				enabled = false,
 				opts = { lsp = { auto_attach = true } }
 			}
 		}
 	},
+	--]==]
 
 	{
 			'nvim-lua/lsp-status.nvim',

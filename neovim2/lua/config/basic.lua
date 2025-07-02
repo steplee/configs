@@ -85,7 +85,7 @@ set.sidescrolloff   = 5             -- keep 30 columns visible left and right of
 set.backspace       = 'indent,start,eol' -- make backspace behave like normal again
 --set.mouse = "a"  		-- turn on mouse interaction
 set.updatetime      = 500           -- CursorHold interval
-set.timeoutlen      = 900
+set.timeoutlen      = 500
 --set.ttimeoutlen     = 450
 set.ttimeoutlen     =  50
 
@@ -97,7 +97,8 @@ set.shiftwidth      = 4             -- spaces per tab (when shifting), when usin
 set.tabstop         = 4             -- spaces per tab
 set.smarttab        = true          -- <tab>/<BS> indent/dedent in leading whitespace
 set.autoindent      = true          -- maintain indent of current line
-set.expandtab       = false         -- don't expand tabs into spaces
+-- set.expandtab       = false         -- don't expand tabs into spaces
+set.expandtab       = true         -- expand tabs into spaces
 set.shiftround      = true
 
 set.splitbelow      = true      -- open horizontal splits below current window
@@ -116,7 +117,8 @@ set.completeopt     = 'menuone,noselect,noinsert'       -- completion options
 
 -- Dec 2024: Add default folding from Treesitter
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldexpr = "v:lua.require'config.foldexpr'.foldexpr()"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 
