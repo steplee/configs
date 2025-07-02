@@ -33,7 +33,6 @@ rm nvim.appimage*
 # wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
 # wget https://github.com/neovim/neovim/releases/download/v0.8.0/nvim.appimage
 # wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-
 # wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
 # wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
 wget https://github.com/neovim/neovim/releases/download/v0.11.2/nvim-linux-x86_64.appimage
