@@ -97,6 +97,6 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard:        Auto
 TabWidth:        4
-#UseTab:          Never
-UseTab:          Always
+UseTab:          Never
+#UseTab:          Always
 ...

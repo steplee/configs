@@ -1,11 +1,24 @@
 
 function toggle_lsp()
-	if table.getn(vim.lsp.get_active_clients()) == 0 then
-		vim.cmd('LspStart');
+	-- if table.getn(vim.lsp.get_active_clients()) == 0 then
+	if table.getn(vim.lsp.get_clients()) == 0 then
+		-- vim.cmd('LspStart');
+		vim.lsp.enable(require'mason-lspconfig'.get_installed_servers(), true)
+		vim.cmd('edit')
 		print('Turning LSP On')
 	else
-		vim.cmd('LspStop');
-		print('Turning LSP Off')
+		-- vim.cmd('LspStop');
+		-- vim.lsp.enable(require'mason-lspconfig'.get_installed_servers(), false)
+		-- vim.cmd('edit')
+
+		vim.lsp.stop_client(vim.lsp.get_clients())
+
+		local clientNames = {};
+		for ii,k in pairs(vim.lsp.get_clients()) do clientNames[#clientNames+1] = k.name end
+		vim.lsp.enable(clientNames, false)
+		-- for ii,k in pairs(clientNames) do print(ii,k) end
+
+		print('Turning LSP Off', clientNames)
 	end
 end
 
@@ -85,6 +98,40 @@ function setup_maps()
 	-- make a-n and a-p act like c-n and c-p
 	cmd('imap <expr> <A-p> pumvisible() ? "<C-p>" : "<A-p>"')
 	-- cmd('imap <A-n> <C-n>')
+	
+	-- April 12: change directory of current buffer /to/ current buffer location (using grb), and allow going up (using gru)
+	--           modified from https://www.reddit.com/r/neovim/comments/1e34ti5/how_to_set_working_directory_to_that_of_the/
+	if 1 then
+		vim.keymap.set('n', 'gru', function()
+			vim.cmd 'cd ..'
+		end, { desc = 'Navigate up one directory from current' })
+
+		vim.keymap.set('n', 'grb', function()
+			vim.cmd('cd ' .. vim.fn.expand '%:p:h')
+		end, { desc = 'Set working directory to path of buffer.' })
+
+		-- Try to go up until we see a .git dir
+		vim.keymap.set('n', 'grg', function()
+			original = vim.fn.getcwd()
+			success = false
+			for i=1,15 do
+				vim.print('at ' .. vim.fn.expand('%:p:h'))
+				if vim.uv.fs_stat('./.git') then
+					vim.print('found .git/, done')
+					success = true
+					break
+				end
+				vim.cmd('cd ..')
+			end
+			if not success then
+				vim.print('faield to find .git/, not doing anything')
+				vim.cmd('cd ' .. original)
+			end
+		end, { desc = 'Walk working directory up until seeing a .git/' })
+
+		-- Combines `grb` & `grg`
+		vim.keymap.set('n', 'grr', 'grbgrg', {remap=true});
+	end
 end
 
 

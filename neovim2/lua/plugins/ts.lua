@@ -5,7 +5,7 @@ return {
 			-- commit='4cccb6f494eb255b32a290d37c35ca12584c74d0',
 			-- commit='239bb86b54d07a955caa0200053484298879ca59',
 			-- commit='bd5517989398145c36d859927fb4e76a45c66cf6',
-			commit='53b32a6aa3e1de224e82f88cbdc08584c753adb7',
+			-- commit='53b32a6aa3e1de224e82f88cbdc08584c753adb7',
 			run = ':TSUpdate',
 			config = function()
 				require'nvim-treesitter.configs'.setup {

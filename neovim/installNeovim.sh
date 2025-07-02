@@ -27,10 +27,17 @@ rm fonts -rf
 echo ''
 echo ' - Installing neovim appimage.'
 sudo rm /usr/local/bin/nvim
+
+rm nvim.appimage*
+
 # wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
 # wget https://github.com/neovim/neovim/releases/download/v0.8.0/nvim.appimage
 # wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+# wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
+# wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
 wget https://github.com/neovim/neovim/releases/download/v0.11.2/nvim-linux-x86_64.appimage
+mv nvim-linux-x86_64.appimage nvim.appimage
+
 chmod u+x nvim.appimage
 sudo cp nvim.appimage /usr/local/bin/nvim.appimage
 sudo ln -s /usr/local/bin/nvim.appimage /usr/local/bin/nvim
