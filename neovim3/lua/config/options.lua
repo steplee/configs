@@ -5,3 +5,7 @@
 local opt = vim.opt
 
 opt.relativenumber = false
+
+vim.g.autoformat = false
+vim.opt.tabstop = 4
+-- vim.opt.shiftwidth = 4

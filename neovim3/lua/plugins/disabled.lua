@@ -2,6 +2,13 @@ return {
   { "folke/noice.nvim", enabled = false },
   { "folke/flash.nvim", enabled = false },
   { "akinsho/bufferline.nvim", enabled = false },
+  {"echasnovski/mini.pairs", enabled=false},
+
+  -- indent is broken for me.
+  {
+  "nvim-treesitter/nvim-treesitter",
+    opts = { indent = { enable = false} },
+  },
 
   {
     "folke/snacks.nvim",
@@ -15,22 +22,28 @@ return {
       bigfile = { enabled = true },
       dashboard = { enabled = true },
       explorer = { enabled = true },
-      indent = { enabled = true },
       input = { enabled = true },
       picker = { enabled = true },
       notifier = { enabled = true },
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = false },
-      statuscolumn = { enabled = true },
+      -- statuscolumn = { enabled = true },
+      statuscolumn = { enabled = false },
       words = { enabled = true },
       scratch = {enabled=false},
       terminal = {
         win={style="float"},
-      }
+      },
+      indent = {
+        enabled = true,
+        animate = {enabled=false},
+        chunk={enabled=false},
+      },
     },
     keys = {
     }
-  }
+  },
+
 
 }
