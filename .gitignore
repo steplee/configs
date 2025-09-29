@@ -34,3 +34,5 @@ VirtualBox VMs/
 dev/
 gits/
 .zcompdump
+*appimage
+
