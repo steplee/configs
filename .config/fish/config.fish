@@ -1,3 +1,8 @@
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+    tmux attach || tmux new
+end
+
 
 function edit_cmd --description 'Edit cmdline in editor'
 	set -l f (mktemp --tmpdir=.)
