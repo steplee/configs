@@ -2,12 +2,17 @@ return {
   { "folke/noice.nvim", enabled = false },
   { "folke/flash.nvim", enabled = false },
   { "akinsho/bufferline.nvim", enabled = false },
-  {"echasnovski/mini.pairs", enabled=false},
+  { "nvim-mini/mini.pairs", enabled=false},
 
   -- indent is broken for me.
   {
   "nvim-treesitter/nvim-treesitter",
-    opts = { indent = { enable = false} },
+    opts = {
+        indent = {
+            enable = false
+        },
+        incremental_selection = { enable = true },
+    },
   },
 
   {

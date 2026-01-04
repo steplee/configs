@@ -1,43 +1,44 @@
-
 return {
 
-  -- { "projekt0n/github-nvim-theme" },
-  {"Shatur/neovim-ayu"},
-  -- {"nyoom-engineering/oxocarbon.nvim"},
-  -- {"scottmckendry/cyberdream.nvim"},
-  -- {"olimorris/onedarkpro.nvim"},
-  -- {"savq/melange-nvim"},
-  {"thesimonho/kanagawa-paper.nvim"},
-  -- {"DeaDWTeaM/retrolegends.nvim"},
-  -- {"hendriknielaender/stardust.nvim"}, -- contrast too high
-  -- {"nickkadutskyi/jb.nvim"},
-  -- {"neg-serg/neg.nvim"},
-  -- {"ptdewey/monalisa-nvim"}, -- could be good but too high contrast
-  {"rose-pine/neovim"}, -- all time best
-  -- {"kvrohit/mellow.nvim"}, -- similar to oldworld but not as good
-  {"yorumicolors/yorumi.nvim",
-  config = function()
-    -- require('yorumi').setup()
-    vim.api.nvim_create_autocmd("ColorScheme", {
-      callback = function(params)
-        if params.match == "yorumi" then
-          vim.api.nvim_set_hl(0, "SnacksIndent", {fg='#171922'})
-          vim.api.nvim_set_hl(0, "SnacksIndentScope", {fg='#304595'})
-          vim.api.nvim_set_hl(0, "Normal", {bg='#06080d'})
-          vim.api.nvim_set_hl(0, "LspReferenceText", {bg='#172135'})
-        end
-      end,
-    })
-  end
-}, -- nice, very dark.
-  -- {"datsfilipe/vesper.nvim"},
-  {"dgox16/oldworld.nvim"}, -- nice.
-  -- {"xero/miasma.nvim"},
-  -- {"vague2k/huez.nvim", enabled=false, config = function() require("huez").setup({}) end,},
+	-- { "projekt0n/github-nvim-theme" },
+	{ "Shatur/neovim-ayu" },
+	-- {"nyoom-engineering/oxocarbon.nvim"},
+	-- {"scottmckendry/cyberdream.nvim"},
+	-- {"olimorris/onedarkpro.nvim"},
+	-- {"savq/melange-nvim"},
+	{ "thesimonho/kanagawa-paper.nvim" },
+	-- {"DeaDWTeaM/retrolegends.nvim"},
+	-- {"hendriknielaender/stardust.nvim"}, -- contrast too high
+	-- {"nickkadutskyi/jb.nvim"},
+	-- {"neg-serg/neg.nvim"},
+	-- {"ptdewey/monalisa-nvim"}, -- could be good but too high contrast
+	{ "rose-pine/neovim" }, -- all time best
+	-- {"kvrohit/mellow.nvim"}, -- similar to oldworld but not as good
+	{
+		"yorumicolors/yorumi.nvim",
+		config = function()
+			-- require('yorumi').setup()
+			vim.api.nvim_create_autocmd("ColorScheme", {
+				callback = function(params)
+					if params.match == "yorumi" then
+						vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#171922" })
+						vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#304595" })
+						vim.api.nvim_set_hl(0, "Normal", { bg = "#06080d" })
+						vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#172135" })
+					end
+				end,
+			})
+		end,
+	}, -- nice, very dark.
+	-- {"datsfilipe/vesper.nvim"},
+	{ "dgox16/oldworld.nvim" }, -- nice.
+	-- {"xero/miasma.nvim"},
+	-- {"vague2k/huez.nvim", enabled=false, config = function() require("huez").setup({}) end,},
 
 	{
 		"saghen/blink.cmp",
-    -- enabled = false,
+        commit = "v1.7.0",
+		-- enabled = false,
 		opts = {
 			keymap = {
 				-- preset = "enter",
@@ -48,10 +49,10 @@ return {
 				["<C-CR>"] = { "select_and_accept" }, -- unforunately does not work with most terminals.
 				["<C-Space>"] = { "show", "select_and_accept" },
 			},
-      completion = {
-        ghost_text = { enabled = false },
-        menu = { auto_show = false },
-      }
+			completion = {
+				ghost_text = { enabled = false },
+				menu = { auto_show = false },
+			},
 		},
 	},
 
@@ -67,50 +68,101 @@ return {
         desc = "Find Plugin File",
       },
 
-			{ "<leader>tt", function() require("telescope.builtin").builtin() end, desc = "Telescope Builtins", },
-			{ "<leader>tr", function() require("telescope.builtin").resume() end, desc = "Telescope Resume", },
+			{
+				"<leader>tt",
+				function()
+					require("telescope.builtin").builtin()
+				end,
+				desc = "Telescope Builtins",
+			},
+			{
+				"<leader>tr",
+				function()
+					require("telescope.builtin").resume()
+				end,
+				desc = "Telescope Resume",
+			},
 		},
 		-- change some options
 		opts = {
 			defaults = {
 				layout_strategy = "horizontal",
+				-- layout_config = { prompt_position = "bottom" },
 				layout_config = { prompt_position = "top" },
 				sorting_strategy = "ascending",
 				winblend = 0,
+
+                file_ignore_patterns= {
+                    "__pycache__/", "__pycache__/*",
+                    "build/",       "gradle/", "node_modules/", "node_modules/*", "obj/Debug",
+                    "smalljre_*/*", "target/", "vendor/*",      "bin/Debug",      "venv/",
+                    ".dart_tool/", ".git/", ".github/", ".gradle/",".idea/", ".vscode/",
+                    "%.sqlite3", "%.ipynb", "%.lock", "%.pdb",   "%.so",
+                    "%.dll",     "%.class", "%.exe",  "%.cache", "%.pdf",  "%.dylib",
+                    "%.jar",     "%.docx",  "%.met",  "%.burp",  "%.mp4",  "%.mkv",   "%.rar",
+                    "%.zip",     "%.7z",    "%.tar",  "%.bz2",   "%.epub", "%.flac",  "%.tar.gz",
+                },
 			},
 		},
 	},
 
+	{
+		"mason-org/mason-lspconfig.nvim",
+		opts = {
+			automatic_enable = false,
+		},
+		dependencies = {
+			"mason-org/mason.nvim",
+			{
+				"neovim/nvim-lspconfig",
+				opts = {
+					automatic_enable = false,
+					inlay_hints = { enabled = false },
+				},
+			},
+		},
+	},
 
+	{
+		"LazyVim/LazyVim",
+		opts = {
+			-- colorscheme = "tokyonight-moon",
+			-- colorscheme = "ayu-mirage",
+			-- colorscheme = "kanagawa-paper",
+			-- colorscheme = "rose-pine-main", -- its just the best!
+			-- colorscheme = "oldworld",
+			colorscheme = "yorumi",
+		},
+	},
 
     {
-        "mason-org/mason-lspconfig.nvim",
-        opts = {
-            automatic_enable = false,
+        "folke/snacks.nvim",
+        keys = {
+            -- Default snacks Find Files excludes files via .gitignore, very annoying.
+            -- I bind <space><space> to find all non-ignored files. <space>ff is made to search all files.
+            -- You can use either and switch ignored/hidden with A-i/A-h anyway.
+            { "<leader><space>", function() Snacks.picker.smart({hidden=true,ignored=false}) end, desc = "Smart Find Files (-Ignored)" },
+            { "<leader>ff", function() Snacks.picker.smart({hidden=true,ignored=true}) end, desc = "Smart Find Files (+Ignored)" },
+            { "<leader>e", function() Snacks.explorer({hidden=true,ignored=true}) end, desc = "Explorer Snacks (root dir) (+Ignored)" },
         },
-        dependencies = {
-            "mason-org/mason.nvim",
-            {
-                "neovim/nvim-lspconfig",
-                opts = {
-                    automatic_enable = false,
-                    inlay_hints = { enabled = false },
+
+        opts = {
+            picker = {
+                sources = {
+                    explorer = {
+                        ignored = true,
+                        hidden = true,
+                        exclude = {".git", "build", "build*"},
+                    },
+                    files = {
+                        -- Actually rely on special <space><space> bind instead. <Space>FF opens w/o hidden/ignored
+                        -- ignored = true,
+                        -- hidden = true,
+                        exclude = {".git", "build", "build*"},
+                        include = {"cfg", "cfg/*"},
+                    },
                 },
             },
         },
     },
-
-
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      -- colorscheme = "tokyonight-moon",
-      -- colorscheme = "ayu-mirage",
-      -- colorscheme = "kanagawa-paper",
-      -- colorscheme = "rose-pine-main", -- its just the best!
-      -- colorscheme = "oldworld",
-      colorscheme = "yorumi",
-    },
-  },
-
 }

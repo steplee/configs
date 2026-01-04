@@ -23,6 +23,8 @@ cd ..
 rm fonts -rf
 '
 
+echo " - Installing debs"
+sudo apt-get install ripgrep fd-find
 
 echo ''
 echo ' - Installing neovim appimage.'
